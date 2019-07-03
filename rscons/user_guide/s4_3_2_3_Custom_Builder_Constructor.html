@@ -1,0 +1,98 @@
+<html>
+  <head>
+    <title>RScons User Guide - 4.3.2.3 Custom Builder Constructor - Version 2.0.0beta1</title>
+    <style>
+      body {
+        background-color: #CCC;
+        margin: 0px;
+        padding: 0px;
+      }
+      #body-table {
+        margin-left: auto;
+        margin-right: auto;
+        border-collapse: collapse;
+      }
+      #body-left-border {
+        width: 10px;
+        background-image: linear-gradient(to right, #CCC, #000, #FFF);
+      }
+      #body-right-border {
+        width: 10px;
+        background-image: linear-gradient(to right, #FFF, #000, #CCC);
+      }
+      #body-center {
+        background-color: #FFF;
+        width: 120ex;
+        padding: 1ex;
+      }
+      a {
+        text-decoration: none;
+      }
+      .separator {
+        height: 2em;
+      }
+      .page_nav {
+        width: 100%;
+        table-layout: fixed;
+      }
+      .page_nav_toc {
+        text-align: center;
+      }
+      .page_nav_next {
+        text-align: right;
+      }
+      .code {
+        padding-left: 2ex;
+        width: 116ex;
+        overflow-x: auto;
+      }
+      .ruby_code .normal {}
+      .ruby_code .comment { color: #005; font-style: italic; }
+      .ruby_code .keyword { color: #A00; font-weight: bold; }
+      .ruby_code .method { color: #077; }
+      .ruby_code .class { color: #074; }
+      .ruby_code .module { color: #050; }
+      .ruby_code .punct { color: #447; font-weight: bold; }
+      .ruby_code .symbol { color: #099; }
+      .ruby_code .string { color: #090; }
+      .ruby_code .char { color: #F07; }
+      .ruby_code .ident { color: #004; }
+      .ruby_code .constant { color: #07F; }
+      .ruby_code .regex { color: #B66; }
+      .ruby_code .number { color: #D55; }
+      .ruby_code .attribute { color: #377; }
+      .ruby_code .global { color: #3B7; }
+      .ruby_code .expr { color: #227; }
+    </style>
+  </head>
+  <body>
+    <table id="body-table">
+      <tr>
+        <td id="body-left-border"></td>
+        <td id="body-center"><table class="page_nav"><tr><td class="page_nav_prev"><a href="s4_3_2_2_Builder_Name.html">&laquo; Prev<br/>4.3.2.2 Builder Name</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s4_3_2_4_Custom_Builder_Operation.html">Next &raquo<br/>4.3.2.4 Custom Builder Operation</a></td></tr></table><div class="separator"></div><a name="s4_3_2_3_Custom_Builder_Constructor" /><h4>4.3.2.3 Custom Builder Constructor</h4>
+
+<p>It is optional for a custom builder to provide an <code>initialize</code> method.
+If an <code>initialize</code> method is provided, it must call <code>super</code> to invoke the
+base <code>Rscons::Builder</code> class&#39;s constructor.
+A single Hash parameter is passed to the builder constructor.
+This Hash contains many parameters describing how the build target was
+registered by the user.
+The base constructor will set several instance attributes within the builder:</p>
+
+<ul>
+<li><code>@target</code> will contain the path to the build target</li>
+<li><code>@sources</code> will contain the path(s) to the build source(s)</li>
+<li><code>@cache</code> will contain a reference to the <code>Rscons::Cache</code> object used for
+the build</li>
+<li><code>@env</code> will contain a reference to the Environment object that registered
+the build target using the builder</li>
+<li><code>@vars</code> will contain any user-specified construction variable values that
+should be used for the build operation (overriding any Environment-wide
+construction variable values)</li>
+</ul>
+<div class="separator"></div><table class="page_nav"><tr><td class="page_nav_prev"><a href="s4_3_2_2_Builder_Name.html">&laquo; Prev<br/>4.3.2.2 Builder Name</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s4_3_2_4_Custom_Builder_Operation.html">Next &raquo<br/>4.3.2.4 Custom Builder Operation</a></td></tr></table></td>
+        <td id="body-right-border"></td>
+      </tr>
+    </table>
+  </body>
+</html>
