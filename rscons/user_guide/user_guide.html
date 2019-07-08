@@ -150,7 +150,8 @@
 </span><span style="padding-left: 8ex;"><a href="user_guide.html#s5_2_5_Example__Using_different_compilation_flags_for_some_sources">5.2.5 Example: Using different compilation flags for some sources</a><br/>
 </span><span style="padding-left: 8ex;"><a href="user_guide.html#s5_2_6_Example__Creating_a_static_library">5.2.6 Example: Creating a static library</a><br/>
 </span><span style="padding-left: 8ex;"><a href="user_guide.html#s5_2_7_Example__Creating_a_C___parser_source_from_a_Yacc_Bison_input_file">5.2.7 Example: Creating a C++ parser source from a Yacc/Bison input file</a><br/>
-</span><span style="padding-left: 4ex;"><a href="user_guide.html#s5_3_YARD_API_Documentation">5.3 YARD API Documentation</a><br/>
+</span><span style="padding-left: 4ex;"><a href="user_guide.html#s5_3___configure____make">5.3 ./configure && make</a><br/>
+</span><span style="padding-left: 4ex;"><a href="user_guide.html#s5_4_YARD_API_Documentation">5.4 YARD API Documentation</a><br/>
 </span><span style="padding-left: 0ex;"><a href="user_guide.html#s6_License">6 License</a><br/>
 </span><span style="padding-left: 0ex;"><a href="user_guide.html#s7_Contributing">7 Contributing</a><br/>
 </span><span style="padding-left: 0ex;"><a href="user_guide.html#s8_Change_Log">8 Change Log</a><br/>
@@ -1434,7 +1435,45 @@ used it will call the provided block in order to build the target.</p>
 <span class="keyword">end</span>
 </pre>
 </div>
-<a name="s5_3_YARD_API_Documentation" /><h2>5.3 YARD API Documentation</h2>
+<a name="s5_3___configure____make" /><h2>5.3 ./configure &amp;&amp; make</h2>
+
+<p>You can make your Rscons-based project more familiar to users of
+autoconf-generated projects by creating a <code>configure</code> script and a <code>Makefile</code>
+for the user.
+Such users may be used to executing:</p>
+
+<div class="code">
+<pre>./configure
+make
+</pre>
+</div>
+
+<p>to build a project.
+To do this, create a <code>configure</code> script with contents similar to the following:</p>
+
+<div class="code">
+<pre>#!/bin/sh
+exec "$(dirname "$0")"/rscons "$@"
+</pre>
+</div>
+
+<p>and make it executable with <code>chmod +x configure</code>.</p>
+
+<p>If you want your users to be able to build/clean a project with <code>make</code> but
+still make use of Rscons under the hood, you can create a <code>Makefile</code> with
+contents something like this:</p>
+
+<div class="code">
+<pre>.PHONY: all
+all:
+    ./rscons build
+
+.PHONY: clean
+clean:
+    ./rscons clean
+</pre>
+</div>
+<a name="s5_4_YARD_API_Documentation" /><h2>5.4 YARD API Documentation</h2>
 
 <p>See <a href="../yard/index.html">here</a> for Rscons YARD API Documentation.</p>
 <a name="s6_License" /><h1>6 License</h1>
@@ -1484,7 +1523,44 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 </ol>
 <a name="s8_Change_Log" /><h1>8 Change Log</h1>
 
-<p><h2>v1.17.0</h2>
+<p><h2>v2.0.0</h2>
+
+<ul>
+<li>convert rscons from a Ruby gem to a standalone script</li>
+<li>compress rscons distributable script</li>
+<li>add configure operation to detect compilers, check for headers/libraries, etc... (invoked automatically if needed)</li>
+<li>Environments store builder classes instead of instances of builder classes</li>
+<li>use a separate Builder instance for each build operation</li>
+<li>load Rsconscript from Rsconscript/Rsconscript.rb instead of Rsconsfile</li>
+<li>drop support for builder run methods using the old 5 parameter signature</li>
+<li>remove Environment#build_dir</li>
+<li>set Environment build root in configure step</li>
+<li>remove Builder#finalize (now #run called repeatedly until builder completes)</li>
+<li>remove Builder#setup</li>
+<li>remove Builder#features and Builder#produces?</li>
+<li>add functionality to allow builders to wait on Ruby threads or other builders</li>
+<li>add install/uninstall/distclean command-line operations</li>
+<li>preserve makefile dependency files under build directory</li>
+<li>remove a few deprecated methods</li>
+<li>pass a Builder instance to build hooks instead of a build operation Hash</li>
+<li>support a basic markup syntax in builder run messages to colorize target/source files</li>
+<li>hide (but store) failed compilation command by default so the user doesn&#39;t have to scroll back as much to see compiler output</li>
+<li>refactor to remove some redundancy among built-in builders</li>
+<li>track object file source language (correctly determine linker when only passed object files previously built by particular toolchains)</li>
+<li>add barriers</li>
+<li>add InstallDirectory builder</li>
+<li>change Install builder to copy files on &#39;install&#39; operation</li>
+<li>add &quot;prefix&quot; construction variable based on configured installation prefix</li>
+<li>allow passing builder objects as sources to build targets</li>
+<li>differentiate &#39;build&#39; targets from &#39;install&#39; targets in cache contents</li>
+<li>add verbose mode</li>
+<li>show build progress as a percentage in builder output messages</li>
+<li>various performance improvements</li>
+<li>wrote a new user guide</li>
+<li>added new website (<a href="https://holtrop.github.io/rscons/">https://holtrop.github.io/rscons/</a>)</li>
+</ul>
+
+<h2>v1.17.0</h2>
 
 <h3>New Features</h3>
 

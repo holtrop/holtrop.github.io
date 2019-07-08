@@ -71,7 +71,44 @@
         <td id="body-left-border"></td>
         <td id="body-center"><table class="page_nav"><tr><td class="page_nav_prev"><a href="s7_Contributing.html">&laquo; Prev<br/>7 Contributing</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"></td></tr></table><div class="separator"></div><a name="s8_Change_Log" /><h1>8 Change Log</h1>
 
-<p><h2>v1.17.0</h2>
+<p><h2>v2.0.0</h2>
+
+<ul>
+<li>convert rscons from a Ruby gem to a standalone script</li>
+<li>compress rscons distributable script</li>
+<li>add configure operation to detect compilers, check for headers/libraries, etc... (invoked automatically if needed)</li>
+<li>Environments store builder classes instead of instances of builder classes</li>
+<li>use a separate Builder instance for each build operation</li>
+<li>load Rsconscript from Rsconscript/Rsconscript.rb instead of Rsconsfile</li>
+<li>drop support for builder run methods using the old 5 parameter signature</li>
+<li>remove Environment#build_dir</li>
+<li>set Environment build root in configure step</li>
+<li>remove Builder#finalize (now #run called repeatedly until builder completes)</li>
+<li>remove Builder#setup</li>
+<li>remove Builder#features and Builder#produces?</li>
+<li>add functionality to allow builders to wait on Ruby threads or other builders</li>
+<li>add install/uninstall/distclean command-line operations</li>
+<li>preserve makefile dependency files under build directory</li>
+<li>remove a few deprecated methods</li>
+<li>pass a Builder instance to build hooks instead of a build operation Hash</li>
+<li>support a basic markup syntax in builder run messages to colorize target/source files</li>
+<li>hide (but store) failed compilation command by default so the user doesn&#39;t have to scroll back as much to see compiler output</li>
+<li>refactor to remove some redundancy among built-in builders</li>
+<li>track object file source language (correctly determine linker when only passed object files previously built by particular toolchains)</li>
+<li>add barriers</li>
+<li>add InstallDirectory builder</li>
+<li>change Install builder to copy files on &#39;install&#39; operation</li>
+<li>add &quot;prefix&quot; construction variable based on configured installation prefix</li>
+<li>allow passing builder objects as sources to build targets</li>
+<li>differentiate &#39;build&#39; targets from &#39;install&#39; targets in cache contents</li>
+<li>add verbose mode</li>
+<li>show build progress as a percentage in builder output messages</li>
+<li>various performance improvements</li>
+<li>wrote a new user guide</li>
+<li>added new website (<a href="https://holtrop.github.io/rscons/">https://holtrop.github.io/rscons/</a>)</li>
+</ul>
+
+<h2>v1.17.0</h2>
 
 <h3>New Features</h3>
 
