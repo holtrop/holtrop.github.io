@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title>RScons - a Build System for Developers</title>
+    <title>RScons User Guide - 4.2.4.9 The Object Builder - Version 2.0.0beta2</title>
     <style>
       body {
         background-color: #CCC;
@@ -69,32 +69,19 @@
     <table id="body-table">
       <tr>
         <td id="body-left-border"></td>
-        <td id="body-center">
-          <p>Rscons is an open-source build system for developers.
-          It supports the following features:</p>
-          <ul>
-          <li>multi-threaded job execution</li>
-          <li>auto-configuration</li>
-          <li>built-in builders for several common operations</li>
-          <li>out-of-the-box support for C, C++, and D languages</li>
-          <li>extensibility for other languages or custom builders</li>
-          <li>compatible with Windows, Linux, and OS X</li>
-          <li>colorized output with build progress</li>
-          <li>build hooks</li>
-          </ul>
-          <p>See <a href="https://github.com/holtrop/rscons">https://github.com/holtrop/rscons</a> for development, downloads, and issues.</p>
-          <p>Releases:</p>
-          <ul>
-            <li>2.0.0beta2
-              <ul>
-                <li><a href="https://github.com/holtrop/rscons/releases/download/v2.0.0beta2/rscons">Download</a> (sha256sum: e3fdf14b695ee165262d0ea2fa8fea0ab51224e470b78a283775a6f8f93b9eed)</li>
-                <li><a href="v2.0.0beta2/user_guide/user_guide.html">User Guide - Single Page (HTML)</a></li>
-                <li><a href="v2.0.0beta2/user_guide/toc.html">User Guide - Multiple Pages (HTML)</a></li>
-                <li><a href="v2.0.0beta2/yard/index.html">YARD API Documentation</a></li>
-              </ul>
-            </li>
-          </ul>
-        </td>
+        <td id="body-center"><table class="page_nav"><tr><td class="page_nav_prev"><a href="s4_2_4_8_The_Library_Builder.html">&laquo; Prev<br/>4.2.4.8 The Library Builder</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s4_2_4_10_The_Preprocess_Builder.html">Next &raquo<br/>4.2.4.10 The Preprocess Builder</a></td></tr></table><div class="separator"></div><a name="s4_2_4_9_The_Object_Builder" /><h4>4.2.4.9 The Object Builder</h4>
+
+<div class="code ruby_code">
+<pre><span class="ident">env</span><span class="punct">.</span><span class="ident">Object</span><span class="punct">(</span><span class="ident">target</span><span class="punct">,</span> <span class="ident">sources</span><span class="punct">)</span>
+<span class="comment"># Example</span>
+<span class="ident">env</span><span class="punct">.</span><span class="ident">Object</span><span class="punct">(&quot;</span><span class="string">module.o</span><span class="punct">&quot;,</span> <span class="punct">&quot;</span><span class="string">module.c</span><span class="punct">&quot;)</span>
+</pre>
+</div>
+
+<p>The <code>Object</code> builder compiles the given sources to an object file.
+Although it can be called explicitly, it is more commonly implicitly called by
+the <code>Program</code> builder.</p>
+<div class="separator"></div><table class="page_nav"><tr><td class="page_nav_prev"><a href="s4_2_4_8_The_Library_Builder.html">&laquo; Prev<br/>4.2.4.8 The Library Builder</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s4_2_4_10_The_Preprocess_Builder.html">Next &raquo<br/>4.2.4.10 The Preprocess Builder</a></td></tr></table></td>
         <td id="body-right-border"></td>
       </tr>
     </table>

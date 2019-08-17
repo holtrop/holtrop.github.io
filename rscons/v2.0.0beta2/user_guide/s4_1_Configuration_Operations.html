@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title>RScons - a Build System for Developers</title>
+    <title>RScons User Guide - 4.1 Configuration Operations - Version 2.0.0beta2</title>
     <style>
       body {
         background-color: #CCC;
@@ -69,32 +69,20 @@
     <table id="body-table">
       <tr>
         <td id="body-left-border"></td>
-        <td id="body-center">
-          <p>Rscons is an open-source build system for developers.
-          It supports the following features:</p>
-          <ul>
-          <li>multi-threaded job execution</li>
-          <li>auto-configuration</li>
-          <li>built-in builders for several common operations</li>
-          <li>out-of-the-box support for C, C++, and D languages</li>
-          <li>extensibility for other languages or custom builders</li>
-          <li>compatible with Windows, Linux, and OS X</li>
-          <li>colorized output with build progress</li>
-          <li>build hooks</li>
-          </ul>
-          <p>See <a href="https://github.com/holtrop/rscons">https://github.com/holtrop/rscons</a> for development, downloads, and issues.</p>
-          <p>Releases:</p>
-          <ul>
-            <li>2.0.0beta2
-              <ul>
-                <li><a href="https://github.com/holtrop/rscons/releases/download/v2.0.0beta2/rscons">Download</a> (sha256sum: e3fdf14b695ee165262d0ea2fa8fea0ab51224e470b78a283775a6f8f93b9eed)</li>
-                <li><a href="v2.0.0beta2/user_guide/user_guide.html">User Guide - Single Page (HTML)</a></li>
-                <li><a href="v2.0.0beta2/user_guide/toc.html">User Guide - Multiple Pages (HTML)</a></li>
-                <li><a href="v2.0.0beta2/yard/index.html">YARD API Documentation</a></li>
-              </ul>
-            </li>
-          </ul>
-        </td>
+        <td id="body-center"><table class="page_nav"><tr><td class="page_nav_prev"><a href="s4_The_Build_Script.html">&laquo; Prev<br/>4 The Build Script</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s4_1_1_Checking_for_a_Compiler.html">Next &raquo<br/>4.1.1 Checking for a Compiler</a></td></tr></table><div class="separator"></div><a name="s4_1_Configuration_Operations" /><h2>4.1 Configuration Operations</h2>
+
+<p>A <code>configure</code> block is optional.
+It can be used to perform various checks and setup operations for a project.
+Example <code>configure</code> block:</p>
+
+<div class="code ruby_code">
+<pre><span class="ident">configure</span> <span class="keyword">do</span>
+  <span class="ident">check_cxx_compiler</span>
+  <span class="ident">check_c_header</span> <span class="punct">&quot;</span><span class="string">getopt.h</span><span class="punct">&quot;</span>
+<span class="keyword">end</span>
+</pre>
+</div>
+<div class="separator"></div><table class="page_nav"><tr><td class="page_nav_prev"><a href="s4_The_Build_Script.html">&laquo; Prev<br/>4 The Build Script</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s4_1_1_Checking_for_a_Compiler.html">Next &raquo<br/>4.1.1 Checking for a Compiler</a></td></tr></table></td>
         <td id="body-right-border"></td>
       </tr>
     </table>

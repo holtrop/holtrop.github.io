@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title>RScons - a Build System for Developers</title>
+    <title>RScons User Guide - 4.2.4.4 The Directory Builder - Version 2.0.0beta2</title>
     <style>
       body {
         background-color: #CCC;
@@ -69,32 +69,19 @@
     <table id="body-table">
       <tr>
         <td id="body-left-border"></td>
-        <td id="body-center">
-          <p>Rscons is an open-source build system for developers.
-          It supports the following features:</p>
-          <ul>
-          <li>multi-threaded job execution</li>
-          <li>auto-configuration</li>
-          <li>built-in builders for several common operations</li>
-          <li>out-of-the-box support for C, C++, and D languages</li>
-          <li>extensibility for other languages or custom builders</li>
-          <li>compatible with Windows, Linux, and OS X</li>
-          <li>colorized output with build progress</li>
-          <li>build hooks</li>
-          </ul>
-          <p>See <a href="https://github.com/holtrop/rscons">https://github.com/holtrop/rscons</a> for development, downloads, and issues.</p>
-          <p>Releases:</p>
-          <ul>
-            <li>2.0.0beta2
-              <ul>
-                <li><a href="https://github.com/holtrop/rscons/releases/download/v2.0.0beta2/rscons">Download</a> (sha256sum: e3fdf14b695ee165262d0ea2fa8fea0ab51224e470b78a283775a6f8f93b9eed)</li>
-                <li><a href="v2.0.0beta2/user_guide/user_guide.html">User Guide - Single Page (HTML)</a></li>
-                <li><a href="v2.0.0beta2/user_guide/toc.html">User Guide - Multiple Pages (HTML)</a></li>
-                <li><a href="v2.0.0beta2/yard/index.html">YARD API Documentation</a></li>
-              </ul>
-            </li>
-          </ul>
-        </td>
+        <td id="body-center"><table class="page_nav"><tr><td class="page_nav_prev"><a href="s4_2_4_3_The_Copy_Builder.html">&laquo; Prev<br/>4.2.4.3 The Copy Builder</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s4_2_4_5_The_Disassemble_Builder.html">Next &raquo<br/>4.2.4.5 The Disassemble Builder</a></td></tr></table><div class="separator"></div><a name="s4_2_4_4_The_Directory_Builder" /><h4>4.2.4.4 The Directory Builder</h4>
+
+<div class="code ruby_code">
+<pre><span class="ident">env</span><span class="punct">.</span><span class="ident">Directory</span><span class="punct">(</span><span class="ident">target</span><span class="punct">)</span>
+<span class="comment"># Example</span>
+<span class="ident">env</span><span class="punct">.</span><span class="ident">Directory</span><span class="punct">(&quot;</span><span class="string">^/tests</span><span class="punct">&quot;)</span>
+</pre>
+</div>
+
+<p>The <code>Directory</code> builder can be used to explicitly create a directory.
+This can also disambiguate whether the target for a subsequent builder
+(e.g. <code>Copy</code>) refers to a file path or directory path.</p>
+<div class="separator"></div><table class="page_nav"><tr><td class="page_nav_prev"><a href="s4_2_4_3_The_Copy_Builder.html">&laquo; Prev<br/>4.2.4.3 The Copy Builder</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s4_2_4_5_The_Disassemble_Builder.html">Next &raquo<br/>4.2.4.5 The Disassemble Builder</a></td></tr></table></td>
         <td id="body-right-border"></td>
       </tr>
     </table>
