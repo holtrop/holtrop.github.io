@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title>Rscons - a Build System for Developers</title>
+    <title>Rscons User Guide - 4.3.2 Adding Custom Builders - Version 2.0.0</title>
     <style>
       body {
         background-color: #CCC;
@@ -74,33 +74,19 @@
     <table id="body-table">
       <tr>
         <td id="body-left-border"></td>
-        <td id="body-center">
-          <img class="img_block_center" src="rscons_logo_1000.png" />
-          <p>Rscons is an open-source build system for developers.
-          It supports the following features:</p>
-          <ul>
-          <li>multi-threaded job execution</li>
-          <li>auto-configuration</li>
-          <li>built-in builders for several common operations</li>
-          <li>out-of-the-box support for C, C++, and D languages</li>
-          <li>extensibility for other languages or custom builders</li>
-          <li>compatible with Windows, Linux, OS X, and FreeBSD</li>
-          <li>colorized output with build progress</li>
-          <li>build hooks</li>
-          </ul>
-          <p>See <a href="https://github.com/holtrop/rscons">https://github.com/holtrop/rscons</a> for development, downloads, and issues.</p>
-          <p>Releases:</p>
-          <ul>
-            <li>2.0.0
-              <ul>
-                <li><a href="https://github.com/holtrop/rscons/releases/download/v2.0.0/rscons">Download</a> (sha256sum: 81d7b8b451f297770acc5aee0b06c618baa1a1a02d95b2b4fce780a08d41d8f3)</li>
-                <li><a href="v2.0.0/user_guide/user_guide.html">User Guide - Single Page (HTML)</a></li>
-                <li><a href="v2.0.0/user_guide/toc.html">User Guide - Multiple Pages (HTML)</a></li>
-                <li><a href="v2.0.0/yard/index.html">YARD API Documentation</a></li>
-              </ul>
-            </li>
-          </ul>
-        </td>
+        <td id="body-center"><table class="page_nav"><tr><td class="page_nav_prev"><a href="s4_3_Extending_Rscons.html">&laquo; Prev<br/>4.3 Extending Rscons</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s4_3_2_1_Adding_a_Custom_Builder_to_an_Environment.html">Next &raquo<br/>4.3.2.1 Adding a Custom Builder to an Environment</a></td></tr></table><div class="separator"></div><a name="s4_3_2_Adding_Custom_Builders" /><h3>4.3.2 Adding Custom Builders</h3>
+
+<p>It is also possible to extend Rscons with new builders.
+This is the most flexible method to extend Rscons.
+Builders can execute a command line program, call another builder, or just use
+plain Ruby code to produce an output file.</p>
+
+<p>A builder is a class that inherits from the <code>Rscons::Builder</code> base class.
+Rscons provides a <code>Rscons::Builders</code> namespacing module which contains the
+built-in builder classes.
+User-provided custom builder classes can also reside in the <code>Rscons::Builders</code>
+namespacing module, but this is not required.</p>
+<div class="separator"></div><table class="page_nav"><tr><td class="page_nav_prev"><a href="s4_3_Extending_Rscons.html">&laquo; Prev<br/>4.3 Extending Rscons</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s4_3_2_1_Adding_a_Custom_Builder_to_an_Environment.html">Next &raquo<br/>4.3.2.1 Adding a Custom Builder to an Environment</a></td></tr></table></td>
         <td id="body-right-border"></td>
       </tr>
     </table>
