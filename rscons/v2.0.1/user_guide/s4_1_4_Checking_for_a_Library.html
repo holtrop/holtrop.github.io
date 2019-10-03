@@ -1,0 +1,117 @@
+<html>
+  <head>
+    <title>Rscons User Guide - 4.1.4 Checking for a Library - Version 2.0.1</title>
+    <style>
+      body {
+        background-color: #CCC;
+        margin: 0px;
+        padding: 0px;
+      }
+      #body-table {
+        margin-left: auto;
+        margin-right: auto;
+        border-collapse: collapse;
+      }
+      #body-left-border {
+        width: 10px;
+        background-image: linear-gradient(to right, #CCC, #000, #FFF);
+      }
+      #body-right-border {
+        width: 10px;
+        background-image: linear-gradient(to right, #FFF, #000, #CCC);
+      }
+      #body-center {
+        background-color: #FFF;
+        width: 120ex;
+        padding: 1ex;
+      }
+      a {
+        text-decoration: none;
+      }
+      .separator {
+        height: 2em;
+      }
+      .img_block_center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .page_nav {
+        width: 100%;
+        table-layout: fixed;
+      }
+      .page_nav_toc {
+        text-align: center;
+      }
+      .page_nav_next {
+        text-align: right;
+      }
+      .code {
+        padding-left: 2ex;
+        width: 116ex;
+        overflow-x: auto;
+      }
+      .ruby_code .normal {}
+      .ruby_code .comment { color: #005; font-style: italic; }
+      .ruby_code .keyword { color: #A00; font-weight: bold; }
+      .ruby_code .method { color: #077; }
+      .ruby_code .class { color: #074; }
+      .ruby_code .module { color: #050; }
+      .ruby_code .punct { color: #447; font-weight: bold; }
+      .ruby_code .symbol { color: #099; }
+      .ruby_code .string { color: #090; }
+      .ruby_code .char { color: #F07; }
+      .ruby_code .ident { color: #004; }
+      .ruby_code .constant { color: #07F; }
+      .ruby_code .regex { color: #B66; }
+      .ruby_code .number { color: #D55; }
+      .ruby_code .attribute { color: #377; }
+      .ruby_code .global { color: #3B7; }
+      .ruby_code .expr { color: #227; }
+    </style>
+  </head>
+  <body>
+    <table id="body-table">
+      <tr>
+        <td id="body-left-border"></td>
+        <td id="body-center"><table class="page_nav"><tr><td class="page_nav_prev"><a href="s4_1_3_Checking_for_a_D_Import.html">&laquo; Prev<br/>4.1.3 Checking for a D Import</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s4_1_5_Checking_for_a_Program.html">Next &raquo<br/>4.1.5 Checking for a Program</a></td></tr></table><div class="separator"></div><a name="s4_1_4_Checking_for_a_Library" /><h3>4.1.4 Checking for a Library</h3>
+
+<p>The <code>check_lib</code> method can be used to check for the presence of a library.</p>
+
+<p>This method takes the name of the library to check for as the first argument,
+and take an optional Hash of arguments as the second argument.</p>
+
+<p>Example calls:</p>
+
+<div class="code ruby_code">
+<pre><span class="ident">configure</span> <span class="keyword">do</span>
+  <span class="ident">check_lib</span> <span class="punct">&quot;</span><span class="string">kpty</span><span class="punct">&quot;,</span> <span class="ident">fail</span><span class="punct">:</span> <span class="constant">false</span><span class="punct">,</span> <span class="ident">set_define</span><span class="punct">:</span> <span class="punct">&quot;</span><span class="string">HAVE_LIBKPTY</span><span class="punct">&quot;</span>
+  <span class="ident">check_lib</span> <span class="punct">&quot;</span><span class="string">GL</span><span class="punct">&quot;</span>
+<span class="keyword">end</span>
+</pre>
+</div>
+<a name="s4_1_4_1_Options" /><h4>4.1.4.1 Options</h4>
+<a name="s4_1_4_1_1___check_libpath_" /><h5>4.1.4.1.1 <code>:check_libpath</code></h5>
+
+<p>Optionally specifies an array of paths to look for the library in.</p>
+<a name="s4_1_4_1_2___fail_" /><h5>4.1.4.1.2 <code>:fail</code></h5>
+
+<p>If the <code>:fail</code> option is set to <code>false</code>, then the absence of the library
+will not result in the configure option failing.
+The <code>:fail</code> option defaults to <code>true</code> if the <code>:set_define</code> option is not
+defined, and defaults to <code>false</code> if the <code>:set_define</code> option is defined.</p>
+<a name="s4_1_4_1_3___set_define_" /><h5>4.1.4.1.3 <code>:set_define</code></h5>
+
+<p>If set, a build define of the specified String will be added to the
+<code>CPPDEFINES</code> construction variable array if the requested library is found.</p>
+<a name="s4_1_4_1_4___use_" /><h5>4.1.4.1.4 <code>:use</code></h5>
+
+<p>If not set, the library will be used by default in all <code>Environment</code> objects.
+If set, the library will only be used in <code>Environment</code> objects that have a
+matching <code>:use</code> flag set.</p>
+<div class="separator"></div><table class="page_nav"><tr><td class="page_nav_prev"><a href="s4_1_3_Checking_for_a_D_Import.html">&laquo; Prev<br/>4.1.3 Checking for a D Import</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s4_1_5_Checking_for_a_Program.html">Next &raquo<br/>4.1.5 Checking for a Program</a></td></tr></table></td>
+        <td id="body-right-border"></td>
+      </tr>
+    </table>
+  </body>
+</html>
