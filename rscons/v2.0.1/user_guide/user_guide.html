@@ -1641,7 +1641,7 @@ To do this, create a <code>configure</code> script with contents similar to the 
 
 <div class="code">
 <pre>#!/bin/sh
-exec "$(dirname "$0")"/rscons "$@"
+exec "$(dirname "$0")"/rscons configure "$@"
 </pre>
 </div>
 
