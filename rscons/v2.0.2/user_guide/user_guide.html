@@ -1,0 +1,2058 @@
+<html>
+  <head>
+    <title>Rscons User Guide - Version 2.0.2</title>
+    <style>
+      body {
+        background-color: #CCC;
+        margin: 0px;
+        padding: 0px;
+      }
+      #body-table {
+        margin-left: auto;
+        margin-right: auto;
+        border-collapse: collapse;
+      }
+      #body-left-border {
+        width: 10px;
+        background-image: linear-gradient(to right, #CCC, #000, #FFF);
+      }
+      #body-right-border {
+        width: 10px;
+        background-image: linear-gradient(to right, #FFF, #000, #CCC);
+      }
+      #body-center {
+        background-color: #FFF;
+        width: 120ex;
+        padding: 1ex;
+      }
+      a {
+        text-decoration: none;
+      }
+      .separator {
+        height: 2em;
+      }
+      .img_block_center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .page_nav {
+        width: 100%;
+        table-layout: fixed;
+      }
+      .page_nav_toc {
+        text-align: center;
+      }
+      .page_nav_next {
+        text-align: right;
+      }
+      .code {
+        padding-left: 2ex;
+        width: 116ex;
+        overflow-x: auto;
+      }
+      .ruby_code .normal {}
+      .ruby_code .comment { color: #005; font-style: italic; }
+      .ruby_code .keyword { color: #A00; font-weight: bold; }
+      .ruby_code .method { color: #077; }
+      .ruby_code .class { color: #074; }
+      .ruby_code .module { color: #050; }
+      .ruby_code .punct { color: #447; font-weight: bold; }
+      .ruby_code .symbol { color: #099; }
+      .ruby_code .string { color: #090; }
+      .ruby_code .char { color: #F07; }
+      .ruby_code .ident { color: #004; }
+      .ruby_code .constant { color: #07F; }
+      .ruby_code .regex { color: #B66; }
+      .ruby_code .number { color: #D55; }
+      .ruby_code .attribute { color: #377; }
+      .ruby_code .global { color: #3B7; }
+      .ruby_code .expr { color: #227; }
+    </style>
+  </head>
+  <body>
+    <table id="body-table">
+      <tr>
+        <td id="body-left-border"></td>
+        <td id="body-center"><img class="img_block_center" src="rscons_logo_1000.png" /><h1>Table of Contents</h1>
+<span style="padding-left: 0ex;"><a href="user_guide.html#s1_Overview">1 Overview</a><br/>
+</span><span style="padding-left: 4ex;"><a href="user_guide.html#s1_1_Design_Principles">1.1 Design Principles</a><br/>
+</span><span style="padding-left: 8ex;"><a href="user_guide.html#s1_1_1_Build_Correctness">1.1.1 Build Correctness</a><br/>
+</span><span style="padding-left: 8ex;"><a href="user_guide.html#s1_1_2_Build_Flexibility">1.1.2 Build Flexibility</a><br/>
+</span><span style="padding-left: 8ex;"><a href="user_guide.html#s1_1_3_Build_Efficiency">1.1.3 Build Efficiency</a><br/>
+</span><span style="padding-left: 8ex;"><a href="user_guide.html#s1_1_4_Build_Directory">1.1.4 Build Directory</a><br/>
+</span><span style="padding-left: 4ex;"><a href="user_guide.html#s1_2_Getting_Started">1.2 Getting Started</a><br/>
+</span><span style="padding-left: 0ex;"><a href="user_guide.html#s2_Installation">2 Installation</a><br/>
+</span><span style="padding-left: 4ex;"><a href="user_guide.html#s2_1_Version_Control_Setup">2.1 Version Control Setup</a><br/>
+</span><span style="padding-left: 0ex;"><a href="user_guide.html#s3_Command_Line_Operation">3 Command-Line Operation</a><br/>
+</span><span style="padding-left: 4ex;"><a href="user_guide.html#s3_1_Configure_Operation">3.1 Configure Operation</a><br/>
+</span><span style="padding-left: 4ex;"><a href="user_guide.html#s3_2_Build_Operation">3.2 Build Operation</a><br/>
+</span><span style="padding-left: 4ex;"><a href="user_guide.html#s3_3_Clean_Operation">3.3 Clean Operation</a><br/>
+</span><span style="padding-left: 4ex;"><a href="user_guide.html#s3_4_Distclean_Operation">3.4 Distclean Operation</a><br/>
+</span><span style="padding-left: 4ex;"><a href="user_guide.html#s3_5_Install_Operation">3.5 Install Operation</a><br/>
+</span><span style="padding-left: 4ex;"><a href="user_guide.html#s3_6_Uninstall_Operation">3.6 Uninstall Operation</a><br/>
+</span><span style="padding-left: 0ex;"><a href="user_guide.html#s4_The_Build_Script">4 The Build Script</a><br/>
+</span><span style="padding-left: 4ex;"><a href="user_guide.html#s4_1_Configuration_Operations">4.1 Configuration Operations</a><br/>
+</span><span style="padding-left: 8ex;"><a href="user_guide.html#s4_1_1_Checking_for_a_Compiler">4.1.1 Checking for a Compiler</a><br/>
+</span><span style="padding-left: 8ex;"><a href="user_guide.html#s4_1_2_Checking_for_a_Header_File">4.1.2 Checking for a Header File</a><br/>
+</span><span style="padding-left: 12ex;"><a href="user_guide.html#s4_1_2_1_Options">4.1.2.1 Options</a><br/>
+</span><span style="padding-left: 16ex;"><a href="user_guide.html#s4_1_2_1_1___check_cpppath_">4.1.2.1.1 :check_cpppath</a><br/>
+</span><span style="padding-left: 16ex;"><a href="user_guide.html#s4_1_2_1_2___fail_">4.1.2.1.2 :fail</a><br/>
+</span><span style="padding-left: 16ex;"><a href="user_guide.html#s4_1_2_1_3___set_define_">4.1.2.1.3 :set_define</a><br/>
+</span><span style="padding-left: 8ex;"><a href="user_guide.html#s4_1_3_Checking_for_a_D_Import">4.1.3 Checking for a D Import</a><br/>
+</span><span style="padding-left: 12ex;"><a href="user_guide.html#s4_1_3_1_Options">4.1.3.1 Options</a><br/>
+</span><span style="padding-left: 16ex;"><a href="user_guide.html#s4_1_3_1_1___check_d_import_path_">4.1.3.1.1 :check_d_import_path</a><br/>
+</span><span style="padding-left: 8ex;"><a href="user_guide.html#s4_1_4_Checking_for_a_Library">4.1.4 Checking for a Library</a><br/>
+</span><span style="padding-left: 12ex;"><a href="user_guide.html#s4_1_4_1_Options">4.1.4.1 Options</a><br/>
+</span><span style="padding-left: 16ex;"><a href="user_guide.html#s4_1_4_1_1___check_libpath_">4.1.4.1.1 :check_libpath</a><br/>
+</span><span style="padding-left: 16ex;"><a href="user_guide.html#s4_1_4_1_2___fail_">4.1.4.1.2 :fail</a><br/>
+</span><span style="padding-left: 16ex;"><a href="user_guide.html#s4_1_4_1_3___set_define_">4.1.4.1.3 :set_define</a><br/>
+</span><span style="padding-left: 16ex;"><a href="user_guide.html#s4_1_4_1_4___use_">4.1.4.1.4 :use</a><br/>
+</span><span style="padding-left: 8ex;"><a href="user_guide.html#s4_1_5_Checking_for_a_Program">4.1.5 Checking for a Program</a><br/>
+</span><span style="padding-left: 8ex;"><a href="user_guide.html#s4_1_6_Checking_for_a_Package_Configuration">4.1.6 Checking for a Package Configuration</a><br/>
+</span><span style="padding-left: 12ex;"><a href="user_guide.html#s4_1_6_1_Options">4.1.6.1 Options</a><br/>
+</span><span style="padding-left: 16ex;"><a href="user_guide.html#s4_1_6_1_1___package_">4.1.6.1.1 :package</a><br/>
+</span><span style="padding-left: 16ex;"><a href="user_guide.html#s4_1_6_1_2___program_">4.1.6.1.2 :program</a><br/>
+</span><span style="padding-left: 16ex;"><a href="user_guide.html#s4_1_6_1_3___fail_">4.1.6.1.3 :fail</a><br/>
+</span><span style="padding-left: 16ex;"><a href="user_guide.html#s4_1_6_1_4___set_define_">4.1.6.1.4 :set_define</a><br/>
+</span><span style="padding-left: 16ex;"><a href="user_guide.html#s4_1_6_1_5___use_">4.1.6.1.5 :use</a><br/>
+</span><span style="padding-left: 8ex;"><a href="user_guide.html#s4_1_7_Custom_Configuration_Checks">4.1.7 Custom Configuration Checks</a><br/>
+</span><span style="padding-left: 4ex;"><a href="user_guide.html#s4_2_Build_Operations">4.2 Build Operations</a><br/>
+</span><span style="padding-left: 8ex;"><a href="user_guide.html#s4_2_1_Environments">4.2.1 Environments</a><br/>
+</span><span style="padding-left: 8ex;"><a href="user_guide.html#s4_2_2_Specifying_Source_Files__The_glob_Method">4.2.2 Specifying Source Files: The glob Method</a><br/>
+</span><span style="padding-left: 8ex;"><a href="user_guide.html#s4_2_3_Construction_Variables">4.2.3 Construction Variables</a><br/>
+</span><span style="padding-left: 12ex;"><a href="user_guide.html#s4_2_3_1_Construction_Variable_Naming">4.2.3.1 Construction Variable Naming</a><br/>
+</span><span style="padding-left: 8ex;"><a href="user_guide.html#s4_2_4_Builders">4.2.4 Builders</a><br/>
+</span><span style="padding-left: 12ex;"><a href="user_guide.html#s4_2_4_1_The_Command_Builder">4.2.4.1 The Command Builder</a><br/>
+</span><span style="padding-left: 12ex;"><a href="user_guide.html#s4_2_4_2_The_CFile_Builder">4.2.4.2 The CFile Builder</a><br/>
+</span><span style="padding-left: 12ex;"><a href="user_guide.html#s4_2_4_3_The_Copy_Builder">4.2.4.3 The Copy Builder</a><br/>
+</span><span style="padding-left: 12ex;"><a href="user_guide.html#s4_2_4_4_The_Directory_Builder">4.2.4.4 The Directory Builder</a><br/>
+</span><span style="padding-left: 12ex;"><a href="user_guide.html#s4_2_4_5_The_Disassemble_Builder">4.2.4.5 The Disassemble Builder</a><br/>
+</span><span style="padding-left: 12ex;"><a href="user_guide.html#s4_2_4_6_The_Install_Builder">4.2.4.6 The Install Builder</a><br/>
+</span><span style="padding-left: 12ex;"><a href="user_guide.html#s4_2_4_7_The_InstallDirectory_Builder">4.2.4.7 The InstallDirectory Builder</a><br/>
+</span><span style="padding-left: 12ex;"><a href="user_guide.html#s4_2_4_8_The_Library_Builder">4.2.4.8 The Library Builder</a><br/>
+</span><span style="padding-left: 12ex;"><a href="user_guide.html#s4_2_4_9_The_Object_Builder">4.2.4.9 The Object Builder</a><br/>
+</span><span style="padding-left: 12ex;"><a href="user_guide.html#s4_2_4_10_The_Preprocess_Builder">4.2.4.10 The Preprocess Builder</a><br/>
+</span><span style="padding-left: 12ex;"><a href="user_guide.html#s4_2_4_11_The_Program_Builder">4.2.4.11 The Program Builder</a><br/>
+</span><span style="padding-left: 16ex;"><a href="user_guide.html#s4_2_4_11_1_Direct_Mode">4.2.4.11.1 Direct Mode</a><br/>
+</span><span style="padding-left: 12ex;"><a href="user_guide.html#s4_2_4_12_The_SharedLibrary_Builder">4.2.4.12 The SharedLibrary Builder</a><br/>
+</span><span style="padding-left: 16ex;"><a href="user_guide.html#s4_2_4_12_1_Direct_Mode">4.2.4.12.1 Direct Mode</a><br/>
+</span><span style="padding-left: 12ex;"><a href="user_guide.html#s4_2_4_13_The_SharedObject_Builder">4.2.4.13 The SharedObject Builder</a><br/>
+</span><span style="padding-left: 8ex;"><a href="user_guide.html#s4_2_5_Explicit_Dependencies">4.2.5 Explicit Dependencies</a><br/>
+</span><span style="padding-left: 8ex;"><a href="user_guide.html#s4_2_6_Build_Hooks">4.2.6 Build Hooks</a><br/>
+</span><span style="padding-left: 8ex;"><a href="user_guide.html#s4_2_7_Barriers">4.2.7 Barriers</a><br/>
+</span><span style="padding-left: 4ex;"><a href="user_guide.html#s4_3_Extending_Rscons">4.3 Extending Rscons</a><br/>
+</span><span style="padding-left: 8ex;"><a href="user_guide.html#s4_3_1_Adding_New_Languages">4.3.1 Adding New Languages</a><br/>
+</span><span style="padding-left: 8ex;"><a href="user_guide.html#s4_3_2_Adding_Custom_Builders">4.3.2 Adding Custom Builders</a><br/>
+</span><span style="padding-left: 12ex;"><a href="user_guide.html#s4_3_2_1_Adding_a_Custom_Builder_to_an_Environment">4.3.2.1 Adding a Custom Builder to an Environment</a><br/>
+</span><span style="padding-left: 12ex;"><a href="user_guide.html#s4_3_2_2_Builder_Name">4.3.2.2 Builder Name</a><br/>
+</span><span style="padding-left: 12ex;"><a href="user_guide.html#s4_3_2_3_Custom_Builder_Constructor">4.3.2.3 Custom Builder Constructor</a><br/>
+</span><span style="padding-left: 12ex;"><a href="user_guide.html#s4_3_2_4_Custom_Builder_Operation">4.3.2.4 Custom Builder Operation</a><br/>
+</span><span style="padding-left: 16ex;"><a href="user_guide.html#s4_3_2_4_1_Return_Value">4.3.2.4.1 Return Value</a><br/>
+</span><span style="padding-left: 16ex;"><a href="user_guide.html#s4_3_2_4_2_Printing_Build_Status">4.3.2.4.2 Printing Build Status</a><br/>
+</span><span style="padding-left: 16ex;"><a href="user_guide.html#s4_3_2_4_3_Custom_Builder_Cache_Usage___Only_Rebuild_When_Necessary">4.3.2.4.3 Custom Builder Cache Usage - Only Rebuild When Necessary</a><br/>
+</span><span style="padding-left: 16ex;"><a href="user_guide.html#s4_3_2_4_4_Custom_Builder_Parallelization">4.3.2.4.4 Custom Builder Parallelization</a><br/>
+</span><span style="padding-left: 20ex;"><a href="user_guide.html#s4_3_2_4_4_1_Using_a_Ruby_Thread_to_Parallelize_a_Build_Operation">4.3.2.4.4.1 Using a Ruby Thread to Parallelize a Build Operation</a><br/>
+</span><span style="padding-left: 20ex;"><a href="user_guide.html#s4_3_2_4_4_2_Executing_a_Subcommand_from_a_Custom_Builder">4.3.2.4.4.2 Executing a Subcommand from a Custom Builder</a><br/>
+</span><span style="padding-left: 12ex;"><a href="user_guide.html#s4_3_2_5_Simple_custom_builders_added_with_add_builder">4.3.2.5 Simple custom builders added with add_builder</a><br/>
+</span><span style="padding-left: 0ex;"><a href="user_guide.html#s5_Appendix">5 Appendix</a><br/>
+</span><span style="padding-left: 4ex;"><a href="user_guide.html#s5_1_Default_Construction_Variables">5.1 Default Construction Variables</a><br/>
+</span><span style="padding-left: 4ex;"><a href="user_guide.html#s5_2_Example_Build_Scripts">5.2 Example Build Scripts</a><br/>
+</span><span style="padding-left: 8ex;"><a href="user_guide.html#s5_2_1_Example__Building_a_C_Program">5.2.1 Example: Building a C Program</a><br/>
+</span><span style="padding-left: 8ex;"><a href="user_guide.html#s5_2_2_Example__Building_a_D_Program">5.2.2 Example: Building a D Program</a><br/>
+</span><span style="padding-left: 8ex;"><a href="user_guide.html#s5_2_3_Example__Cloning_an_Environment">5.2.3 Example: Cloning an Environment</a><br/>
+</span><span style="padding-left: 8ex;"><a href="user_guide.html#s5_2_4_Example__Custom_Builder">5.2.4 Example: Custom Builder</a><br/>
+</span><span style="padding-left: 8ex;"><a href="user_guide.html#s5_2_5_Example__Using_different_compilation_flags_for_some_sources">5.2.5 Example: Using different compilation flags for some sources</a><br/>
+</span><span style="padding-left: 8ex;"><a href="user_guide.html#s5_2_6_Example__Creating_a_static_library">5.2.6 Example: Creating a static library</a><br/>
+</span><span style="padding-left: 8ex;"><a href="user_guide.html#s5_2_7_Example__Creating_a_C___parser_source_from_a_Yacc_Bison_input_file">5.2.7 Example: Creating a C++ parser source from a Yacc/Bison input file</a><br/>
+</span><span style="padding-left: 4ex;"><a href="user_guide.html#s5_3___configure____make">5.3 ./configure && make</a><br/>
+</span><span style="padding-left: 4ex;"><a href="user_guide.html#s5_4_YARD_API_Documentation">5.4 YARD API Documentation</a><br/>
+</span><span style="padding-left: 0ex;"><a href="user_guide.html#s6_License">6 License</a><br/>
+</span><span style="padding-left: 0ex;"><a href="user_guide.html#s7_Contributing">7 Contributing</a><br/>
+</span><span style="padding-left: 0ex;"><a href="user_guide.html#s8_Change_Log">8 Change Log</a><br/>
+</span><a name="s1_Overview" /><h1>1 Overview</h1>
+
+<p>Rscons is an open-source build system for developers.
+It supports the following features:</p>
+
+<ul>
+<li>multi-threaded job execution</li>
+<li>auto-configuration</li>
+<li>built-in builders for several common operations</li>
+<li>out-of-the-box support for C, C++, and D languages</li>
+<li>extensibility for other languages or custom builders</li>
+<li>compatible with Windows, Linux, OS X, and FreeBSD</li>
+<li>colorized output with build progress</li>
+<li>build hooks</li>
+</ul>
+
+<p>At its core, Rscons is mainly an engine to:</p>
+
+<ul>
+<li>determine the proper order to perform build operations,</li>
+<li>determine whether each build target is up to date or in need of rebuild, and</li>
+<li>schedule those build operations across multiple threads as efficiently as possible.</li>
+</ul>
+
+<p>Along the way, Rscons provides a concise syntax for specifying common types of
+build operations, but also provides an extensible framework for performing
+custom build operations as well.</p>
+
+<p>Rscons is written in Ruby, and is inspired by <a href="https://scons.org/">SCons</a> and <a href="https://waf.io/">waf</a>.</p>
+<a name="s1_1_Design_Principles" /><h2>1.1 Design Principles</h2>
+<a name="s1_1_1_Build_Correctness" /><h3>1.1.1 Build Correctness</h3>
+
+<p>The number one design principle in Rscons is build correctness.
+This means that a build operation will be performed when Rscons cannot
+determine that a build target is already up-to-date.
+A build target will be built whenever:</p>
+
+<ul>
+<li>the target file has been removed or changed since it was last built</li>
+<li>the command to build the target file is different from the previous command
+used to build it</li>
+<li>any of the target file&#39;s dependency files have changed since the last time
+the target was built</li>
+</ul>
+
+<p>Importantly, Rscons uses the content of a source (dependency) file to determine
+whether a rebuild is necessary, not simply the timestamp of the file.
+This is because relying solely on the timestamp of the file can lead to an
+incorrect decision being made to not rebuild when a rebuild is necessary.</p>
+<a name="s1_1_2_Build_Flexibility" /><h3>1.1.2 Build Flexibility</h3>
+
+<p>Rscons supports multiple configurations of compilation flags or build options
+across multiple environments to build output files in different ways according
+to the user&#39;s desire.
+For example, the same source files can be built into a release executable, but
+also compiled with different compilation flags or build options into a test
+executable.
+Rscons also supports build hooks, which allow the user to further fine-tune the
+build system&#39;s operation.
+A build hook, for example, can be used to set a build option for only source
+files coming from a particular source directory.</p>
+<a name="s1_1_3_Build_Efficiency" /><h3>1.1.3 Build Efficiency</h3>
+
+<p>Rscons will automatically determine the number of threads to use based on the
+host CPU configuration, and will schedule jobs as efficiently as possible
+across the available threads in order to complete the build operation in as
+little time as possible.
+As development occurs and build operations are executed, Rscons makes use of a
+cache file in order to avoid rebuilding a target when it is already up to date.</p>
+<a name="s1_1_4_Build_Directory" /><h3>1.1.4 Build Directory</h3>
+
+<p>Rscons was designed to store temporary build artifacts (for example, object
+files, dependency files, etc...) in a <code>build</code> directory.
+This keeps files generated by the build cleanly separated from user-controlled
+source files.</p>
+<a name="s1_2_Getting_Started" /><h2>1.2 Getting Started</h2>
+
+<p>To use Rscons on your project, you must:</p>
+
+<ol>
+<li>Install the <code>rscons</code> script in your project (See <a href="user_guide.html#s2_Installation">Installation</a>).</li>
+<li>Write the <code>Rsconscript</code> build script for your project (See <a href="user_guide.html#s4_The_Build_Script">The Build Script</a>).</li>
+<li>Use the <code>rscons</code> command in your project (See <a href="user_guide.html#s3_Command_Line_Operation">Command-Line Operation</a>).</li>
+</ol>
+<a name="s2_Installation" /><h1>2 Installation</h1>
+
+<p>Rscons is designed to be distributed as a stand-alone single file script that
+can be copied into and versioned in a project&#39;s source tree.
+The only dependency required to run Rscons is to have a Ruby interpreter
+installed.
+The latest release can be downloaded from <a href="https://github.com/holtrop/rscons/releases">https://github.com/holtrop/rscons/releases</a>.
+Simply copy the <code>rscons</code> executable script into the desired location within
+the project to be built (typically the root of the repository) and mark it
+executable.</p>
+<a name="s2_1_Version_Control_Setup" /><h2>2.1 Version Control Setup</h2>
+
+<p>The following files should be added to source control:</p>
+
+<ul>
+<li><code>rscons</code></li>
+<li><code>Rsconscript</code></li>
+</ul>
+
+<p>Add the following contents to <code>.gitignore</code> (or the equivalent thereof for different
+version control systems):</p>
+
+<div class="code">
+<pre>/.rscons*
+/build/
+</pre>
+</div>
+<a name="s3_Command_Line_Operation" /><h1>3 Command-Line Operation</h1>
+
+<p>Rscons is typically invoked from the command-line as <code>./rscons</code>.
+Rscons supports several build <em>operations</em>:</p>
+
+<ul>
+<li>configure</li>
+<li>build</li>
+<li>clean</li>
+<li>distclean</li>
+<li>install</li>
+<li>uninstall</li>
+</ul>
+<a name="s3_1_Configure_Operation" /><h2>3.1 Configure Operation</h2>
+
+<p>The <code>configure</code> operation will initialize the Rscons cache file and build
+directory.
+It will also perform any configuration checks requested by the build script.
+Such configuration checks can include:</p>
+
+<ul>
+<li>verifying operation of a compiler</li>
+<li>loading compilation/linker flags from a config program (e.g. <code>pkg-config</code>)</li>
+<li>verifying presence of a C/C++ header file</li>
+<li>verifying presence of a D import</li>
+<li>verifying presence of a library</li>
+<li>verifying presence of an executable</li>
+<li>any custom user-supplied configuration check</li>
+</ul>
+<a name="s3_2_Build_Operation" /><h2>3.2 Build Operation</h2>
+
+<p>If a <code>build</code> operation is requested and a <code>configure</code> operation has not yet
+been performed, a <code>configure</code> operation will be automatically invoked.</p>
+
+<p>The <code>build</code> operation will execute all builders registered to produce build
+targets.</p>
+
+<p>If a <code>build</code> operation fails (e.g. due to a compilation failure), Rscons will
+log the failed commands.
+By default Rscons does not print the failed commands to the console so that it
+is easier for the user to focus on the actual compiler failure messages rather
+than the compilation command itself.
+However, if the user wishes to see the compilation commands, rscons can be
+invoked with the <code>-v</code> command-line option to show all complilation commands
+while building, or, alternatively, following a compilation failure, the user
+can invoke rscons with the -F option which will not rebuild but will show the
+failed command log from the previous build operation.</p>
+<a name="s3_3_Clean_Operation" /><h2>3.3 Clean Operation</h2>
+
+<p>A <code>clean</code> operation will remove all built target files.
+It will not remove items installed by an <code>install</code> operation.
+It will not remove the cached configuration options.</p>
+<a name="s3_4_Distclean_Operation" /><h2>3.4 Distclean Operation</h2>
+
+<p>A <code>distclean</code> operation will remove all built target files and all cached
+configuration options.
+Generally it will get the project directory back to the state it was in when
+unpacked before any configuration or build operations took place.
+It will not removed items installed by an <code>install</code> operation.</p>
+<a name="s3_5_Install_Operation" /><h2>3.5 Install Operation</h2>
+
+<p>An <code>install</code> operation will perform a <code>build</code> (and if necessary, first a
+<code>configure</code> as well).
+In addition it will execute any <code>Install</code> or <code>InstallDirectory</code> builders to
+install items into the specified install directory.</p>
+<a name="s3_6_Uninstall_Operation" /><h2>3.6 Uninstall Operation</h2>
+
+<p>An <code>uninstall</code> operation will remove any items installed by an <code>install</code>
+operation.
+It will not remove all built target files, just the installed copies.</p>
+<a name="s4_The_Build_Script" /><h1>4 The Build Script</h1>
+
+<p>Rscons looks for instructions for what to build by reading a build script file
+called <code>Rsconscript</code> (or <code>Rsconscript.rb</code>).
+Here is a simple example <code>Rsconscript</code> file:</p>
+
+<div class="code ruby_code">
+<pre><span class="ident">build</span> <span class="keyword">do</span>
+  <span class="constant">Environment</span><span class="punct">.</span><span class="ident">new</span> <span class="keyword">do</span> <span class="punct">|</span><span class="ident">env</span><span class="punct">|</span>
+    <span class="ident">env</span><span class="punct">.</span><span class="ident">Program</span><span class="punct">(&quot;</span><span class="string">myprog.exe</span><span class="punct">&quot;,</span> <span class="ident">glob</span><span class="punct">(&quot;</span><span class="string">src/**/*.c</span><span class="punct">&quot;))</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre>
+</div>
+
+<p>This <code>Rsconscript</code> file would instruct Rscons to produce a <em>Program</em> target
+called <code>myprog.exe</code> which is to be built from all C source files found
+(recursively) under the <code>src</code> directory.</p>
+
+<p>The <code>Rsconscript</code> file is a Ruby script.</p>
+<a name="s4_1_Configuration_Operations" /><h2>4.1 Configuration Operations</h2>
+
+<p>A <code>configure</code> block is optional.
+It can be used to perform various checks and setup operations for a project.
+Example <code>configure</code> block:</p>
+
+<div class="code ruby_code">
+<pre><span class="ident">configure</span> <span class="keyword">do</span>
+  <span class="ident">check_cxx_compiler</span>
+  <span class="ident">check_c_header</span> <span class="punct">&quot;</span><span class="string">getopt.h</span><span class="punct">&quot;</span>
+<span class="keyword">end</span>
+</pre>
+</div>
+<a name="s4_1_1_Checking_for_a_Compiler" /><h3>4.1.1 Checking for a Compiler</h3>
+
+<p>The following methods can be used within a <code>configure</code> block to check for a
+working compiler:</p>
+
+<ul>
+<li><code>check_c_compiler</code></li>
+<li><code>check_cxx_compiler</code></li>
+<li><code>check_d_compiler</code></li>
+</ul>
+
+<p>Each of these methods can take an optional list of compilers to check for.
+If such a list is supplied, the compilers are tested in the order listed.
+The first compiler option found which passes a compilation test is used.</p>
+
+<p>Here are example calls which also show the default compiler list for each
+supported language:</p>
+
+<div class="code ruby_code">
+<pre><span class="ident">configure</span> <span class="keyword">do</span>
+  <span class="ident">check_c_compiler</span> <span class="punct">&quot;</span><span class="string">gcc</span><span class="punct">&quot;,</span> <span class="punct">&quot;</span><span class="string">clang</span><span class="punct">&quot;</span>
+  <span class="ident">check_cxx_compiler</span> <span class="punct">&quot;</span><span class="string">g++</span><span class="punct">&quot;,</span> <span class="punct">&quot;</span><span class="string">clang++</span><span class="punct">&quot;</span>
+  <span class="ident">check_d_compiler</span> <span class="punct">&quot;</span><span class="string">gdc</span><span class="punct">&quot;,</span> <span class="punct">&quot;</span><span class="string">ldc2</span><span class="punct">&quot;</span>
+<span class="keyword">end</span>
+</pre>
+</div>
+<a name="s4_1_2_Checking_for_a_Header_File" /><h3>4.1.2 Checking for a Header File</h3>
+
+<p>The following methods can be used to check for the presence of a header file:</p>
+
+<ul>
+<li><code>check_c_header</code> will check for a C header to be present</li>
+<li><code>check_cxx_header</code> will check for a C++ header to be present</li>
+</ul>
+
+<p>Each of these methods take the name of the header file to check for as the
+first argument, and take an optional Hash of arguments as the second argument.</p>
+
+<p>Example calls:</p>
+
+<div class="code ruby_code">
+<pre><span class="ident">configure</span> <span class="keyword">do</span>
+  <span class="ident">check_c_header</span> <span class="punct">&quot;</span><span class="string">getopt.h</span><span class="punct">&quot;,</span> <span class="ident">set_define</span><span class="punct">:</span> <span class="punct">&quot;</span><span class="string">HAVE_GETOPT_H</span><span class="punct">&quot;</span>
+  <span class="ident">check_c_header</span> <span class="punct">&quot;</span><span class="string">FreeType2.h</span><span class="punct">&quot;</span>
+  <span class="ident">check_cxx_header</span> <span class="punct">&quot;</span><span class="string">memory</span><span class="punct">&quot;</span>
+<span class="keyword">end</span>
+</pre>
+</div>
+<a name="s4_1_2_1_Options" /><h4>4.1.2.1 Options</h4>
+<a name="s4_1_2_1_1___check_cpppath_" /><h5>4.1.2.1.1 <code>:check_cpppath</code></h5>
+
+<p>Optionally specifies an array of paths to look for the header file in.</p>
+<a name="s4_1_2_1_2___fail_" /><h5>4.1.2.1.2 <code>:fail</code></h5>
+
+<p>If the <code>:fail</code> option is set to <code>false</code>, then the absence of the header file
+will not result in the configure option failing.
+The <code>:fail</code> option defaults to <code>true</code> if the <code>:set_define</code> option is not
+defined, and defaults to <code>false</code> if the <code>:set_define</code> option is defined.</p>
+<a name="s4_1_2_1_3___set_define_" /><h5>4.1.2.1.3 <code>:set_define</code></h5>
+
+<p>If set, a build define of the specified String will be added to the
+<code>CPPDEFINES</code> construction variable array if the requested header is found.</p>
+<a name="s4_1_3_Checking_for_a_D_Import" /><h3>4.1.3 Checking for a D Import</h3>
+
+<p>The <code>check_d_import</code> method can be used to check for the presence of D import.</p>
+
+<p>This method takes the name of the import to check for as the first argument.</p>
+
+<p>Example calls:</p>
+
+<div class="code ruby_code">
+<pre><span class="ident">configure</span> <span class="keyword">do</span>
+  <span class="ident">check_d_import</span> <span class="punct">&quot;</span><span class="string">std.stdio</span><span class="punct">&quot;</span>
+  <span class="ident">check_d_import</span> <span class="punct">&quot;</span><span class="string">std.numeric</span><span class="punct">&quot;</span>
+<span class="keyword">end</span>
+</pre>
+</div>
+<a name="s4_1_3_1_Options" /><h4>4.1.3.1 Options</h4>
+<a name="s4_1_3_1_1___check_d_import_path_" /><h5>4.1.3.1.1 <code>:check_d_import_path</code></h5>
+
+<p>Optionally specifies an array of paths to look for the module in.</p>
+<a name="s4_1_4_Checking_for_a_Library" /><h3>4.1.4 Checking for a Library</h3>
+
+<p>The <code>check_lib</code> method can be used to check for the presence of a library.</p>
+
+<p>This method takes the name of the library to check for as the first argument,
+and take an optional Hash of arguments as the second argument.</p>
+
+<p>Example calls:</p>
+
+<div class="code ruby_code">
+<pre><span class="ident">configure</span> <span class="keyword">do</span>
+  <span class="ident">check_lib</span> <span class="punct">&quot;</span><span class="string">kpty</span><span class="punct">&quot;,</span> <span class="ident">fail</span><span class="punct">:</span> <span class="constant">false</span><span class="punct">,</span> <span class="ident">set_define</span><span class="punct">:</span> <span class="punct">&quot;</span><span class="string">HAVE_LIBKPTY</span><span class="punct">&quot;</span>
+  <span class="ident">check_lib</span> <span class="punct">&quot;</span><span class="string">GL</span><span class="punct">&quot;</span>
+<span class="keyword">end</span>
+</pre>
+</div>
+<a name="s4_1_4_1_Options" /><h4>4.1.4.1 Options</h4>
+<a name="s4_1_4_1_1___check_libpath_" /><h5>4.1.4.1.1 <code>:check_libpath</code></h5>
+
+<p>Optionally specifies an array of paths to look for the library in.</p>
+<a name="s4_1_4_1_2___fail_" /><h5>4.1.4.1.2 <code>:fail</code></h5>
+
+<p>If the <code>:fail</code> option is set to <code>false</code>, then the absence of the library
+will not result in the configure option failing.
+The <code>:fail</code> option defaults to <code>true</code> if the <code>:set_define</code> option is not
+defined, and defaults to <code>false</code> if the <code>:set_define</code> option is defined.</p>
+<a name="s4_1_4_1_3___set_define_" /><h5>4.1.4.1.3 <code>:set_define</code></h5>
+
+<p>If set, a build define of the specified String will be added to the
+<code>CPPDEFINES</code> construction variable array if the requested library is found.</p>
+<a name="s4_1_4_1_4___use_" /><h5>4.1.4.1.4 <code>:use</code></h5>
+
+<p>If not set, the library will be used by default in all <code>Environment</code> objects.
+If set, the library will only be used in <code>Environment</code> objects that have a
+matching <code>:use</code> flag set.</p>
+<a name="s4_1_5_Checking_for_a_Program" /><h3>4.1.5 Checking for a Program</h3>
+
+<p>The <code>check_program</code> method can check for the existence of an executable in the
+host operating system environment.</p>
+
+<p>Example call:</p>
+
+<div class="code ruby_code">
+<pre><span class="ident">configure</span> <span class="keyword">do</span>
+  <span class="ident">check_program</span> <span class="punct">&quot;</span><span class="string">xxd</span><span class="punct">&quot;</span>
+<span class="keyword">end</span>
+</pre>
+</div>
+<a name="s4_1_6_Checking_for_a_Package_Configuration" /><h3>4.1.6 Checking for a Package Configuration</h3>
+
+<p>The <code>check_cfg</code> method can be used to check for the existence of a package as
+well as import any build options (e.g. include path, defines, libraries to link
+against, etc...) required to use the package.</p>
+
+<p>This method takes a Hash of options as its only argument.</p>
+
+<p>Example calls:</p>
+
+<div class="code ruby_code">
+<pre><span class="ident">configure</span> <span class="keyword">do</span>
+  <span class="ident">check_cfg</span> <span class="ident">package</span><span class="punct">:</span> <span class="punct">&quot;</span><span class="string">zlib</span><span class="punct">&quot;</span>
+  <span class="ident">check_cfg</span> <span class="ident">program</span><span class="punct">:</span> <span class="punct">&quot;</span><span class="string">freetype-config</span><span class="punct">&quot;,</span> <span class="ident">fail</span><span class="punct">:</span> <span class="constant">false</span><span class="punct">,</span> <span class="ident">set_define</span><span class="punct">:</span> <span class="punct">&quot;</span><span class="string">HAVE_FREETYPE</span><span class="punct">&quot;</span>
+<span class="keyword">end</span>
+</pre>
+</div>
+<a name="s4_1_6_1_Options" /><h4>4.1.6.1 Options</h4>
+<a name="s4_1_6_1_1___package_" /><h5>4.1.6.1.1 <code>:package</code></h5>
+
+<p>If the <code>:package</code> option is set to a value, the <code>pkg-config</code> program will be
+used to look for package configuration flags for the specified package.</p>
+<a name="s4_1_6_1_2___program_" /><h5>4.1.6.1.2 <code>:program</code></h5>
+
+<p>If the <code>:program</code> option is given, the program specified will be used to look
+for configuration flags.</p>
+<a name="s4_1_6_1_3___fail_" /><h5>4.1.6.1.3 <code>:fail</code></h5>
+
+<p>If the <code>:fail</code> option is set to <code>false</code>, then the absence of the package or
+program requested will not result in the configure option failing.
+The <code>:fail</code> option defaults to <code>true</code> if the <code>:set_define</code> option is not
+defined, and defaults to <code>false</code> if the <code>:set_define</code> option is defined.</p>
+<a name="s4_1_6_1_4___set_define_" /><h5>4.1.6.1.4 <code>:set_define</code></h5>
+
+<p>If set, a build define of the specified String will be added to the
+<code>CPPDEFINES</code> construction variable array if the requested package is found.</p>
+<a name="s4_1_6_1_5___use_" /><h5>4.1.6.1.5 <code>:use</code></h5>
+
+<p>If not set, the library will be used by default in all <code>Environment</code> objects.
+If set, the library will only be used in <code>Environment</code> objects that have a
+matching <code>:use</code> flag set.</p>
+<a name="s4_1_7_Custom_Configuration_Checks" /><h3>4.1.7 Custom Configuration Checks</h3>
+
+<p>The <code>Rsconscript</code> author can add custom configuration checks to be performed
+during the rscons <code>configure</code> operation.</p>
+
+<p>Here is an example from <code>build_tests/configure/custom_config_check.rb</code> showing
+a custom configuration check:</p>
+
+<div class="code ruby_code">
+<pre><span class="ident">configure</span> <span class="keyword">do</span>
+  <span class="ident">custom_check</span><span class="punct">(&quot;</span><span class="string">Checking 'grep' version</span><span class="punct">&quot;)</span> <span class="keyword">do</span> <span class="punct">|</span><span class="ident">op</span><span class="punct">|</span>
+    <span class="ident">stdout</span><span class="punct">,</span> <span class="ident">stderr</span><span class="punct">,</span> <span class="ident">status</span> <span class="punct">=</span> <span class="ident">op</span><span class="punct">.</span><span class="ident">log_and_test_command</span><span class="punct">(%w[</span><span class="string">grep --version</span><span class="punct">])</span>
+    <span class="ident">should_fail</span> <span class="punct">=</span> <span class="constant">true</span>
+    <span class="keyword">if</span> <span class="ident">status</span> <span class="punct">!=</span> <span class="number">0</span>
+      <span class="ident">fail_message</span> <span class="punct">=</span> <span class="punct">&quot;</span><span class="string">error executing grep</span><span class="punct">&quot;</span>
+    <span class="keyword">elsif</span> <span class="ident">stdout</span> <span class="punct">=~</span> <span class="punct">/</span><span class="regex">^grep <span class="escape">\(</span>GNU grep<span class="escape">\)</span> 1<span class="escape">\.</span></span><span class="punct">/</span>
+      <span class="ident">fail_message</span> <span class="punct">=</span> <span class="punct">&quot;</span><span class="string">too old!</span><span class="punct">&quot;</span>
+      <span class="ident">status</span> <span class="punct">=</span> <span class="number">1</span>
+    <span class="keyword">elsif</span> <span class="ident">stdout</span> <span class="punct">=~</span> <span class="punct">/</span><span class="regex">^grep <span class="escape">\(</span>GNU grep<span class="escape">\)</span> 2<span class="escape">\.</span></span><span class="punct">/</span>
+      <span class="ident">fail_message</span> <span class="punct">=</span> <span class="punct">&quot;</span><span class="string">we'll work with it but you should upgrade</span><span class="punct">&quot;</span>
+      <span class="ident">status</span> <span class="punct">=</span> <span class="number">1</span>
+      <span class="ident">should_fail</span> <span class="punct">=</span> <span class="constant">false</span>
+      <span class="ident">op</span><span class="punct">.</span><span class="ident">store_merge</span><span class="punct">(&quot;</span><span class="string">CPPDEFINES</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">&quot;</span><span class="string">GREP_WORKAROUND</span><span class="punct">&quot;)</span>
+    <span class="keyword">else</span>
+      <span class="ident">op</span><span class="punct">.</span><span class="ident">store_append</span><span class="punct">(&quot;</span><span class="string">CPPDEFINES</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">&quot;</span><span class="string">GREP_FULL</span><span class="punct">&quot;)</span>
+    <span class="keyword">end</span>
+    <span class="ident">op</span><span class="punct">.</span><span class="ident">complete</span><span class="punct">(</span><span class="ident">status</span><span class="punct">,</span> <span class="ident">success_message</span><span class="punct">:</span> <span class="punct">&quot;</span><span class="string">good!</span><span class="punct">&quot;,</span> <span class="ident">fail_message</span><span class="punct">:</span> <span class="ident">fail_message</span><span class="punct">,</span> <span class="ident">fail</span><span class="punct">:</span> <span class="ident">should_fail</span><span class="punct">)</span>
+  <span class="keyword">end</span>
+  <span class="ident">custom_check</span><span class="punct">(&quot;</span><span class="string">Checking sed -E flag</span><span class="punct">&quot;)</span> <span class="keyword">do</span> <span class="punct">|</span><span class="ident">op</span><span class="punct">|</span>
+    <span class="ident">stdout</span><span class="punct">,</span> <span class="ident">stderr</span><span class="punct">,</span> <span class="ident">status</span> <span class="punct">=</span> <span class="ident">op</span><span class="punct">.</span><span class="ident">log_and_test_command</span><span class="punct">(%w[</span><span class="string">sed -E -e s/ab+/rep/</span><span class="punct">],</span> <span class="ident">stdin</span><span class="punct">:</span> <span class="punct">&quot;</span><span class="string">abbbc</span><span class="punct">&quot;)</span>
+    <span class="ident">op</span><span class="punct">.</span><span class="ident">complete</span><span class="punct">(</span><span class="ident">stdout</span> <span class="punct">=~</span> <span class="punct">/</span><span class="regex">repc</span><span class="punct">/</span> <span class="punct">?</span> <span class="number">0</span> <span class="punct">:</span> <span class="number">1</span><span class="punct">,</span> <span class="ident">success_message</span><span class="punct">:</span> <span class="punct">&quot;</span><span class="string">good</span><span class="punct">&quot;,</span> <span class="ident">fail_message</span><span class="punct">:</span> <span class="punct">&quot;</span><span class="string">fail</span><span class="punct">&quot;)</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+<span class="ident">build</span> <span class="keyword">do</span>
+  <span class="constant">Environment</span><span class="punct">.</span><span class="ident">new</span> <span class="keyword">do</span> <span class="punct">|</span><span class="ident">env</span><span class="punct">|</span>
+    <span class="ident">puts</span> <span class="ident">env</span><span class="punct">[&quot;</span><span class="string">CPPDEFINES</span><span class="punct">&quot;]</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+</pre>
+</div>
+
+<p>A custom configuration check is created by calling the <code>custom_check</code> method
+and passing a block.
+The contents of the block should perform the custom configuration checking
+logic.
+This logic can include executing a test command or other arbitrary operations.
+An argument <code>op</code> is passed to the block.
+This object is an instance of the <a href="../yard/Rscons/ConfigureOp.html"><code>ConfigureOp</code> class</a>
+class and provides several methods that can be used to aid with the custom
+configuration check.
+The <a href="../yard/Rscons/ConfigureOp.html#log_and_test_command-instance_method"><code>log_and_test_command</code></a>
+method can be used to execute a test command and retrieve its results.
+The command and its output are also logged to the config.log file.
+The <a href="../yard/Rscons/ConfigureOp.html#store_merge-instance_method"><code>store_merge</code></a>,
+<a href="../yard/Rscons/ConfigureOp.html#store_append-instance_method"><code>store_append</code></a>,
+and <a href="../yard/Rscons/ConfigureOp.html#store_parse-instance_method"><code>store_parse</code></a>
+methods can be used to store construction variables for Environments created
+during the <code>build</code> operation.
+Finally, the <a href="../yard/Rscons/ConfigureOp.html#complete-instance_method"><code>complete</code></a>
+method can be used to complete the configuration check and indicate a success
+or failure.</p>
+
+<p>While performing a custom configuration check, it can sometimes be useful to
+be able to construct an Environment to use the set of default construction
+variables as defined so far in the configuration block, for example to expand
+construction variables to build a test command.
+The normal <code>Environment</code> class cannot be used within the <code>configure</code> block,
+however the <a href="../yard/Rscons/BasicEnvironment.html"><code>BasicEnvironment</code></a> class
+can be used for such a purpose.</p>
+
+<p>For example, to expand the current <code>${CCCMD}</code> value:</p>
+
+<div class="code ruby_code">
+<pre><span class="ident">configure</span> <span class="keyword">do</span>
+  <span class="ident">custom_check</span><span class="punct">(&quot;</span><span class="string">Checking something to do with CCCMD</span><span class="punct">&quot;)</span> <span class="keyword">do</span>
+    <span class="ident">command</span> <span class="punct">=</span> <span class="constant">BasicEnvironment</span><span class="punct">.</span><span class="ident">new</span><span class="punct">.</span><span class="ident">expand_varref</span><span class="punct">(&quot;</span><span class="string">${CCCMD}</span><span class="punct">&quot;)</span>
+    <span class="comment"># ...</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre>
+</div>
+<a name="s4_2_Build_Operations" /><h2>4.2 Build Operations</h2>
+
+<p>The <code>build</code> block is used to create Environments and register build targets.
+An Rscons build script would not be very useful without a <code>build</code> block.</p>
+
+<p>Here is an example <code>build</code> block demonstrating how to register a build target:</p>
+
+<div class="code ruby_code">
+<pre><span class="ident">build</span> <span class="keyword">do</span>
+  <span class="constant">Environment</span><span class="punct">.</span><span class="ident">new</span> <span class="keyword">do</span> <span class="punct">|</span><span class="ident">env</span><span class="punct">|</span>
+    <span class="ident">env</span><span class="punct">.</span><span class="ident">Program</span><span class="punct">(&quot;</span><span class="string">myprog.exe</span><span class="punct">&quot;,</span> <span class="ident">glob</span><span class="punct">(&quot;</span><span class="string">src/**/*.c</span><span class="punct">&quot;))</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre>
+</div>
+
+<p>This <code>Rsconscript</code> would build an executable called <code>myprog.exe</code> from all C
+source files found recursively under the <code>src</code> directory.</p>
+<a name="s4_2_1_Environments" /><h3>4.2.1 Environments</h3>
+
+<p>An Environment includes:</p>
+
+<ul>
+<li>a collection of construction variables</li>
+<li>a collection of build hooks</li>
+<li>a collection of user-registered build targets</li>
+<li>a build root</li>
+</ul>
+
+<p>All build targets must be registered within an <code>Environment</code>.
+The Environment&#39;s build root is a directory created within the top-level
+Rscons build directory.
+By default it holds all intermediate files generated by Rscons that are needed
+to produce a user-specified build target.
+For example, for the <code>Rsconscript</code>:</p>
+
+<div class="code ruby_code">
+<pre><span class="ident">build</span> <span class="keyword">do</span>
+  <span class="constant">Environment</span><span class="punct">.</span><span class="ident">new</span> <span class="keyword">do</span> <span class="punct">|</span><span class="ident">env</span><span class="punct">|</span>
+    <span class="ident">env</span><span class="punct">.</span><span class="ident">Program</span><span class="punct">(&quot;</span><span class="string">myprog.exe</span><span class="punct">&quot;,</span> <span class="ident">glob</span><span class="punct">(&quot;</span><span class="string">src/**/*.c</span><span class="punct">&quot;))</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre>
+</div>
+
+<p>Rscons will place an object file and dependency file corresponding to each C
+source file under the Environment&#39;s build root.
+This keeps the intermediate generated build artifacts separate from the source
+files.</p>
+<a name="s4_2_2_Specifying_Source_Files__The_glob_Method" /><h3>4.2.2 Specifying Source Files: The glob Method</h3>
+
+<p>The <a href="../yard/Rscons/Script/Dsl.html#glob-instance_method"><code>glob</code></a> method can be
+used to find files matching the patterns specified.
+It supports a syntax similar to the Ruby <a href="https://ruby-doc.org/core-2.5.1/Dir.html#method-c-glob">Dir.glob method</a> but operates more deterministically.</p>
+
+<p>Example use:</p>
+
+<div class="code ruby_code">
+<pre><span class="ident">build</span> <span class="keyword">do</span>
+  <span class="constant">Environment</span><span class="punct">.</span><span class="ident">new</span> <span class="keyword">do</span> <span class="punct">|</span><span class="ident">env</span><span class="punct">|</span>
+    <span class="ident">env</span><span class="punct">.</span><span class="ident">Program</span><span class="punct">(&quot;</span><span class="string">mytests</span><span class="punct">&quot;,</span> <span class="ident">glob</span><span class="punct">(&quot;</span><span class="string">src/**/*.cc</span><span class="punct">&quot;,</span> <span class="punct">&quot;</span><span class="string">test/**/*.cc</span><span class="punct">&quot;))</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre>
+</div>
+
+<p>This example would build the <code>mytests</code> executable from all <code>.cc</code> source files
+found recursively under the <code>src</code> or <code>test</code> directory.</p>
+<a name="s4_2_3_Construction_Variables" /><h3>4.2.3 Construction Variables</h3>
+
+<p>Construction variables are values assigned to keys within an Environment.
+Construction variables are used by Builders to produce output files.
+See <a href="user_guide.html#s5_1_Default_Construction_Variables">Default Construction Variables</a> for a reference of all built-in
+construction variables.</p>
+
+<p>Example:</p>
+
+<div class="code ruby_code">
+<pre><span class="ident">build</span> <span class="keyword">do</span>
+  <span class="constant">Environment</span><span class="punct">.</span><span class="ident">new</span> <span class="keyword">do</span> <span class="punct">|</span><span class="ident">env</span><span class="punct">|</span>
+    <span class="ident">env</span><span class="punct">[&quot;</span><span class="string">CCFLAGS</span><span class="punct">&quot;]</span> <span class="punct">+=</span> <span class="punct">%w[</span><span class="string">-O2 -Wall</span><span class="punct">]</span>
+    <span class="ident">env</span><span class="punct">[&quot;</span><span class="string">LIBS</span><span class="punct">&quot;]</span> <span class="punct">+=</span> <span class="punct">%w[</span><span class="string">m</span><span class="punct">]</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre>
+</div>
+
+<p>This example modifies the <code>CCFLAGS</code> construction variable to add <code>-O2</code> and
+<code>-Wall</code> to the compilation commands used for C and C++ source files.
+It also instructs the linker to link against the <code>m</code> library.</p>
+<a name="s4_2_3_1_Construction_Variable_Naming" /><h4>4.2.3.1 Construction Variable Naming</h4>
+
+<ul>
+<li>uppercase strings - the default construction variables that Rscons uses</li>
+<li>strings beginning with &quot;_&quot; - set and used internally by builders</li>
+<li>symbols, lowercase strings - reserved as user-defined construction variables</li>
+</ul>
+<a name="s4_2_4_Builders" /><h3>4.2.4 Builders</h3>
+
+<p>Rscons uses builder objects to produce <em>target</em> output files from <em>source</em>
+input files.
+A build target to be built using a builder is registered by calling a method on
+the <code>Environment</code> object that matches the builder&#39;s name.
+For example, a <code>Program</code> build target is registered by calling the
+<code>env.Program</code> method.</p>
+
+<p>The general syntax for registering a build target using a builder is:</p>
+
+<div class="code ruby_code">
+<pre><span class="ident">env</span><span class="punct">.</span><span class="ident">BuilderName</span><span class="punct">(</span><span class="ident">target</span><span class="punct">,</span> <span class="ident">sources</span><span class="punct">,</span> <span class="ident">vars</span> <span class="punct">=</span> <span class="punct">{})</span>
+</pre>
+</div>
+
+<p>The <code>target</code> parameter is the path to the output file or directory.
+The <code>sources</code> parameter is the path or paths to the input file(s) to be used
+by the builder.
+In the <code>target</code> and <code>sources</code> parameters, the user can explicitly refer to a
+path within the Environment&#39;s build root by beginning the path with &quot;^/&quot;.
+The <code>vars</code> parameter is an optional Hash which can include construction
+variables to be used for this build target.
+Any construction variable values specified in this parameter will override
+those assigned to the Environment.</p>
+
+<p>There are several default builders that are built-in to Rscons:</p>
+
+<ul>
+<li><code>Command</code>, which executes a user-defined command to produce the target.</li>
+<li><code>Copy</code>, which copies files or directories to a specified destination.</li>
+<li><code>CFile</code>, which builds a C or C++ source file from a lex or yacc input file.</li>
+<li><code>Directory</code>, which creates a directory.</li>
+<li><code>Disassemble</code>, which disassembles an object file to a disassembly listing.</li>
+<li><code>Install</code>, which installs files or directories to a specified destination.</li>
+<li><code>InstallDirectory</code>, which creates a directory during an install operation.</li>
+<li><code>Library</code>, which collects object files into a static library archive file.</li>
+<li><code>Object</code>, which compiles source files to produce an object file.</li>
+<li><code>Preprocess</code>, which invokes the C/C++ preprocessor on a source file.</li>
+<li><code>Program</code>, which links object files to produce an executable.</li>
+<li><code>SharedLibrary</code>, which links object files to produce a dynamically loadable
+library.</li>
+<li><code>SharedObject</code>, which compiles source files to produce an object file, in a
+way that is able to be used to create a shared library.</li>
+</ul>
+<a name="s4_2_4_1_The_Command_Builder" /><h4>4.2.4.1 The Command Builder</h4>
+
+<div class="code ruby_code">
+<pre><span class="ident">env</span><span class="punct">.</span><span class="ident">Command</span><span class="punct">(</span><span class="ident">target</span><span class="punct">,</span> <span class="ident">sources</span><span class="punct">,</span> <span class="punct">&quot;</span><span class="string">CMD</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="ident">command</span><span class="punct">)</span>
+<span class="comment"># Example</span>
+<span class="ident">env</span><span class="punct">.</span><span class="ident">Command</span><span class="punct">(&quot;</span><span class="string">docs.html</span><span class="punct">&quot;,</span> <span class="punct">&quot;</span><span class="string">docs.md</span><span class="punct">&quot;,</span>
+  <span class="punct">&quot;</span><span class="string">CMD</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">[&quot;</span><span class="string">pandoc</span><span class="punct">&quot;,</span> <span class="punct">&quot;</span><span class="string">-fmarkdown</span><span class="punct">&quot;,</span> <span class="punct">&quot;</span><span class="string">-thtml</span><span class="punct">&quot;,</span> <span class="punct">&quot;</span><span class="string">-o${_TARGET}</span><span class="punct">&quot;,</span> <span class="punct">&quot;</span><span class="string">${_SOURCES}</span><span class="punct">&quot;],</span>
+  <span class="punct">&quot;</span><span class="string">CMD_DESC</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">&quot;</span><span class="string">PANDOC</span><span class="punct">&quot;)</span>
+</pre>
+</div>
+
+<p>The <code>Command</code> builder executes a user-defined command in order to produce the
+desired target file based on the provided source files.</p>
+<a name="s4_2_4_2_The_CFile_Builder" /><h4>4.2.4.2 The CFile Builder</h4>
+
+<div class="code ruby_code">
+<pre><span class="ident">env</span><span class="punct">.</span><span class="ident">CFile</span><span class="punct">(</span><span class="ident">target</span><span class="punct">,</span> <span class="ident">source</span><span class="punct">)</span>
+<span class="comment"># Example</span>
+<span class="ident">env</span><span class="punct">.</span><span class="ident">CFile</span><span class="punct">(&quot;</span><span class="string">^/parser/parser.c</span><span class="punct">&quot;,</span> <span class="punct">&quot;</span><span class="string">parser.y</span><span class="punct">&quot;)</span>
+</pre>
+</div>
+
+<p>The <code>CFile</code> builder will generate a C or C++ source file from a lex (.l, .ll)
+or yacc (.y, .yy) input file.</p>
+<a name="s4_2_4_3_The_Copy_Builder" /><h4>4.2.4.3 The Copy Builder</h4>
+
+<div class="code ruby_code">
+<pre><span class="ident">env</span><span class="punct">.</span><span class="ident">Copy</span><span class="punct">(</span><span class="ident">destination</span><span class="punct">,</span> <span class="ident">sources</span><span class="punct">)</span>
+<span class="comment"># Example</span>
+<span class="ident">env</span><span class="punct">.</span><span class="ident">Copy</span><span class="punct">(&quot;</span><span class="string">mytests</span><span class="punct">&quot;,</span> <span class="punct">&quot;</span><span class="string">^/mytests</span><span class="punct">&quot;)</span>
+<span class="ident">env</span><span class="punct">.</span><span class="ident">Copy</span><span class="punct">(&quot;</span><span class="string">^/dist/share</span><span class="punct">&quot;,</span> <span class="punct">&quot;</span><span class="string">share</span><span class="punct">&quot;)</span>
+</pre>
+</div>
+
+<p>The <code>Copy</code> builder can copy files or directories to a target location.</p>
+<a name="s4_2_4_4_The_Directory_Builder" /><h4>4.2.4.4 The Directory Builder</h4>
+
+<div class="code ruby_code">
+<pre><span class="ident">env</span><span class="punct">.</span><span class="ident">Directory</span><span class="punct">(</span><span class="ident">target</span><span class="punct">)</span>
+<span class="comment"># Example</span>
+<span class="ident">env</span><span class="punct">.</span><span class="ident">Directory</span><span class="punct">(&quot;</span><span class="string">^/tests</span><span class="punct">&quot;)</span>
+</pre>
+</div>
+
+<p>The <code>Directory</code> builder can be used to explicitly create a directory.
+This can also disambiguate whether the target for a subsequent builder
+(e.g. <code>Copy</code>) refers to a file path or directory path.</p>
+<a name="s4_2_4_5_The_Disassemble_Builder" /><h4>4.2.4.5 The Disassemble Builder</h4>
+
+<div class="code ruby_code">
+<pre><span class="ident">env</span><span class="punct">.</span><span class="ident">Disassemble</span><span class="punct">(</span><span class="ident">target</span><span class="punct">,</span> <span class="ident">source</span><span class="punct">)</span>
+<span class="comment"># Example</span>
+<span class="ident">env</span><span class="punct">.</span><span class="ident">Disassemble</span><span class="punct">(&quot;</span><span class="string">module.dis</span><span class="punct">&quot;,</span> <span class="punct">&quot;</span><span class="string">module.o</span><span class="punct">&quot;)</span>
+</pre>
+</div>
+
+<p>The <code>Disassemble</code> builder generates a disassembly listing using objdump from
+and object file.</p>
+<a name="s4_2_4_6_The_Install_Builder" /><h4>4.2.4.6 The Install Builder</h4>
+
+<div class="code ruby_code">
+<pre><span class="ident">env</span><span class="punct">.</span><span class="ident">Install</span><span class="punct">(</span><span class="ident">destination</span><span class="punct">,</span> <span class="ident">sources</span><span class="punct">)</span>
+<span class="comment"># Example</span>
+<span class="ident">env</span><span class="punct">.</span><span class="ident">Install</span><span class="punct">(&quot;</span><span class="string">${prefix}/bin</span><span class="punct">&quot;,</span> <span class="punct">&quot;</span><span class="string">app.exe</span><span class="punct">&quot;)</span>
+<span class="ident">env</span><span class="punct">.</span><span class="ident">Install</span><span class="punct">(&quot;</span><span class="string">${prefix}/share</span><span class="punct">&quot;,</span> <span class="punct">&quot;</span><span class="string">share</span><span class="punct">&quot;)</span>
+</pre>
+</div>
+
+<p>The <code>Install</code> builder can install files or directories to their installation
+target location.
+<code>Install</code> builders are only processed when the user has requested to perform
+an <code>install</code> operation from the command line.</p>
+<a name="s4_2_4_7_The_InstallDirectory_Builder" /><h4>4.2.4.7 The InstallDirectory Builder</h4>
+
+<div class="code ruby_code">
+<pre><span class="ident">env</span><span class="punct">.</span><span class="ident">InstallDirectory</span><span class="punct">(</span><span class="ident">target</span><span class="punct">)</span>
+<span class="comment"># Example</span>
+<span class="ident">env</span><span class="punct">.</span><span class="ident">InstallDirectory</span><span class="punct">(&quot;</span><span class="string">${prefix}/share</span><span class="punct">&quot;)</span>
+</pre>
+</div>
+
+<p>The <code>InstallDirectory</code> builder can be used to explicitly create a directory.
+<code>InstallDirectory</code> builders are only processed when the user has requested to
+perform an <code>install</code> operation from the command line.
+This can also disambiguate whether the target for a subsequent builder
+(e.g. <code>Install</code>) refers to a file path or directory path.</p>
+<a name="s4_2_4_8_The_Library_Builder" /><h4>4.2.4.8 The Library Builder</h4>
+
+<div class="code ruby_code">
+<pre><span class="ident">env</span><span class="punct">.</span><span class="ident">Library</span><span class="punct">(</span><span class="ident">target</span><span class="punct">,</span> <span class="ident">sources</span><span class="punct">)</span>
+<span class="comment"># Example</span>
+<span class="ident">env</span><span class="punct">.</span><span class="ident">Library</span><span class="punct">(&quot;</span><span class="string">lib.a</span><span class="punct">&quot;,</span> <span class="ident">Rscons</span><span class="punct">.</span><span class="ident">glob</span><span class="punct">(&quot;</span><span class="string">src/**/*.c</span><span class="punct">&quot;))</span>
+</pre>
+</div>
+
+<p>The <code>Library</code> builder creates a static library archive from the given source
+files.</p>
+<a name="s4_2_4_9_The_Object_Builder" /><h4>4.2.4.9 The Object Builder</h4>
+
+<div class="code ruby_code">
+<pre><span class="ident">env</span><span class="punct">.</span><span class="ident">Object</span><span class="punct">(</span><span class="ident">target</span><span class="punct">,</span> <span class="ident">sources</span><span class="punct">)</span>
+<span class="comment"># Example</span>
+<span class="ident">env</span><span class="punct">.</span><span class="ident">Object</span><span class="punct">(&quot;</span><span class="string">module.o</span><span class="punct">&quot;,</span> <span class="punct">&quot;</span><span class="string">module.c</span><span class="punct">&quot;)</span>
+</pre>
+</div>
+
+<p>The <code>Object</code> builder compiles the given sources to an object file.
+Although it can be called explicitly, it is more commonly implicitly called by
+the <code>Program</code> builder.</p>
+<a name="s4_2_4_10_The_Preprocess_Builder" /><h4>4.2.4.10 The Preprocess Builder</h4>
+
+<div class="code ruby_code">
+<pre><span class="ident">env</span><span class="punct">.</span><span class="ident">Preprocess</span><span class="punct">(</span><span class="ident">target</span><span class="punct">,</span> <span class="ident">source</span><span class="punct">)</span>
+<span class="comment"># Example</span>
+<span class="ident">env</span><span class="punct">.</span><span class="ident">Preprocess</span><span class="punct">(&quot;</span><span class="string">module-preprocessed.cc</span><span class="punct">&quot;,</span> <span class="punct">&quot;</span><span class="string">module.cc</span><span class="punct">&quot;)</span>
+</pre>
+</div>
+
+<p>The <code>Preprocess</code> builder invokes either <code>${CC}</code> or <code>${CXX}</code> (depending on if
+the source contains an extension in <code>${CXXSUFFIX}</code> or not) and writes the
+preprocessed output to the target file.</p>
+<a name="s4_2_4_11_The_Program_Builder" /><h4>4.2.4.11 The Program Builder</h4>
+
+<div class="code ruby_code">
+<pre><span class="ident">env</span><span class="punct">.</span><span class="ident">Program</span><span class="punct">(</span><span class="ident">target</span><span class="punct">,</span> <span class="ident">sources</span><span class="punct">)</span>
+<span class="comment"># Example</span>
+<span class="ident">env</span><span class="punct">.</span><span class="ident">Program</span><span class="punct">(&quot;</span><span class="string">myprog</span><span class="punct">&quot;,</span> <span class="ident">Rscons</span><span class="punct">.</span><span class="ident">glob</span><span class="punct">(&quot;</span><span class="string">src/**/*.cc</span><span class="punct">&quot;))</span>
+</pre>
+</div>
+
+<p>The <code>Program</code> builder compiles and links the given sources to an executable
+file.
+Object files, static library files, or source files can be given as <code>sources</code>.
+A platform-dependent program suffix will be appended to the target name if one
+is not specified.
+This can be controlled with the <code>PROGSUFFIX</code> construction variable.</p>
+<a name="s4_2_4_11_1_Direct_Mode" /><h5>4.2.4.11.1 Direct Mode</h5>
+
+<p>The Program builder supports a &quot;direct&quot; mode which is activated by specifying
+the <code>:direct</code> option.
+In the direct mode, all source files are passed directly to the compiler
+together and compiled and linked in one step, rather than being individually
+compiled to separate object files first.
+This mode allows taking advantage of any multi-file compilation capabilities
+of the compiler.
+However, it also requires recompiling all source files when any one of them
+has changed.</p>
+
+<p>Example use:</p>
+
+<div class="code ruby_code">
+<pre><span class="ident">env</span><span class="punct">.</span><span class="ident">Program</span><span class="punct">(&quot;</span><span class="string">myprog</span><span class="punct">&quot;,</span> <span class="ident">Rscons</span><span class="punct">.</span><span class="ident">glob</span><span class="punct">(&quot;</span><span class="string">src/**/*.c</span><span class="punct">&quot;),</span> <span class="ident">direct</span><span class="punct">:</span> <span class="constant">true</span><span class="punct">)</span>
+</pre>
+</div>
+<a name="s4_2_4_12_The_SharedLibrary_Builder" /><h4>4.2.4.12 The SharedLibrary Builder</h4>
+
+<div class="code ruby_code">
+<pre><span class="ident">env</span><span class="punct">.</span><span class="ident">SharedLibrary</span><span class="punct">(</span><span class="ident">target</span><span class="punct">,</span> <span class="ident">sources</span><span class="punct">)</span>
+<span class="comment"># Example</span>
+<span class="ident">env</span><span class="punct">.</span><span class="ident">SharedLibrary</span><span class="punct">(&quot;</span><span class="string">mydll</span><span class="punct">&quot;,</span> <span class="ident">Rscons</span><span class="punct">.</span><span class="ident">glob</span><span class="punct">(&quot;</span><span class="string">src/**/*.cc</span><span class="punct">&quot;))</span>
+</pre>
+</div>
+
+<p>The <code>SharedLibrary</code> builder compiles and links the given sources to a
+dynamically loadable library.
+Object files or source files can be given as <code>sources</code>.
+A platform-dependent prefix and suffix will be appended to the target name if
+they are not specified by the user.
+These values can be controlled by overriding the <code>SHLIBPREFIX</code> and
+<code>SHLIBSUFFIX</code> construction variables.</p>
+<a name="s4_2_4_12_1_Direct_Mode" /><h5>4.2.4.12.1 Direct Mode</h5>
+
+<p>The SharedLibrary builder supports a &quot;direct&quot; mode which is activated by
+specifying the <code>:direct</code> option.
+In the direct mode, all source files are passed directly to the compiler
+together and compiled and linked in one step, rather than being individually
+compiled to separate object files first.
+This mode allows taking advantage of any multi-file compilation capabilities
+of the compiler.
+However, it also requires recompiling all source files when any one of them
+has changed.</p>
+
+<p>Example use:</p>
+
+<div class="code ruby_code">
+<pre><span class="ident">env</span><span class="punct">.</span><span class="ident">SharedLibrary</span><span class="punct">(&quot;</span><span class="string">mydll</span><span class="punct">&quot;,</span> <span class="ident">Rscons</span><span class="punct">.</span><span class="ident">glob</span><span class="punct">(&quot;</span><span class="string">src/**/*.c</span><span class="punct">&quot;),</span> <span class="ident">direct</span><span class="punct">:</span> <span class="constant">true</span><span class="punct">)</span>
+</pre>
+</div>
+<a name="s4_2_4_13_The_SharedObject_Builder" /><h4>4.2.4.13 The SharedObject Builder</h4>
+
+<div class="code ruby_code">
+<pre><span class="ident">env</span><span class="punct">.</span><span class="ident">SharedObject</span><span class="punct">(</span><span class="ident">target</span><span class="punct">,</span> <span class="ident">sources</span><span class="punct">)</span>
+<span class="comment"># Example</span>
+<span class="ident">env</span><span class="punct">.</span><span class="ident">SharedObject</span><span class="punct">(&quot;</span><span class="string">lib_module.o</span><span class="punct">&quot;,</span> <span class="punct">&quot;</span><span class="string">lib_module.c</span><span class="punct">&quot;)</span>
+</pre>
+</div>
+
+<p>The <code>SharedObject</code> builder compiles the given sources to an object file.
+Any compilation flags necessary to build the object file in a manner that
+allows it to be used to create a shared library are added.
+Although it can be called explicitly, it is more commonly implicitly called by
+the <code>SharedLibrary</code> builder.</p>
+<a name="s4_2_5_Explicit_Dependencies" /><h3>4.2.5 Explicit Dependencies</h3>
+
+<p>A target can be marked as depending on another file that Rscons would not
+otherwise know about via the <code>Environment#depends</code> function. For example,
+to force the linker to re-link a Program output when a linker script changes:</p>
+
+<div class="code ruby_code">
+<pre><span class="ident">env</span><span class="punct">.</span><span class="ident">Program</span><span class="punct">(&quot;</span><span class="string">a.out</span><span class="punct">&quot;,</span> <span class="punct">&quot;</span><span class="string">foo.c</span><span class="punct">&quot;,</span> <span class="punct">&quot;</span><span class="string">LDFLAGS</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">-T linker_script.ld</span><span class="punct">])</span>
+<span class="ident">env</span><span class="punct">.</span><span class="ident">depends</span><span class="punct">(&quot;</span><span class="string">a.out</span><span class="punct">&quot;,</span> <span class="punct">&quot;</span><span class="string">linker_script.ld</span><span class="punct">&quot;)</span>
+</pre>
+</div>
+
+<p>You can pass multiple dependency files to <code>Environment#depends</code>:</p>
+
+<div class="code ruby_code">
+<pre><span class="ident">env</span><span class="punct">.</span><span class="ident">depends</span><span class="punct">(&quot;</span><span class="string">my_app</span><span class="punct">&quot;,</span> <span class="punct">&quot;</span><span class="string">config/link.ld</span><span class="punct">&quot;,</span> <span class="punct">&quot;</span><span class="string">README.txt</span><span class="punct">&quot;,</span> <span class="punct">*</span><span class="ident">glob</span><span class="punct">(&quot;</span><span class="string">assets/**/*</span><span class="punct">&quot;))</span>
+</pre>
+</div>
+<a name="s4_2_6_Build_Hooks" /><h3>4.2.6 Build Hooks</h3>
+
+<p>A build hook is a Ruby block that is called whenever Rscons is about to invoke
+a builder to produce a build target.
+Rscons also supports post-build hooks which are called after the builder has
+produced the build target.
+A build hook can be used to modify construction variables depending on the
+build target or source file names.</p>
+
+<p>Example:</p>
+
+<div class="code ruby_code">
+<pre><span class="ident">build</span> <span class="keyword">do</span>
+  <span class="constant">Environment</span><span class="punct">.</span><span class="ident">new</span> <span class="keyword">do</span> <span class="punct">|</span><span class="ident">env</span><span class="punct">|</span>
+    <span class="ident">env</span><span class="punct">[&quot;</span><span class="string">CFLAGS</span><span class="punct">&quot;]</span> <span class="punct">&lt;&lt;</span> <span class="punct">&quot;</span><span class="string">-Wall</span><span class="punct">&quot;</span>
+    <span class="ident">env</span><span class="punct">.</span><span class="ident">add_build_hook</span> <span class="keyword">do</span> <span class="punct">|</span><span class="ident">builder</span><span class="punct">|</span>
+      <span class="comment"># Compile sources from under src/tests without the -Wall flag.</span>
+      <span class="keyword">if</span> <span class="ident">builder</span><span class="punct">.</span><span class="ident">sources</span><span class="punct">.</span><span class="ident">first</span> <span class="punct">=~</span> <span class="punct">%r{</span><span class="regex">src/tests/</span><span class="punct">}</span>
+        <span class="ident">builder</span><span class="punct">.</span><span class="ident">vars</span><span class="punct">[&quot;</span><span class="string">CFLAGS</span><span class="punct">&quot;]</span> <span class="punct">-=</span> <span class="punct">%w[</span><span class="string">-Wall</span><span class="punct">]</span>
+      <span class="keyword">end</span>
+    <span class="keyword">end</span>
+    <span class="ident">env</span><span class="punct">.</span><span class="ident">Program</span><span class="punct">(&quot;</span><span class="string">program.exe</span><span class="punct">&quot;,</span> <span class="ident">glob</span><span class="punct">(&quot;</span><span class="string">src/**/*.c</span><span class="punct">&quot;))</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre>
+</div>
+
+<p>This example script would compile all C sources under the <code>src</code> directory with
+the <code>-Wall</code> flag except for sources under the <code>src/tests</code> directory.</p>
+
+<p>A post-build hook can be added with <code>env.add_post_build_hook</code>.
+Post-build hooks are only invoked if the build operation was a success.</p>
+
+<p>Build hooks and post-build hooks can register new build targets.</p>
+<a name="s4_2_7_Barriers" /><h3>4.2.7 Barriers</h3>
+
+<p>Normally Rscons will parallelize all builders.
+A barrier can be used to separate sets of build targets.
+All build targets registered before the barrier is created will be built before
+Rscons will schedule any build targets after the barrier.
+In other words, build targets are not parallelized across a barrier.</p>
+
+<div class="code ruby_code">
+<pre><span class="ident">env</span><span class="punct">.</span><span class="ident">barrier</span>
+</pre>
+</div>
+<a name="s4_3_Extending_Rscons" /><h2>4.3 Extending Rscons</h2>
+<a name="s4_3_1_Adding_New_Languages" /><h3>4.3.1 Adding New Languages</h3>
+
+<p>The <code>Object</code> and <code>SharedObject</code> builders that ship with Rscons have an API that
+allows the user to register extra languages that can be suppored by the
+builders.
+In fact, the built-in support for assembly, C, C++, and D compilation all make
+use of this built-in API.
+To see an example of how this API is used, see the
+<code>lib/rscons/builders/lang/*.rb</code> files in the Rscons source repository.
+For example, here is how the C++ language is registered:</p>
+
+<div class="code ruby_code">
+<pre><span class="constant">Rscons</span><span class="punct">::</span><span class="constant">Builders</span><span class="punct">::</span><span class="constant">Object</span><span class="punct">.</span><span class="ident">register</span><span class="punct">(</span><span class="ident">command</span><span class="punct">:</span> <span class="punct">&quot;</span><span class="string">${CXXCMD}</span><span class="punct">&quot;,</span> <span class="ident">direct_command</span><span class="punct">:</span> <span class="punct">&quot;</span><span class="string">${CXXCMD:direct}</span><span class="punct">&quot;,</span> <span class="ident">suffix</span><span class="punct">:</span> <span class="punct">&quot;</span><span class="string">${CXXSUFFIX}</span><span class="punct">&quot;,</span> <span class="ident">preferred_ld</span><span class="punct">:</span> <span class="punct">&quot;</span><span class="string">${CXX}</span><span class="punct">&quot;)</span>
+<span class="constant">Rscons</span><span class="punct">::</span><span class="constant">Builders</span><span class="punct">::</span><span class="constant">SharedObject</span><span class="punct">.</span><span class="ident">register</span><span class="punct">(</span><span class="ident">command</span><span class="punct">:</span> <span class="punct">&quot;</span><span class="string">${SHCXXCMD}</span><span class="punct">&quot;,</span> <span class="ident">direct_command</span><span class="punct">:</span> <span class="punct">&quot;</span><span class="string">${SHCXXCMD:direct}</span><span class="punct">&quot;,</span> <span class="ident">suffix</span><span class="punct">:</span> <span class="punct">&quot;</span><span class="string">${CXXSUFFIX}</span><span class="punct">&quot;,</span> <span class="ident">preferred_ld</span><span class="punct">:</span> <span class="punct">&quot;</span><span class="string">${SHCXX}</span><span class="punct">&quot;)</span>
+</pre>
+</div>
+
+<p>There are also default construction variables registered to go along with the
+language registration as specified above.
+New default construction variables can be registered globally by assigning to
+the <code>Rscons::DEFAULT_CONSTRUCTION_VARIABLES</code> Hash.
+For example:</p>
+
+<div class="code ruby_code">
+<pre><span class="constant">Rscons</span><span class="punct">::</span><span class="constant">DEFAULT_CONSTRUCTION_VARIABLES</span><span class="punct">[&quot;</span><span class="string">CXXCMD</span><span class="punct">&quot;]</span> <span class="punct">=</span> <span class="punct">%w[</span><span class="string">${CXX} -c -o ${_TARGET} ${CXXDEPGEN} ${INCPREFIX}${CPPPATH} ${CPPFLAGS} ${CXXFLAGS} ${CCFLAGS} ${_SOURCES}</span><span class="punct">]</span>
+</pre>
+</div>
+<a name="s4_3_2_Adding_Custom_Builders" /><h3>4.3.2 Adding Custom Builders</h3>
+
+<p>It is also possible to extend Rscons with new builders.
+This is the most flexible method to extend Rscons.
+Builders can execute a command line program, call another builder, or just use
+plain Ruby code to produce an output file.</p>
+
+<p>A builder is a class that inherits from the <code>Rscons::Builder</code> base class.
+Rscons provides a <code>Rscons::Builders</code> namespacing module which contains the
+built-in builder classes.
+User-provided custom builder classes can also reside in the <code>Rscons::Builders</code>
+namespacing module, but this is not required.</p>
+<a name="s4_3_2_1_Adding_a_Custom_Builder_to_an_Environment" /><h4>4.3.2.1 Adding a Custom Builder to an Environment</h4>
+
+<p>The user can add a builder class to an Environment with the <code>env.add_builder</code>
+method.
+For example:</p>
+
+<div class="code ruby_code">
+<pre><span class="keyword">class </span><span class="class">Rscons::Builders::Mine</span> <span class="punct">&lt;</span> <span class="constant">Rscons</span><span class="punct">::</span><span class="constant">Builder</span>
+<span class="keyword">end</span>
+
+<span class="ident">build</span> <span class="keyword">do</span>
+  <span class="constant">Environment</span><span class="punct">.</span><span class="ident">new</span> <span class="keyword">do</span> <span class="punct">|</span><span class="ident">env</span><span class="punct">|</span>
+    <span class="ident">env</span><span class="punct">.</span><span class="ident">add_builder</span><span class="punct">(</span><span class="constant">Rscons</span><span class="punct">::</span><span class="constant">Builders</span><span class="punct">::</span><span class="constant">Mine</span><span class="punct">)</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre>
+</div>
+
+<p>Alternatively, the builder author can add the name of the custom builder to the
+<code>Rscons::DEFAULT_BUILDERS</code> array and then Rscons will automatically add the
+custom builder to every Environment.
+This method only works if the custom builder class is contained within the
+<code>Rscons::Builders</code> namespacing module.
+For example:</p>
+
+<div class="code ruby_code">
+<pre><span class="comment">#SpecialBuilder.rb</span>
+<span class="keyword">class </span><span class="class">Rscons::Builders::Special</span> <span class="punct">&lt;</span> <span class="constant">Rscons</span><span class="punct">::</span><span class="constant">Builder</span>
+<span class="keyword">end</span>
+<span class="constant">Rscons</span><span class="punct">::</span><span class="constant">DEFAULT_BUILDERS</span> <span class="punct">&lt;&lt;</span> <span class="symbol">:Special</span>
+
+<span class="comment">#Rsconscript</span>
+<span class="ident">load</span> <span class="punct">&quot;</span><span class="string">SpecialBuilder.rb</span><span class="punct">&quot;</span>
+
+<span class="ident">build</span> <span class="keyword">do</span>
+  <span class="constant">Environment</span><span class="punct">.</span><span class="ident">new</span> <span class="keyword">do</span> <span class="punct">|</span><span class="ident">env</span><span class="punct">|</span>
+    <span class="comment"># A build target using the &quot;Special&quot; builder can be registered.</span>
+    <span class="ident">env</span><span class="punct">.</span><span class="ident">Special</span><span class="punct">(&quot;</span><span class="string">target</span><span class="punct">&quot;,</span> <span class="punct">&quot;</span><span class="string">source</span><span class="punct">&quot;)</span>
+  <span class="ident">end</span>
+<span class="keyword">end</span>
+</pre>
+</div>
+<a name="s4_3_2_2_Builder_Name" /><h4>4.3.2.2 Builder Name</h4>
+
+<p>By default, the builder name is taken from the last component of the class name.
+For example, a class called <code>Rscons::Builders::Mine</code> would be usable in the
+Rsconscript with <code>env.Mine()</code>.
+A builder author can override the builder name by defining a class method
+within the builder class called <code>name</code>.
+For example, with the following builder definition:</p>
+
+<div class="code ruby_code">
+<pre><span class="keyword">class </span><span class="class">Rscons::Builders::MySpecialBuilder</span> <span class="punct">&lt;</span> <span class="constant">Rscons</span><span class="punct">::</span><span class="constant">Builder</span>
+  <span class="keyword">def </span><span class="method">self.name</span>
+    <span class="punct">&quot;</span><span class="string">Special</span><span class="punct">&quot;</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre>
+</div>
+
+<p>This builder would be registered in the Rsconscript with <code>env.Special()</code>.</p>
+<a name="s4_3_2_3_Custom_Builder_Constructor" /><h4>4.3.2.3 Custom Builder Constructor</h4>
+
+<p>It is optional for a custom builder to provide an <code>initialize</code> method.
+If an <code>initialize</code> method is provided, it must call <code>super</code> to invoke the
+base <code>Rscons::Builder</code> class&#39;s constructor.
+A single Hash parameter is passed to the builder constructor.
+This Hash contains many parameters describing how the build target was
+registered by the user.
+The base constructor will set several instance attributes within the builder:</p>
+
+<ul>
+<li><code>@target</code> will contain the path to the build target</li>
+<li><code>@sources</code> will contain the path(s) to the build source(s)</li>
+<li><code>@cache</code> will contain a reference to the <code>Rscons::Cache</code> object used for
+the build</li>
+<li><code>@env</code> will contain a reference to the Environment object that registered
+the build target using the builder</li>
+<li><code>@vars</code> will contain any user-specified construction variable values that
+should be used for the build operation (overriding any Environment-wide
+construction variable values)</li>
+</ul>
+<a name="s4_3_2_4_Custom_Builder_Operation" /><h4>4.3.2.4 Custom Builder Operation</h4>
+
+<p>In order for a builder to perform a build operation, the builder class must
+implement a the <code>Builder#run()</code> method.
+Generally, the <code>run()</code> method will use the source file(s) to produce the target
+file.
+Here is an example of a trivial builder:</p>
+
+<div class="code ruby_code">
+<pre><span class="keyword">class </span><span class="class">Rscons::Builders::Custom</span> <span class="punct">&lt;</span> <span class="constant">Rscons</span><span class="punct">::</span><span class="constant">Builder</span>
+  <span class="keyword">def </span><span class="method">run</span><span class="punct">(</span><span class="ident">options</span><span class="punct">)</span>
+    <span class="constant">File</span><span class="punct">.</span><span class="ident">open</span><span class="punct">(</span><span class="attribute">@target</span><span class="punct">,</span> <span class="punct">&quot;</span><span class="string">w</span><span class="punct">&quot;)</span> <span class="keyword">do</span> <span class="punct">|</span><span class="ident">fh</span><span class="punct">|</span>
+      <span class="ident">fh</span><span class="punct">.</span><span class="ident">write</span><span class="punct">(&quot;</span><span class="string">Target file created.</span><span class="punct">&quot;)</span>
+    <span class="keyword">end</span>
+    <span class="constant">true</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre>
+</div>
+<a name="s4_3_2_4_1_Return_Value" /><h5>4.3.2.4.1 Return Value</h5>
+
+<p>If the build operation has completed and failed, the <code>run</code> method should return
+<code>false</code>.
+In this case, generally the command executed or the builder itself would be
+expected to output something to <code>$stderr</code> indicating the reason for the build
+failure.
+If the build operation has completed successfully, the <code>run</code> method should
+return <code>true</code>.
+If the build operation is not yet complete and is waiting on other operations,
+the <code>run</code> method should return the return value from the <code>Builder#wait_for</code>
+method.
+See <a href="user_guide.html#s4_3_2_4_4_Custom_Builder_Parallelization">Custom Builder Parallelization</a>.</p>
+<a name="s4_3_2_4_2_Printing_Build_Status" /><h5>4.3.2.4.2 Printing Build Status</h5>
+
+<p>A builder should print a status line when it produces a build target.
+The <code>Builder#print_run_message</code> method can be used to print the builder status
+line.
+This method supports a limited markup syntax to identify and color code the
+build target and/or source(s).
+Here is our Custom builder example extended to print its status:</p>
+
+<div class="code ruby_code">
+<pre><span class="keyword">class </span><span class="class">Rscons::Builders::Custom</span> <span class="punct">&lt;</span> <span class="constant">Rscons</span><span class="punct">::</span><span class="constant">Builder</span>
+  <span class="keyword">def </span><span class="method">run</span><span class="punct">(</span><span class="ident">options</span><span class="punct">)</span>
+    <span class="ident">print_run_message</span><span class="punct">(&quot;</span><span class="string">Creating &lt;target&gt;<span class="expr">#{@target}</span>&lt;reset&gt; from Custom builder</span><span class="punct">&quot;,</span> <span class="constant">nil</span><span class="punct">)</span>
+    <span class="constant">File</span><span class="punct">.</span><span class="ident">open</span><span class="punct">(</span><span class="attribute">@target</span><span class="punct">,</span> <span class="punct">&quot;</span><span class="string">w</span><span class="punct">&quot;)</span> <span class="keyword">do</span> <span class="punct">|</span><span class="ident">fh</span><span class="punct">|</span>
+      <span class="ident">fh</span><span class="punct">.</span><span class="ident">write</span><span class="punct">(&quot;</span><span class="string">Target file created.</span><span class="punct">&quot;)</span>
+    <span class="keyword">end</span>
+    <span class="constant">true</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre>
+</div>
+<a name="s4_3_2_4_3_Custom_Builder_Cache_Usage___Only_Rebuild_When_Necessary" /><h5>4.3.2.4.3 Custom Builder Cache Usage - Only Rebuild When Necessary</h5>
+
+<p>Whenever possible, a builder should keep track of information necessary to
+know whether the target file(s) need to be rebuilt.
+The <code>Rscons::Cache</code> object is the mechanism by which to keep track of this
+information.
+The Cache object provides two methods: <code>#up_to_date?</code> and <code>#register_build</code>
+which can be used to check if a built file is still up-to-date, and to
+register build information for a subsequent check.
+Here is a Custom builder which combines its source files similar to what the
+<code>cat</code> command would do:</p>
+
+<div class="code ruby_code">
+<pre><span class="keyword">class </span><span class="class">Rscons::Builders::Custom</span> <span class="punct">&lt;</span> <span class="constant">Rscons</span><span class="punct">::</span><span class="constant">Builder</span>
+  <span class="keyword">def </span><span class="method">run</span><span class="punct">(</span><span class="ident">options</span><span class="punct">)</span>
+    <span class="keyword">unless</span> <span class="attribute">@cache</span><span class="punct">.</span><span class="ident">up_to_date?</span><span class="punct">(</span><span class="attribute">@target</span><span class="punct">,</span> <span class="constant">nil</span><span class="punct">,</span> <span class="attribute">@sources</span><span class="punct">,</span> <span class="attribute">@env</span><span class="punct">)</span>
+      <span class="ident">print_run_message</span><span class="punct">(&quot;</span><span class="string">Combining &lt;source&gt;<span class="expr">#{Util.short_format_paths(@sources)}</span>&lt;reset&gt; =&gt; &lt;target&gt;<span class="expr">#{@target}</span>&lt;reset&gt;</span><span class="punct">&quot;,</span> <span class="constant">nil</span><span class="punct">)</span>
+      <span class="constant">File</span><span class="punct">.</span><span class="ident">open</span><span class="punct">(</span><span class="attribute">@target</span><span class="punct">,</span> <span class="punct">&quot;</span><span class="string">wb</span><span class="punct">&quot;)</span> <span class="keyword">do</span> <span class="punct">|</span><span class="ident">fh</span><span class="punct">|</span>
+        <span class="attribute">@sources</span><span class="punct">.</span><span class="ident">each</span> <span class="keyword">do</span> <span class="punct">|</span><span class="ident">source</span><span class="punct">|</span>
+          <span class="ident">fh</span><span class="punct">.</span><span class="ident">write</span><span class="punct">(</span><span class="constant">File</span><span class="punct">.</span><span class="ident">read</span><span class="punct">(</span><span class="ident">source</span><span class="punct">,</span> <span class="ident">mode</span><span class="punct">:</span> <span class="punct">&quot;</span><span class="string">rb</span><span class="punct">&quot;))</span>
+        <span class="keyword">end</span>
+      <span class="keyword">end</span>
+      <span class="attribute">@cache</span><span class="punct">.</span><span class="ident">register_build</span><span class="punct">(</span><span class="attribute">@target</span><span class="punct">,</span> <span class="constant">nil</span><span class="punct">,</span> <span class="attribute">@sources</span><span class="punct">,</span> <span class="attribute">@env</span><span class="punct">)</span>
+    <span class="keyword">end</span>
+    <span class="constant">true</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre>
+</div>
+
+<p>This builder would rebuild the target file and print its run message if the
+target file or any of the source file(s) were changed, but otherwise would be
+silent and not re-combine the source files.</p>
+
+<p>Note that generally the same arguments should be passed to
+<code>@cache.register_build</code> and <code>@cache.up_to_date?</code>.</p>
+<a name="s4_3_2_4_4_Custom_Builder_Parallelization" /><h5>4.3.2.4.4 Custom Builder Parallelization</h5>
+
+<p>The Rscons scheduler can parallelize builders to take advantage of multiple
+processor cores.
+Taking advantage of this ability to parallelize requires the builder author to
+author the builder in a particular way.
+The <code>#run()</code> method of each builder is called from Rscons in the main program
+thread.
+However, the builder may execute a subcommand, spawn a thread, or register
+other builders to execute as a part of doing its job.
+In any of these cases, the builder&#39;s <code>run</code> method should make use of
+<code>Builder#wait_for</code> to &quot;sleep&quot; until one of the items being waited for has
+completed.</p>
+<a name="s4_3_2_4_4_1_Using_a_Ruby_Thread_to_Parallelize_a_Build_Operation" /><h6>4.3.2.4.4.1 Using a Ruby Thread to Parallelize a Build Operation</h6>
+
+<p>Here is an example of using a Ruby thread to parallelize a build operation:</p>
+
+<div class="code ruby_code">
+<pre><span class="keyword">class </span><span class="class">MyBuilder</span> <span class="punct">&lt;</span> <span class="constant">Rscons</span><span class="punct">::</span><span class="constant">Builder</span>
+  <span class="keyword">def </span><span class="method">run</span><span class="punct">(</span><span class="ident">options</span><span class="punct">)</span>
+    <span class="keyword">if</span> <span class="attribute">@thread</span>
+      <span class="constant">true</span>
+    <span class="keyword">else</span>
+      <span class="ident">print_run_message</span><span class="punct">(&quot;</span><span class="string"><span class="expr">#{name}</span> <span class="expr">#{target}</span></span><span class="punct">&quot;,</span> <span class="constant">nil</span><span class="punct">)</span>
+      <span class="attribute">@thread</span> <span class="punct">=</span> <span class="constant">Thread</span><span class="punct">.</span><span class="ident">new</span> <span class="keyword">do</span>
+        <span class="ident">sleep</span> <span class="number">2</span>
+        <span class="constant">FileUtils</span><span class="punct">.</span><span class="ident">touch</span><span class="punct">(</span><span class="attribute">@target</span><span class="punct">)</span>
+      <span class="keyword">end</span>
+      <span class="ident">wait_for</span><span class="punct">(</span><span class="attribute">@thread</span><span class="punct">)</span>
+    <span class="keyword">end</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+<span class="ident">build</span> <span class="keyword">do</span>
+  <span class="constant">Environment</span><span class="punct">.</span><span class="ident">new</span> <span class="keyword">do</span> <span class="punct">|</span><span class="ident">env</span><span class="punct">|</span>
+    <span class="ident">env</span><span class="punct">.</span><span class="ident">add_builder</span><span class="punct">(</span><span class="constant">MyBuilder</span><span class="punct">)</span>
+    <span class="ident">env</span><span class="punct">.</span><span class="ident">MyBuilder</span><span class="punct">(&quot;</span><span class="string">foo</span><span class="punct">&quot;)</span>
+  <span class="ident">end</span>
+<span class="keyword">end</span>
+
+</pre>
+</div>
+
+<p>It is up to the author of the thread logic to only perform actions that are
+thread-safe.
+It is not safe to call other Rscons methods, for example, registering other
+builders or using the Cache, from a thread other than the one that calls the
+<code>#run()</code> method.</p>
+<a name="s4_3_2_4_4_2_Executing_a_Subcommand_from_a_Custom_Builder" /><h6>4.3.2.4.4.2 Executing a Subcommand from a Custom Builder</h6>
+
+<p>It is a very common case that a builder will execute a subcommand which
+produces the build target.
+This is how most of the built-in Rscons builders execute.
+A low-level way to handle this is for the builder to construct an instance of
+the <code>Rscons::Command</code> class and then <code>wait_for</code> the Command object.
+However, this is a common enough case that Rscons provides a few
+convenience methods to handle this:</p>
+
+<ul>
+<li><a href="../yard/Rscons/Builder.html#register_command-instance_method"><code>Rscons::Builder#register_command</code></a></li>
+<li><a href="../yard/Rscons/Builder.html#standard_command-instance_method"><code>Rscons::Builder#standard_command</code></a></li>
+<li><a href="../yard/Rscons/Builder.html#finalize_command-instance_method"><code>Rscons::Builder#finalize_command</code></a></li>
+</ul>
+
+<p>The <code>register_command</code> helper method can be used to create a Command object
+and wait for it to complete.
+The <code>standard_command</code> helper does the same thing as <code>register_command</code> but
+additionally checks the <code>@cache</code> for the target being up to date.
+The <code>finalize_command</code> helper can be used in conjunction with either of the
+previous helper methods.</p>
+
+<p>The built-in Rscons builders <code>Command</code> and <code>Disassemble</code> show examples of how
+to use the <code>standard_command</code> and <code>finalize_command</code> helper methods.</p>
+
+<p>Example (built-in Command builder):</p>
+
+<div class="code ruby_code">
+<pre><span class="keyword">module </span><span class="module">Rscons</span>
+  <span class="keyword">module </span><span class="module">Builders</span>
+    <span class="comment"># A builder to execute an arbitrary command that will produce the given</span>
+    <span class="comment"># target based on the given sources.</span>
+    <span class="comment">#</span>
+    <span class="comment"># Example:</span>
+    <span class="comment">#   env.Command(&quot;docs.html&quot;, &quot;docs.md&quot;,</span>
+    <span class="comment">#               CMD =&gt; %w[pandoc -fmarkdown -thtml -o${_TARGET} ${_SOURCES}])</span>
+    <span class="keyword">class </span><span class="class">Command</span> <span class="punct">&lt;</span> <span class="constant">Builder</span>
+
+      <span class="comment"># Run the builder to produce a build target.</span>
+      <span class="keyword">def </span><span class="method">run</span><span class="punct">(</span><span class="ident">options</span><span class="punct">)</span>
+        <span class="keyword">if</span> <span class="attribute">@command</span>
+          <span class="ident">finalize_command</span>
+        <span class="keyword">else</span>
+          <span class="attribute">@vars</span><span class="punct">[&quot;</span><span class="string">_TARGET</span><span class="punct">&quot;]</span> <span class="punct">=</span> <span class="attribute">@target</span>
+          <span class="attribute">@vars</span><span class="punct">[&quot;</span><span class="string">_SOURCES</span><span class="punct">&quot;]</span> <span class="punct">=</span> <span class="attribute">@sources</span>
+          <span class="ident">command</span> <span class="punct">=</span> <span class="attribute">@env</span><span class="punct">.</span><span class="ident">build_command</span><span class="punct">(&quot;</span><span class="string">${CMD}</span><span class="punct">&quot;,</span> <span class="attribute">@vars</span><span class="punct">)</span>
+          <span class="ident">cmd_desc</span> <span class="punct">=</span> <span class="attribute">@vars</span><span class="punct">[&quot;</span><span class="string">CMD_DESC</span><span class="punct">&quot;]</span> <span class="punct">||</span> <span class="punct">&quot;</span><span class="string">Command</span><span class="punct">&quot;</span>
+          <span class="ident">options</span> <span class="punct">=</span> <span class="punct">{}</span>
+          <span class="keyword">if</span> <span class="attribute">@vars</span><span class="punct">[&quot;</span><span class="string">CMD_STDOUT</span><span class="punct">&quot;]</span>
+            <span class="ident">options</span><span class="punct">[</span><span class="symbol">:stdout</span><span class="punct">]</span> <span class="punct">=</span> <span class="attribute">@env</span><span class="punct">.</span><span class="ident">expand_varref</span><span class="punct">(&quot;</span><span class="string">${CMD_STDOUT}</span><span class="punct">&quot;,</span> <span class="attribute">@vars</span><span class="punct">)</span>
+          <span class="keyword">end</span>
+          <span class="ident">standard_command</span><span class="punct">(&quot;</span><span class="string"><span class="expr">#{cmd_desc}</span> &lt;target&gt;<span class="expr">#{@target}</span>&lt;reset&gt;</span><span class="punct">&quot;,</span> <span class="ident">command</span><span class="punct">,</span> <span class="ident">options</span><span class="punct">)</span>
+        <span class="keyword">end</span>
+      <span class="keyword">end</span>
+
+    <span class="keyword">end</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+</pre>
+</div>
+
+<p>Example (built-in Disassemble builder):</p>
+
+<div class="code ruby_code">
+<pre><span class="keyword">module </span><span class="module">Rscons</span>
+  <span class="keyword">module </span><span class="module">Builders</span>
+    <span class="comment"># The Disassemble builder produces a disassembly listing of a source file.</span>
+    <span class="keyword">class </span><span class="class">Disassemble</span> <span class="punct">&lt;</span> <span class="constant">Builder</span>
+
+      <span class="comment"># Run the builder to produce a build target.</span>
+      <span class="keyword">def </span><span class="method">run</span><span class="punct">(</span><span class="ident">options</span><span class="punct">)</span>
+        <span class="keyword">if</span> <span class="attribute">@command</span>
+          <span class="ident">finalize_command</span>
+        <span class="keyword">else</span>
+          <span class="attribute">@vars</span><span class="punct">[&quot;</span><span class="string">_SOURCES</span><span class="punct">&quot;]</span> <span class="punct">=</span> <span class="attribute">@sources</span>
+          <span class="ident">command</span> <span class="punct">=</span> <span class="attribute">@env</span><span class="punct">.</span><span class="ident">build_command</span><span class="punct">(&quot;</span><span class="string">${DISASM_CMD}</span><span class="punct">&quot;,</span> <span class="attribute">@vars</span><span class="punct">)</span>
+          <span class="ident">standard_command</span><span class="punct">(&quot;</span><span class="string">Disassembling &lt;source&gt;<span class="expr">#{Util.short_format_paths(@sources)}</span>&lt;reset&gt; =&gt; &lt;target&gt;<span class="expr">#{target}</span>&lt;reset&gt;</span><span class="punct">&quot;,</span> <span class="ident">command</span><span class="punct">,</span> <span class="ident">stdout</span><span class="punct">:</span> <span class="attribute">@target</span><span class="punct">)</span>
+        <span class="keyword">end</span>
+      <span class="keyword">end</span>
+
+    <span class="keyword">end</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+</pre>
+</div>
+<a name="s4_3_2_5_Simple_custom_builders_added_with_add_builder" /><h4>4.3.2.5 Simple custom builders added with add_builder</h4>
+
+<p>The <code>add_builder</code> method of the <code>Environment</code> class optionally allows you to
+define and register a builder by providing a name and action block. This can be
+useful if the builder you are trying to define is easily expressed as a short
+ruby procedure. When <code>add_builder</code> is called in this manner a new builder will
+be registered with the environment with the given name. When this builder is
+used it will call the provided block in order to build the target.</p>
+
+<p>Example:</p>
+
+<div class="code ruby_code">
+<pre><span class="ident">build</span> <span class="keyword">do</span>
+  <span class="constant">Environment</span><span class="punct">.</span><span class="ident">new</span> <span class="keyword">do</span> <span class="punct">|</span><span class="ident">env</span><span class="punct">|</span>
+    <span class="ident">require</span> <span class="punct">'</span><span class="string">json</span><span class="punct">'</span>
+    <span class="ident">require</span> <span class="punct">'</span><span class="string">yaml</span><span class="punct">'</span>
+    <span class="ident">env</span><span class="punct">.</span><span class="ident">add_builder</span><span class="punct">(</span><span class="symbol">:JsonToYaml</span><span class="punct">)</span> <span class="keyword">do</span> <span class="punct">|</span><span class="ident">params</span><span class="punct">|</span>
+      <span class="keyword">unless</span> <span class="attribute">@cache</span><span class="punct">.</span><span class="ident">up_to_date?</span><span class="punct">(</span><span class="attribute">@target</span><span class="punct">,</span> <span class="symbol">:JsonToYaml</span><span class="punct">,</span> <span class="attribute">@sources</span><span class="punct">,</span> <span class="attribute">@env</span><span class="punct">)</span>
+        <span class="ident">print_run_message</span><span class="punct">(&quot;</span><span class="string">JsonToYaml <span class="expr">#{@target}</span></span><span class="punct">&quot;,</span> <span class="constant">nil</span><span class="punct">)</span>
+        <span class="attribute">@cache</span><span class="punct">.</span><span class="ident">mkdir_p</span><span class="punct">(</span><span class="constant">File</span><span class="punct">.</span><span class="ident">dirname</span><span class="punct">(</span><span class="attribute">@target</span><span class="punct">))</span>
+        <span class="constant">File</span><span class="punct">.</span><span class="ident">open</span><span class="punct">(</span><span class="attribute">@target</span><span class="punct">,</span> <span class="punct">'</span><span class="string">w</span><span class="punct">')</span> <span class="keyword">do</span> <span class="punct">|</span><span class="ident">f</span><span class="punct">|</span>
+          <span class="ident">f</span><span class="punct">.</span><span class="ident">write</span><span class="punct">(</span><span class="constant">YAML</span><span class="punct">.</span><span class="ident">dump</span><span class="punct">(</span><span class="constant">JSON</span><span class="punct">.</span><span class="ident">load</span><span class="punct">(</span><span class="constant">IO</span><span class="punct">.</span><span class="ident">read</span><span class="punct">(</span><span class="attribute">@sources</span><span class="punct">.</span><span class="ident">first</span><span class="punct">))))</span>
+        <span class="keyword">end</span>
+        <span class="attribute">@cache</span><span class="punct">.</span><span class="ident">register_build</span><span class="punct">(</span><span class="attribute">@target</span><span class="punct">,</span> <span class="symbol">:JsonToYaml</span><span class="punct">,</span> <span class="attribute">@sources</span><span class="punct">,</span> <span class="attribute">@env</span><span class="punct">)</span>
+      <span class="keyword">end</span>
+      <span class="constant">true</span>
+    <span class="keyword">end</span>
+    <span class="ident">env</span><span class="punct">.</span><span class="ident">JsonToYaml</span><span class="punct">('</span><span class="string">foo.yml</span><span class="punct">',</span> <span class="punct">'</span><span class="string">foo.json</span><span class="punct">')</span>
+  <span class="ident">end</span>
+<span class="keyword">end</span>
+
+</pre>
+</div>
+<a name="s5_Appendix" /><h1>5 Appendix</h1>
+<a name="s5_1_Default_Construction_Variables" /><h2>5.1 Default Construction Variables</h2>
+
+<div class="code ruby_code">
+<pre><span class="keyword">module </span><span class="module">Rscons</span>
+
+  <span class="ident">on_windows</span> <span class="punct">=</span> <span class="constant">RUBY_PLATFORM</span> <span class="punct">=~</span> <span class="punct">/</span><span class="regex">mingw|cygwin</span><span class="punct">/</span>
+  <span class="ident">pic_flags</span> <span class="punct">=</span> <span class="ident">on_windows</span> <span class="punct">?</span> <span class="punct">[]</span> <span class="punct">:</span> <span class="punct">%w[</span><span class="string">-fPIC</span><span class="punct">]</span>
+
+  <span class="comment"># Default Rscons construction variables.</span>
+  <span class="constant">DEFAULT_CONSTRUCTION_VARIABLES</span> <span class="punct">=</span> <span class="punct">{</span>
+    <span class="punct">&quot;</span><span class="string">AR</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">&quot;</span><span class="string">ar</span><span class="punct">&quot;,</span>
+    <span class="punct">&quot;</span><span class="string">ARCMD</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">${AR} ${ARFLAGS} ${_TARGET} ${_SOURCES}</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">ARFLAGS</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">rcs</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">AS</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">&quot;</span><span class="string">${CC}</span><span class="punct">&quot;,</span>
+    <span class="punct">&quot;</span><span class="string">ASCMD</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">${AS} -c -o ${_TARGET} ${ASDEPGEN} ${INCPREFIX}${ASPPPATH} ${ASPPFLAGS} ${ASFLAGS} ${_SOURCES}</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">ASCMD:direct</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">${AS} -o ${_TARGET} ${ASDEPGEN} ${INCPREFIX}${ASPPPATH} ${ASPPFLAGS} ${ASFLAGS} ${LDFLAGS} ${_SOURCES} ${LIBDIRPREFIX}${LIBPATH} ${LIBLINKPREFIX}${LIBS}</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">ASDEPGEN</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">-MMD -MF ${_DEPFILE}</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">ASFLAGS</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">[],</span>
+    <span class="punct">&quot;</span><span class="string">ASPPFLAGS</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">&quot;</span><span class="string">${CPPFLAGS}</span><span class="punct">&quot;,</span>
+    <span class="punct">&quot;</span><span class="string">ASPPPATH</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">&quot;</span><span class="string">${CPPPATH}</span><span class="punct">&quot;,</span>
+    <span class="punct">&quot;</span><span class="string">ASSUFFIX</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">.S</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">CC</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">&quot;</span><span class="string">gcc</span><span class="punct">&quot;,</span>
+    <span class="punct">&quot;</span><span class="string">CCCMD</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">${CC} -c -o ${_TARGET} ${CCDEPGEN} ${INCPREFIX}${CPPPATH} ${CPPFLAGS} ${CFLAGS} ${CCFLAGS} ${_SOURCES}</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">CCCMD:direct</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">${CC} -o ${_TARGET} ${CCDEPGEN} ${INCPREFIX}${CPPPATH} ${CPPFLAGS} ${CFLAGS} ${CCFLAGS} ${LDFLAGS} ${_SOURCES} ${LIBDIRPREFIX}${LIBPATH} ${LIBLINKPREFIX}${LIBS}</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">CCDEPGEN</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">-MMD -MF ${_DEPFILE}</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">CCFLAGS</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">[],</span>
+    <span class="punct">&quot;</span><span class="string">CFLAGS</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">[],</span>
+    <span class="punct">&quot;</span><span class="string">CPPDEFINES</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">[],</span>
+    <span class="punct">&quot;</span><span class="string">CPPDEFPREFIX</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">&quot;</span><span class="string">-D</span><span class="punct">&quot;,</span>
+    <span class="punct">&quot;</span><span class="string">CPPFLAGS</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">${CPPDEFPREFIX}${CPPDEFINES}</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">CPPPATH</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">[],</span>
+    <span class="punct">&quot;</span><span class="string">CPP_CMD</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">${_PREPROCESS_CC} -E ${_PREPROCESS_DEPGEN} -o ${_TARGET} ${INCPREFIX}${CPPPATH} ${CPPFLAGS} ${_SOURCES}</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">CSUFFIX</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">.c</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">CXX</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">&quot;</span><span class="string">g++</span><span class="punct">&quot;,</span>
+    <span class="punct">&quot;</span><span class="string">CXXCMD</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">${CXX} -c -o ${_TARGET} ${CXXDEPGEN} ${INCPREFIX}${CPPPATH} ${CPPFLAGS} ${CXXFLAGS} ${CCFLAGS} ${_SOURCES}</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">CXXCMD:direct</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">${CXX} -o ${_TARGET} ${CXXDEPGEN} ${INCPREFIX}${CPPPATH} ${CPPFLAGS} ${CXXFLAGS} ${CCFLAGS} ${LDFLAGS} ${_SOURCES} ${LIBDIRPREFIX}${LIBPATH} ${LIBLINKPREFIX}${LIBS}</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">CXXDEPGEN</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">-MMD -MF ${_DEPFILE}</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">CXXFLAGS</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">[],</span>
+    <span class="punct">&quot;</span><span class="string">CXXSUFFIX</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">.cc .cpp .cxx .C</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">DC</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">&quot;</span><span class="string">gdc</span><span class="punct">&quot;,</span>
+    <span class="punct">&quot;</span><span class="string">DCCMD</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">${DC} -c -o ${_TARGET} ${DDEPGEN} ${INCPREFIX}${D_IMPORT_PATH} ${DFLAGS} ${_SOURCES}</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">DCCMD:direct</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">${DC} -o ${_TARGET} ${DDEPGEN} ${INCPREFIX}${D_IMPORT_PATH} ${DFLAGS} ${LDFLAGS} ${_SOURCES} ${LIBDIRPREFIX}${LIBPATH} ${LIBLINKPREFIX}${LIBS}</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">DDEPGEN</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">-MMD -MF ${_DEPFILE}</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">DEPFILESUFFIX</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">&quot;</span><span class="string">.mf</span><span class="punct">&quot;,</span>
+    <span class="punct">&quot;</span><span class="string">DFLAGS</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">[],</span>
+    <span class="punct">&quot;</span><span class="string">DISASM_CMD</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">${OBJDUMP} ${DISASM_FLAGS} ${_SOURCES}</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">DISASM_FLAGS</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">--disassemble --source</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">DSUFFIX</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">.d</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">D_IMPORT_PATH</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">[],</span>
+    <span class="punct">&quot;</span><span class="string">INCPREFIX</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">&quot;</span><span class="string">-I</span><span class="punct">&quot;,</span>
+    <span class="punct">&quot;</span><span class="string">LD</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="constant">nil</span><span class="punct">,</span>
+    <span class="punct">&quot;</span><span class="string">LDCMD</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">${LD} -o ${_TARGET} ${LDFLAGS} ${_SOURCES} ${LIBDIRPREFIX}${LIBPATH} ${LIBLINKPREFIX}${LIBS}</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">LDFLAGS</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">[],</span>
+    <span class="punct">&quot;</span><span class="string">LEX</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">&quot;</span><span class="string">flex</span><span class="punct">&quot;,</span>
+    <span class="punct">&quot;</span><span class="string">LEXSUFFIX</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">.l .ll</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">LEX_CMD</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">${LEX} ${LEX_FLAGS} -o ${_TARGET} ${_SOURCES}</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">LEX_FLAGS</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">[],</span>
+    <span class="punct">&quot;</span><span class="string">LIBDIRPREFIX</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">&quot;</span><span class="string">-L</span><span class="punct">&quot;,</span>
+    <span class="punct">&quot;</span><span class="string">LIBLINKPREFIX</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">&quot;</span><span class="string">-l</span><span class="punct">&quot;,</span>
+    <span class="punct">&quot;</span><span class="string">LIBPATH</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">[],</span>
+    <span class="punct">&quot;</span><span class="string">LIBS</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">[],</span>
+    <span class="punct">&quot;</span><span class="string">LIBSUFFIX</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">&quot;</span><span class="string">.a</span><span class="punct">&quot;,</span>
+    <span class="punct">&quot;</span><span class="string">OBJDUMP</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">&quot;</span><span class="string">objdump</span><span class="punct">&quot;,</span>
+    <span class="punct">&quot;</span><span class="string">OBJSUFFIX</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">.o</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">PROGSUFFIX</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="ident">on_windows</span> <span class="punct">?</span> <span class="punct">&quot;</span><span class="string">.exe</span><span class="punct">&quot;</span> <span class="punct">:</span> <span class="punct">&quot;</span><span class="string"></span><span class="punct">&quot;,</span>
+    <span class="punct">&quot;</span><span class="string">SHCC</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">&quot;</span><span class="string">${CC}</span><span class="punct">&quot;,</span>
+    <span class="punct">&quot;</span><span class="string">SHCCCMD</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">${SHCC} -c -o ${_TARGET} ${CCDEPGEN} ${INCPREFIX}${CPPPATH} ${CPPFLAGS} ${SHCFLAGS} ${SHCCFLAGS} ${_SOURCES}</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">SHCCCMD:direct</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">${SHCC} -o ${_TARGET} ${CCDEPGEN} ${INCPREFIX}${CPPPATH} ${CPPFLAGS} ${SHCFLAGS} ${SHCCFLAGS} ${SHLDFLAGS} ${_SOURCES} ${LIBDIRPREFIX}${LIBPATH} ${LIBLINKPREFIX}${LIBS}</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">SHCCFLAGS</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">${CCFLAGS}</span><span class="punct">]</span> <span class="punct">+</span> <span class="ident">pic_flags</span><span class="punct">,</span>
+    <span class="punct">&quot;</span><span class="string">SHCFLAGS</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">${CFLAGS}</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">SHCXX</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">&quot;</span><span class="string">${CXX}</span><span class="punct">&quot;,</span>
+    <span class="punct">&quot;</span><span class="string">SHCXXCMD</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">${SHCXX} -c -o ${_TARGET} ${CXXDEPGEN} ${INCPREFIX}${CPPPATH} ${CPPFLAGS} ${SHCXXFLAGS} ${SHCCFLAGS} ${_SOURCES}</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">SHCXXCMD:direct</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">${SHCXX} -o ${_TARGET} ${CXXDEPGEN} ${INCPREFIX}${CPPPATH} ${CPPFLAGS} ${SHCXXFLAGS} ${SHCCFLAGS} ${SHLDFLAGS} ${_SOURCES} ${LIBDIRPREFIX}${LIBPATH} ${LIBLINKPREFIX}${LIBS}</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">SHCXXFLAGS</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">${CXXFLAGS}</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">SHDC</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">&quot;</span><span class="string">gdc</span><span class="punct">&quot;,</span>
+    <span class="punct">&quot;</span><span class="string">SHDCCMD</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">${SHDC} -c -o ${_TARGET} ${INCPREFIX}${D_IMPORT_PATH} ${SHDFLAGS} ${_SOURCES}</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">SHDCCMD:direct</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">${SHDC} -o ${_TARGET} ${INCPREFIX}${D_IMPORT_PATH} ${SHDFLAGS} ${SHLDFLAGS} ${_SOURCES} ${LIBDIRPREFIX}${LIBPATH} ${LIBLINKPREFIX}${LIBS}</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">SHDFLAGS</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">${DFLAGS}</span><span class="punct">]</span> <span class="punct">+</span> <span class="ident">pic_flags</span><span class="punct">,</span>
+    <span class="punct">&quot;</span><span class="string">SHLD</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="constant">nil</span><span class="punct">,</span>
+    <span class="punct">&quot;</span><span class="string">SHLDCMD</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">${SHLD} -o ${_TARGET} ${SHLDFLAGS} ${_SOURCES} ${SHLIBDIRPREFIX}${LIBPATH} ${SHLIBLINKPREFIX}${LIBS}</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">SHLDFLAGS</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">${LDFLAGS} -shared</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">SHLIBDIRPREFIX</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">&quot;</span><span class="string">-L</span><span class="punct">&quot;,</span>
+    <span class="punct">&quot;</span><span class="string">SHLIBLINKPREFIX</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">&quot;</span><span class="string">-l</span><span class="punct">&quot;,</span>
+    <span class="punct">&quot;</span><span class="string">SHLIBPREFIX</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="ident">on_windows</span> <span class="punct">?</span> <span class="punct">&quot;</span><span class="string"></span><span class="punct">&quot;</span> <span class="punct">:</span> <span class="punct">&quot;</span><span class="string">lib</span><span class="punct">&quot;,</span>
+    <span class="punct">&quot;</span><span class="string">SHLIBSUFFIX</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="ident">on_windows</span> <span class="punct">?</span> <span class="punct">&quot;</span><span class="string">.dll</span><span class="punct">&quot;</span> <span class="punct">:</span> <span class="punct">&quot;</span><span class="string">.so</span><span class="punct">&quot;,</span>
+    <span class="punct">&quot;</span><span class="string">YACC</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">&quot;</span><span class="string">bison</span><span class="punct">&quot;,</span>
+    <span class="punct">&quot;</span><span class="string">YACCSUFFIX</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">.y .yy</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">YACC_CMD</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">${YACC} ${YACC_FLAGS} -o ${_TARGET} ${_SOURCES}</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">YACC_FLAGS</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">-d</span><span class="punct">],</span>
+  <span class="punct">}</span>
+
+<span class="keyword">end</span>
+
+</pre>
+</div>
+<a name="s5_2_Example_Build_Scripts" /><h2>5.2 Example Build Scripts</h2>
+<a name="s5_2_1_Example__Building_a_C_Program" /><h3>5.2.1 Example: Building a C Program</h3>
+
+<div class="code ruby_code">
+<pre><span class="ident">build</span> <span class="keyword">do</span>
+  <span class="constant">Environment</span><span class="punct">.</span><span class="ident">new</span> <span class="keyword">do</span> <span class="punct">|</span><span class="ident">env</span><span class="punct">|</span>
+    <span class="ident">env</span><span class="punct">[&quot;</span><span class="string">CFLAGS</span><span class="punct">&quot;]</span> <span class="punct">&lt;&lt;</span> <span class="punct">&quot;</span><span class="string">-Wall</span><span class="punct">&quot;</span>
+    <span class="ident">env</span><span class="punct">.</span><span class="ident">Program</span><span class="punct">(&quot;</span><span class="string">program</span><span class="punct">&quot;,</span> <span class="ident">glob</span><span class="punct">(&quot;</span><span class="string">src/**/*.c</span><span class="punct">&quot;))</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre>
+</div>
+<a name="s5_2_2_Example__Building_a_D_Program" /><h3>5.2.2 Example: Building a D Program</h3>
+
+<div class="code ruby_code">
+<pre><span class="ident">build</span> <span class="keyword">do</span>
+  <span class="constant">Environment</span><span class="punct">.</span><span class="ident">new</span> <span class="keyword">do</span> <span class="punct">|</span><span class="ident">env</span><span class="punct">|</span>
+    <span class="ident">env</span><span class="punct">[&quot;</span><span class="string">DFLAGS</span><span class="punct">&quot;]</span> <span class="punct">&lt;&lt;</span> <span class="punct">&quot;</span><span class="string">-Wall</span><span class="punct">&quot;</span>
+    <span class="ident">env</span><span class="punct">.</span><span class="ident">Program</span><span class="punct">(&quot;</span><span class="string">program</span><span class="punct">&quot;,</span> <span class="ident">glob</span><span class="punct">(&quot;</span><span class="string">src/**/*.d</span><span class="punct">&quot;))</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre>
+</div>
+<a name="s5_2_3_Example__Cloning_an_Environment" /><h3>5.2.3 Example: Cloning an Environment</h3>
+
+<div class="code ruby_code">
+<pre><span class="ident">build</span> <span class="keyword">do</span>
+  <span class="ident">main_env</span> <span class="punct">=</span> <span class="constant">Environment</span><span class="punct">.</span><span class="ident">new</span> <span class="keyword">do</span> <span class="punct">|</span><span class="ident">env</span><span class="punct">|</span>
+    <span class="ident">env</span><span class="punct">[&quot;</span><span class="string">CFLAGS</span><span class="punct">&quot;]</span> <span class="punct">=</span> <span class="punct">[&quot;</span><span class="string">-DSOME_DEFINE</span><span class="punct">&quot;,</span> <span class="punct">&quot;</span><span class="string">-O3</span><span class="punct">&quot;]</span>
+    <span class="ident">env</span><span class="punct">[&quot;</span><span class="string">LIBS</span><span class="punct">&quot;]</span> <span class="punct">=</span> <span class="punct">[&quot;</span><span class="string">SDL</span><span class="punct">&quot;]</span>
+    <span class="ident">env</span><span class="punct">.</span><span class="ident">Program</span><span class="punct">(&quot;</span><span class="string">program</span><span class="punct">&quot;,</span> <span class="ident">glob</span><span class="punct">(&quot;</span><span class="string">src/**/*.cc</span><span class="punct">&quot;))</span>
+  <span class="keyword">end</span>
+
+  <span class="ident">debug_env</span> <span class="punct">=</span> <span class="ident">main_env</span><span class="punct">.</span><span class="ident">clone</span> <span class="keyword">do</span> <span class="punct">|</span><span class="ident">env</span><span class="punct">|</span>
+    <span class="ident">env</span><span class="punct">[&quot;</span><span class="string">CFLAGS</span><span class="punct">&quot;]</span> <span class="punct">-=</span> <span class="punct">[&quot;</span><span class="string">-O3</span><span class="punct">&quot;]</span>
+    <span class="ident">env</span><span class="punct">[&quot;</span><span class="string">CFLAGS</span><span class="punct">&quot;]</span> <span class="punct">+=</span> <span class="punct">[&quot;</span><span class="string">-g</span><span class="punct">&quot;,</span> <span class="punct">&quot;</span><span class="string">-O0</span><span class="punct">&quot;]</span>
+    <span class="ident">env</span><span class="punct">.</span><span class="ident">Program</span><span class="punct">(&quot;</span><span class="string">program-debug</span><span class="punct">&quot;,</span> <span class="ident">glob</span><span class="punct">(&quot;</span><span class="string">src/**/*.cc</span><span class="punct">&quot;))</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre>
+</div>
+<a name="s5_2_4_Example__Custom_Builder" /><h3>5.2.4 Example: Custom Builder</h3>
+
+<div class="code ruby_code">
+<pre><span class="keyword">class </span><span class="class">GenerateFoo</span> <span class="punct">&lt;</span> <span class="constant">Builder</span>
+  <span class="keyword">def </span><span class="method">run</span><span class="punct">(</span><span class="ident">options</span><span class="punct">)</span>
+    <span class="ident">target</span><span class="punct">,</span> <span class="ident">cache</span> <span class="punct">=</span> <span class="ident">options</span><span class="punct">.</span><span class="ident">values_at</span><span class="punct">(</span><span class="symbol">:target</span><span class="punct">,</span> <span class="symbol">:cache</span><span class="punct">)</span>
+    <span class="ident">cache</span><span class="punct">.</span><span class="ident">mkdir_p</span><span class="punct">(</span><span class="constant">File</span><span class="punct">.</span><span class="ident">dirname</span><span class="punct">(</span><span class="ident">target</span><span class="punct">))</span>
+    <span class="constant">File</span><span class="punct">.</span><span class="ident">open</span><span class="punct">(</span><span class="ident">target</span><span class="punct">,</span> <span class="punct">&quot;</span><span class="string">w</span><span class="punct">&quot;)</span> <span class="keyword">do</span> <span class="punct">|</span><span class="ident">fh</span><span class="punct">|</span>
+      <span class="ident">fh</span><span class="punct">.</span><span class="ident">puts</span> <span class="punct">&lt;&lt;</span><span class="constant">EOF</span><span class="string">
+#define GENERATED 42
+</span><span class="constant">EOF</span>
+    <span class="keyword">end</span>
+    <span class="ident">target</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+<span class="ident">build</span> <span class="keyword">do</span>
+  <span class="constant">Environment</span><span class="punct">.</span><span class="ident">new</span> <span class="keyword">do</span> <span class="punct">|</span><span class="ident">env</span><span class="punct">|</span>
+    <span class="ident">env</span><span class="punct">.</span><span class="ident">add_builder</span><span class="punct">(</span><span class="constant">GenerateFoo</span><span class="punct">)</span>
+    <span class="ident">env</span><span class="punct">.</span><span class="ident">GenerateFoo</span><span class="punct">(&quot;</span><span class="string">foo.h</span><span class="punct">&quot;,</span> <span class="punct">[])</span>
+    <span class="ident">env</span><span class="punct">.</span><span class="ident">Program</span><span class="punct">(&quot;</span><span class="string">a.out</span><span class="punct">&quot;,</span> <span class="ident">glob</span><span class="punct">(&quot;</span><span class="string">*.c</span><span class="punct">&quot;))</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre>
+</div>
+<a name="s5_2_5_Example__Using_different_compilation_flags_for_some_sources" /><h3>5.2.5 Example: Using different compilation flags for some sources</h3>
+
+<div class="code ruby_code">
+<pre><span class="ident">build</span> <span class="keyword">do</span>
+  <span class="constant">Environment</span><span class="punct">.</span><span class="ident">new</span> <span class="keyword">do</span> <span class="punct">|</span><span class="ident">env</span><span class="punct">|</span>
+    <span class="ident">env</span><span class="punct">[&quot;</span><span class="string">CFLAGS</span><span class="punct">&quot;]</span> <span class="punct">=</span> <span class="punct">[&quot;</span><span class="string">-O3</span><span class="punct">&quot;,</span> <span class="punct">&quot;</span><span class="string">-Wall</span><span class="punct">&quot;]</span>
+    <span class="ident">env</span><span class="punct">.</span><span class="ident">add_build_hook</span> <span class="keyword">do</span> <span class="punct">|</span><span class="ident">build_op</span><span class="punct">|</span>
+      <span class="keyword">if</span> <span class="ident">build_op</span><span class="punct">[</span><span class="symbol">:target</span><span class="punct">]</span> <span class="punct">=~</span> <span class="punct">%r{</span><span class="regex">build/third-party</span><span class="punct">}</span>
+        <span class="ident">build_op</span><span class="punct">[</span><span class="symbol">:vars</span><span class="punct">][&quot;</span><span class="string">CFLAGS</span><span class="punct">&quot;]</span> <span class="punct">-=</span> <span class="punct">[&quot;</span><span class="string">-Wall</span><span class="punct">&quot;]</span>
+      <span class="keyword">end</span>
+    <span class="keyword">end</span>
+    <span class="ident">env</span><span class="punct">.</span><span class="ident">Program</span><span class="punct">(&quot;</span><span class="string">program</span><span class="punct">&quot;,</span> <span class="ident">glob</span><span class="punct">(&quot;</span><span class="string">**/*.cc</span><span class="punct">&quot;))</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre>
+</div>
+<a name="s5_2_6_Example__Creating_a_static_library" /><h3>5.2.6 Example: Creating a static library</h3>
+
+<div class="code ruby_code">
+<pre><span class="ident">build</span> <span class="keyword">do</span>
+  <span class="constant">Environment</span><span class="punct">.</span><span class="ident">new</span> <span class="keyword">do</span> <span class="punct">|</span><span class="ident">env</span><span class="punct">|</span>
+    <span class="ident">env</span><span class="punct">.</span><span class="ident">Library</span><span class="punct">(&quot;</span><span class="string">mylib.a</span><span class="punct">&quot;,</span> <span class="ident">glob</span><span class="punct">(&quot;</span><span class="string">src/**/*.c</span><span class="punct">&quot;))</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre>
+</div>
+<a name="s5_2_7_Example__Creating_a_C___parser_source_from_a_Yacc_Bison_input_file" /><h3>5.2.7 Example: Creating a C++ parser source from a Yacc/Bison input file</h3>
+
+<div class="code ruby_code">
+<pre><span class="ident">build</span> <span class="keyword">do</span>
+  <span class="constant">Environment</span><span class="punct">.</span><span class="ident">new</span> <span class="keyword">do</span> <span class="punct">|</span><span class="ident">env</span><span class="punct">|</span>
+    <span class="ident">env</span><span class="punct">.</span><span class="ident">CFile</span><span class="punct">(&quot;</span><span class="string">^/parser.tab.cc</span><span class="punct">&quot;,</span> <span class="punct">&quot;</span><span class="string">parser.yy</span><span class="punct">&quot;)</span>
+  <span class="ident">end</span>
+<span class="keyword">end</span>
+</pre>
+</div>
+<a name="s5_3___configure____make" /><h2>5.3 ./configure &amp;&amp; make</h2>
+
+<p>You can make your Rscons-based project more familiar to users of
+autoconf-generated projects by creating a <code>configure</code> script and a <code>Makefile</code>
+for the user.
+Such users may be used to executing:</p>
+
+<div class="code">
+<pre>./configure
+make
+</pre>
+</div>
+
+<p>to build a project.
+To do this, create a <code>configure</code> script with contents similar to the following:</p>
+
+<div class="code">
+<pre>#!/bin/sh
+exec "$(dirname "$0")"/rscons configure "$@"
+</pre>
+</div>
+
+<p>and make it executable with <code>chmod +x configure</code>.</p>
+
+<p>If you want your users to be able to build/clean a project with <code>make</code> but
+still make use of Rscons under the hood, you can create a <code>Makefile</code> with
+contents something like this:</p>
+
+<div class="code">
+<pre>.PHONY: all
+all:
+    ./rscons build
+
+.PHONY: clean
+clean:
+    ./rscons clean
+</pre>
+</div>
+<a name="s5_4_YARD_API_Documentation" /><h2>5.4 YARD API Documentation</h2>
+
+<p>See <a href="../yard/index.html">here</a> for Rscons YARD API Documentation.</p>
+<a name="s6_License" /><h1>6 License</h1>
+
+<p>Rscons is licensed under the terms of the MIT License:</p>
+
+<div class="code">
+<pre>Copyright (c) 2013-2019 Josh Holtrop
+
+MIT License
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+</pre>
+</div>
+<a name="s7_Contributing" /><h1>7 Contributing</h1>
+
+<p>Rscons is developed on <a href="https://github.com/holtrop/rscons">github</a>.</p>
+
+<p>Issues may be submitted to <a href="https://github.com/holtrop/rscons/issues">https://github.com/holtrop/rscons/issues</a>.</p>
+
+<p>Pull requests may be submitted as well:</p>
+
+<ol>
+<li>Fork it</li>
+<li>Create your feature branch (<code>git checkout -b my-new-feature</code>)</li>
+<li>Commit your changes (<code>git commit -am &#39;Add some feature&#39;</code>)</li>
+<li>Push to the branch (<code>git push origin my-new-feature</code>)</li>
+<li>Create new Pull Request</li>
+</ol>
+<a name="s8_Change_Log" /><h1>8 Change Log</h1>
+
+<p><h2>v2.0.2</h2>
+
+<h3>Fixes</h3>
+
+<ul>
+<li>#113 - distinguish object files built from multiple sources with the same base name but different extensions</li>
+</ul>
+
+<h2>v2.0.1</h2>
+
+<h3>Fixes</h3>
+
+<ul>
+<li>#112 - Install builder cannot replace a currently executing binary on Linux</li>
+</ul>
+
+<h2>v2.0.0</h2>
+
+<ul>
+<li>convert rscons from a Ruby gem to a standalone script</li>
+<li>compress rscons distributable script</li>
+<li>add configure operation to detect compilers, check for headers/libraries, etc... (invoked automatically if needed)</li>
+<li>Environments store builder classes instead of instances of builder classes</li>
+<li>use a separate Builder instance for each build operation</li>
+<li>load Rsconscript from Rsconscript/Rsconscript.rb instead of Rsconsfile</li>
+<li>drop support for builder run methods using the old 5 parameter signature</li>
+<li>remove Environment#build_dir</li>
+<li>set Environment build root in configure step</li>
+<li>remove Builder#finalize (now #run called repeatedly until builder completes)</li>
+<li>remove Builder#setup</li>
+<li>remove Builder#features and Builder#produces?</li>
+<li>add functionality to allow builders to wait on Ruby threads or other builders</li>
+<li>add install/uninstall/distclean command-line operations</li>
+<li>preserve makefile dependency files under build directory</li>
+<li>remove a few deprecated methods</li>
+<li>pass a Builder instance to build hooks instead of a build operation Hash</li>
+<li>support a basic markup syntax in builder run messages to colorize target/source files</li>
+<li>hide (but store) failed compilation command by default so the user doesn&#39;t have to scroll back as much to see compiler output</li>
+<li>refactor to remove some redundancy among built-in builders</li>
+<li>track object file source language (correctly determine linker when only passed object files previously built by particular toolchains)</li>
+<li>add barriers</li>
+<li>add InstallDirectory builder</li>
+<li>change Install builder to copy files on &#39;install&#39; operation</li>
+<li>add &quot;prefix&quot; construction variable based on configured installation prefix</li>
+<li>allow passing builder objects as sources to build targets</li>
+<li>differentiate &#39;build&#39; targets from &#39;install&#39; targets in cache contents</li>
+<li>add verbose mode</li>
+<li>show build progress as a percentage in builder output messages</li>
+<li>various performance improvements</li>
+<li>wrote a new user guide</li>
+<li>added new website (<a href="https://holtrop.github.io/rscons/">https://holtrop.github.io/rscons/</a>)</li>
+<li>added new logo</li>
+</ul>
+
+<h2>v1.17.0</h2>
+
+<h3>New Features</h3>
+
+<ul>
+<li>allow construction variable expansion on <code>true</code> and <code>false</code> values.</li>
+<li>remove makefile target name check when parsing dependencies</li>
+</ul>
+
+<h2>v1.16.0</h2>
+
+<h3>New Features</h3>
+
+<ul>
+<li>Add <code>Rscons.glob</code></li>
+<li>Support command-line variables</li>
+<li>improve debuggability of <code>cache.up_to_date?</code></li>
+<li>allow passing a VarSet into cache methods</li>
+</ul>
+
+<h3>Fixes</h3>
+
+<ul>
+<li>generate dependencies for D builds</li>
+</ul>
+
+<h2>v1.15.0</h2>
+
+<ul>
+<li>allow json 1.x or 2.x</li>
+</ul>
+
+<h2>v1.14.0</h2>
+
+<h3>New Features</h3>
+
+<ul>
+<li>#45 - Add <code>Rscons::VarSet#values_at</code></li>
+</ul>
+
+<h3>Fixes</h3>
+
+<ul>
+<li>#44 - <code>Environment#print_builder_run_message</code> should support string commands</li>
+</ul>
+
+<h2>v1.13.0</h2>
+
+<h3>New Features</h3>
+
+<ul>
+<li>#43 - Add ability to record side-effect file production</li>
+</ul>
+
+<h2>v1.12.0</h2>
+
+<h3>New Features</h3>
+
+<ul>
+<li>#40 - env.depends should imply <code>env.build_after</code></li>
+<li>#41 - be more colorful</li>
+</ul>
+
+<h3>Fixes</h3>
+
+<ul>
+<li>#39 - wait for in-progress subcommands to complete on build failure</li>
+<li>#42 - cloned Environments should inherit <code>n_threads</code></li>
+</ul>
+
+<h2>v1.11.1</h2>
+
+<h3>Fixes</h3>
+
+<ul>
+<li>fix the circular build dependency detection logic</li>
+</ul>
+
+<h2>v1.11.0</h2>
+
+<h3>New Features</h3>
+
+<ul>
+<li>Change default Environment :clone option to :all to clone all attributes</li>
+<li>#38 - raise error when circular dependencies are found</li>
+<li>#34 - Allow overriding <code>n_threads</code> on a per-Environment level</li>
+</ul>
+
+<h3>Fixes</h3>
+
+<ul>
+<li>#35 - <code>env.build_after</code> should expand paths</li>
+<li>#36 - <code>SHCFLAGS</code> and <code>SHCXXFLAGS</code> should inherit non-SH flags by default</li>
+<li>#37 - Fix non-blocking thread-wait if <code>Rscons.n_threads</code> is set to 0</li>
+</ul>
+
+<h2>v1.10.0</h2>
+
+<h3>New Features</h3>
+
+<ul>
+<li>#23 - add parallelization - builds are now parallelized by default</li>
+<li>#31 - add LEXSUFFIX, YACCSUFFIX construction variables</li>
+<li>#30 - place object files for absolute source paths under build_root</li>
+<li>#28 - support redirecting standard output using the Command builder</li>
+<li>Always use a build root and default it to &quot;build&quot;</li>
+<li>Add builder features</li>
+<li>#8 - add SharedObject and SharedLibrary builders</li>
+</ul>
+
+<h3>Fixes</h3>
+
+<ul>
+<li>expand target and source paths before calling <code>Builder#create_build_target</code></li>
+<li>#29 - fix <code>PROGSUFFIX</code> handling</li>
+<li>#32 - Pre-build hooks do not respect modified key values</li>
+</ul>
+
+<h2>v1.9.3</h2>
+
+<ul>
+<li><code>Environment#parse_flags</code> should put -std=XXX flags in CCFLAGS, not CFLAGS</li>
+</ul>
+
+<h2>v1.9.2</h2>
+
+<ul>
+<li>allow phony targets in conjunction with build roots</li>
+</ul>
+
+<h2>v1.9.1</h2>
+
+<ul>
+<li>change *SUFFIX defaults to arrays</li>
+<li>add various C++ file suffixes</li>
+<li>use ${INCPREFIX} instead of hard-coded &quot;-I&quot; in Preprocess builder</li>
+</ul>
+
+<h2>v1.9.0</h2>
+
+<h3>New Features</h3>
+
+<ul>
+<li>#6 - add Install and Copy builders</li>
+<li>#22 - allow overriding Command builder short description with <code>CMD_DESC</code> variable</li>
+<li>#24 - add &quot;rscons&quot; executable</li>
+<li>#25 - add support for phony targets given as Symbols instead of Strings</li>
+<li>#26 - support registering multiple build targets with the same target name</li>
+<li>#27 - add Directory builder</li>
+</ul>
+
+<h3>Fixes</h3>
+
+<ul>
+<li>#20 - fix variable references that expand to arrays in build target sources</li>
+<li>#21 - rework Preprocess builder to consider deep dependencies</li>
+<li>fix <code>Rscons.set_suffix</code> to append the given suffix if the filename has none</li>
+<li>remove ${CFLAGS} from default <code>CPP_CMD</code></li>
+</ul>
+
+<h2>v1.8.1</h2>
+
+<ul>
+<li>fix Environment#dump when construction variables are symbols</li>
+</ul>
+
+<h2>v1.8.0</h2>
+
+<ul>
+<li>new Command builder to execute arbitrary user commands</li>
+<li>new SimpleBuilder class
+
+<ul>
+<li>create new builders quickly by passing a block to <code>Environment#add_builder</code></li>
+</ul></li>
+<li>improved YARD documentation</li>
+<li>add Environment#dump to debug Environment construction variables</li>
+</ul>
+
+<h2>v1.7.0</h2>
+
+<ul>
+<li>allow build hooks to register new build targets</li>
+<li>add post-build hooks (register with <code>Environment#add_post_build_hook</code>)</li>
+<li>clear all build targets after processing an Environment</li>
+<li>allow trailing slashes in arguments to <code>Environment#build_dir</code></li>
+</ul>
+
+<h2>v1.6.1</h2>
+
+<ul>
+<li>add DEPFILESUFFIX construction variable to override dependency file suffix</li>
+<li>fix Environment#depends to expand its arguments for construction variables</li>
+</ul>
+
+<h2>v1.6.0</h2>
+
+<ul>
+<li>support lambdas as construction variable values</li>
+</ul>
+
+<h2>v1.5.0</h2>
+
+<ul>
+<li>add &quot;json&quot; as a runtime dependency</li>
+<li>update construction variables to match SCons more closely
+
+<ul>
+<li>add <code>CPPDEFPREFIX</code>, <code>INCPREFIX</code>, <code>CPPDEFINES</code>, <code>CCFLAGS</code>, <code>LIBDIRPREFIX</code>, and <code>LIBLINKPREFIX</code></li>
+</ul></li>
+<li>add <code>Environment#shell</code></li>
+<li>add <code>Environment#parse_flags</code>, <code>#parse_flags!</code>, <code>#merge_flags</code></li>
+<li>unbuffer <code>$stdout</code> by default</li>
+<li>add <code>PROGSUFFIX</code> construction variable (defaults to <code>.exe</code> on MinGW/Cygwin)</li>
+<li>add <code>Rscons::BuildTarget</code> and <code>Builder#create_build_target</code></li>
+<li>update specs to RSpec 3.x and fix to run on MinGW/Cygwin/Linux</li>
+<li>add YARD documentation to get to 100% coverage</li>
+</ul>
+
+<h2>v1.4.3</h2>
+
+<ul>
+<li>fix builders properly using construction variable overrides</li>
+<li>expand nil construction variables to empty strings</li>
+</ul>
+
+<h2>v1.4.2</h2>
+
+<ul>
+<li>add <code>Environment#expand_path</code></li>
+<li>expand construction variable references in builder targets and sources before invoking builder</li>
+</ul>
+
+<h2>v1.4.1</h2>
+
+<ul>
+<li>fix invoking a builder with no sources while a build root defined</li>
+</ul>
+
+<h2>v1.4.0</h2>
+
+<ul>
+<li>add CFile builder</li>
+<li>add Disassemble builder</li>
+<li>add Preprocess builder</li>
+<li>pass the Environment object to build hooks in the :env key of the build_op parameter</li>
+<li>expand target/source paths beginning with &quot;^/&quot; to be relative to the Environment&#39;s build root</li>
+<li>many performance improvements, including:
+
+<ul>
+<li>use JSON instead of YAML for the cache to improve loading speed (Issue #7)</li>
+<li>store a hash of the build command instead of the full command contents in the cache</li>
+<li>implement copy-on-write semantics for construction variables when cloning Environments</li>
+<li>only load the cache once instead of on each Environment#process</li>
+<li>only write the cache when something has changed</li>
+</ul></li>
+<li>fix <code>Cache#mkdir_p</code> to handle relative paths (Issue #5)</li>
+<li>flush the cache to disk if a builder raises an exception (Issue #4)</li>
+</ul>
+
+<h2>v1.3.0</h2>
+
+<ul>
+<li>change Environment#execute() options parameter to accept the following options keys:
+
+<ul>
+<li>:env to pass an environment Hash to Kernel#system</li>
+<li>:options to pass an options Hash to Kernel#system</li>
+</ul></li>
+</ul>
+
+<h2>v1.2.0</h2>
+
+<ul>
+<li>add :clone option to Environment#clone to control exactly which Environment attributes are cloned</li>
+<li>allow nil to be passed in to <code>Environment#build_root=</code></li>
+</ul>
+
+<h2>v1.1.0</h2>
+
+<ul>
+<li>Change <code>Cache#up_to_date?</code> and <code>#register_build</code> to accept a single target
+file or an array of target file names</li>
+</ul>
+</p>
+</td>
+        <td id="body-right-border"></td>
+      </tr>
+    </table>
+  </body>
+</html>

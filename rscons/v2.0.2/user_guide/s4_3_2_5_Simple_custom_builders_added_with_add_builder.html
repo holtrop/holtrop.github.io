@@ -1,0 +1,115 @@
+<html>
+  <head>
+    <title>Rscons User Guide - 4.3.2.5 Simple custom builders added with add_builder - Version 2.0.2</title>
+    <style>
+      body {
+        background-color: #CCC;
+        margin: 0px;
+        padding: 0px;
+      }
+      #body-table {
+        margin-left: auto;
+        margin-right: auto;
+        border-collapse: collapse;
+      }
+      #body-left-border {
+        width: 10px;
+        background-image: linear-gradient(to right, #CCC, #000, #FFF);
+      }
+      #body-right-border {
+        width: 10px;
+        background-image: linear-gradient(to right, #FFF, #000, #CCC);
+      }
+      #body-center {
+        background-color: #FFF;
+        width: 120ex;
+        padding: 1ex;
+      }
+      a {
+        text-decoration: none;
+      }
+      .separator {
+        height: 2em;
+      }
+      .img_block_center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .page_nav {
+        width: 100%;
+        table-layout: fixed;
+      }
+      .page_nav_toc {
+        text-align: center;
+      }
+      .page_nav_next {
+        text-align: right;
+      }
+      .code {
+        padding-left: 2ex;
+        width: 116ex;
+        overflow-x: auto;
+      }
+      .ruby_code .normal {}
+      .ruby_code .comment { color: #005; font-style: italic; }
+      .ruby_code .keyword { color: #A00; font-weight: bold; }
+      .ruby_code .method { color: #077; }
+      .ruby_code .class { color: #074; }
+      .ruby_code .module { color: #050; }
+      .ruby_code .punct { color: #447; font-weight: bold; }
+      .ruby_code .symbol { color: #099; }
+      .ruby_code .string { color: #090; }
+      .ruby_code .char { color: #F07; }
+      .ruby_code .ident { color: #004; }
+      .ruby_code .constant { color: #07F; }
+      .ruby_code .regex { color: #B66; }
+      .ruby_code .number { color: #D55; }
+      .ruby_code .attribute { color: #377; }
+      .ruby_code .global { color: #3B7; }
+      .ruby_code .expr { color: #227; }
+    </style>
+  </head>
+  <body>
+    <table id="body-table">
+      <tr>
+        <td id="body-left-border"></td>
+        <td id="body-center"><table class="page_nav"><tr><td class="page_nav_prev"><a href="s4_3_2_4_Custom_Builder_Operation.html">&laquo; Prev<br/>4.3.2.4 Custom Builder Operation</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s5_Appendix.html">Next &raquo<br/>5 Appendix</a></td></tr></table><div class="separator"></div><a name="s4_3_2_5_Simple_custom_builders_added_with_add_builder" /><h4>4.3.2.5 Simple custom builders added with add_builder</h4>
+
+<p>The <code>add_builder</code> method of the <code>Environment</code> class optionally allows you to
+define and register a builder by providing a name and action block. This can be
+useful if the builder you are trying to define is easily expressed as a short
+ruby procedure. When <code>add_builder</code> is called in this manner a new builder will
+be registered with the environment with the given name. When this builder is
+used it will call the provided block in order to build the target.</p>
+
+<p>Example:</p>
+
+<div class="code ruby_code">
+<pre><span class="ident">build</span> <span class="keyword">do</span>
+  <span class="constant">Environment</span><span class="punct">.</span><span class="ident">new</span> <span class="keyword">do</span> <span class="punct">|</span><span class="ident">env</span><span class="punct">|</span>
+    <span class="ident">require</span> <span class="punct">'</span><span class="string">json</span><span class="punct">'</span>
+    <span class="ident">require</span> <span class="punct">'</span><span class="string">yaml</span><span class="punct">'</span>
+    <span class="ident">env</span><span class="punct">.</span><span class="ident">add_builder</span><span class="punct">(</span><span class="symbol">:JsonToYaml</span><span class="punct">)</span> <span class="keyword">do</span> <span class="punct">|</span><span class="ident">params</span><span class="punct">|</span>
+      <span class="keyword">unless</span> <span class="attribute">@cache</span><span class="punct">.</span><span class="ident">up_to_date?</span><span class="punct">(</span><span class="attribute">@target</span><span class="punct">,</span> <span class="symbol">:JsonToYaml</span><span class="punct">,</span> <span class="attribute">@sources</span><span class="punct">,</span> <span class="attribute">@env</span><span class="punct">)</span>
+        <span class="ident">print_run_message</span><span class="punct">(&quot;</span><span class="string">JsonToYaml <span class="expr">#{@target}</span></span><span class="punct">&quot;,</span> <span class="constant">nil</span><span class="punct">)</span>
+        <span class="attribute">@cache</span><span class="punct">.</span><span class="ident">mkdir_p</span><span class="punct">(</span><span class="constant">File</span><span class="punct">.</span><span class="ident">dirname</span><span class="punct">(</span><span class="attribute">@target</span><span class="punct">))</span>
+        <span class="constant">File</span><span class="punct">.</span><span class="ident">open</span><span class="punct">(</span><span class="attribute">@target</span><span class="punct">,</span> <span class="punct">'</span><span class="string">w</span><span class="punct">')</span> <span class="keyword">do</span> <span class="punct">|</span><span class="ident">f</span><span class="punct">|</span>
+          <span class="ident">f</span><span class="punct">.</span><span class="ident">write</span><span class="punct">(</span><span class="constant">YAML</span><span class="punct">.</span><span class="ident">dump</span><span class="punct">(</span><span class="constant">JSON</span><span class="punct">.</span><span class="ident">load</span><span class="punct">(</span><span class="constant">IO</span><span class="punct">.</span><span class="ident">read</span><span class="punct">(</span><span class="attribute">@sources</span><span class="punct">.</span><span class="ident">first</span><span class="punct">))))</span>
+        <span class="keyword">end</span>
+        <span class="attribute">@cache</span><span class="punct">.</span><span class="ident">register_build</span><span class="punct">(</span><span class="attribute">@target</span><span class="punct">,</span> <span class="symbol">:JsonToYaml</span><span class="punct">,</span> <span class="attribute">@sources</span><span class="punct">,</span> <span class="attribute">@env</span><span class="punct">)</span>
+      <span class="keyword">end</span>
+      <span class="constant">true</span>
+    <span class="keyword">end</span>
+    <span class="ident">env</span><span class="punct">.</span><span class="ident">JsonToYaml</span><span class="punct">('</span><span class="string">foo.yml</span><span class="punct">',</span> <span class="punct">'</span><span class="string">foo.json</span><span class="punct">')</span>
+  <span class="ident">end</span>
+<span class="keyword">end</span>
+
+</pre>
+</div>
+<div class="separator"></div><table class="page_nav"><tr><td class="page_nav_prev"><a href="s4_3_2_4_Custom_Builder_Operation.html">&laquo; Prev<br/>4.3.2.4 Custom Builder Operation</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s5_Appendix.html">Next &raquo<br/>5 Appendix</a></td></tr></table></td>
+        <td id="body-right-border"></td>
+      </tr>
+    </table>
+  </body>
+</html>
