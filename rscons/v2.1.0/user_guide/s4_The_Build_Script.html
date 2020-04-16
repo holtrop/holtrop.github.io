@@ -1,0 +1,102 @@
+<html>
+  <head>
+    <title>Rscons User Guide - 4 The Build Script - Version 2.1.0</title>
+    <style>
+      body {
+        background-color: #CCC;
+        margin: 0px;
+        padding: 0px;
+      }
+      #body-table {
+        margin-left: auto;
+        margin-right: auto;
+        border-collapse: collapse;
+      }
+      #body-left-border {
+        width: 10px;
+        background-image: linear-gradient(to right, #CCC, #000, #FFF);
+      }
+      #body-right-border {
+        width: 10px;
+        background-image: linear-gradient(to right, #FFF, #000, #CCC);
+      }
+      #body-center {
+        background-color: #FFF;
+        width: 120ex;
+        padding: 1ex;
+      }
+      a {
+        text-decoration: none;
+      }
+      .separator {
+        height: 2em;
+      }
+      .img_block_center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .page_nav {
+        width: 100%;
+        table-layout: fixed;
+      }
+      .page_nav_toc {
+        text-align: center;
+      }
+      .page_nav_next {
+        text-align: right;
+      }
+      .code {
+        padding-left: 2ex;
+        width: 116ex;
+        overflow-x: auto;
+      }
+      .ruby_code .normal {}
+      .ruby_code .comment { color: #005; font-style: italic; }
+      .ruby_code .keyword { color: #A00; font-weight: bold; }
+      .ruby_code .method { color: #077; }
+      .ruby_code .class { color: #074; }
+      .ruby_code .module { color: #050; }
+      .ruby_code .punct { color: #447; font-weight: bold; }
+      .ruby_code .symbol { color: #099; }
+      .ruby_code .string { color: #090; }
+      .ruby_code .char { color: #F07; }
+      .ruby_code .ident { color: #004; }
+      .ruby_code .constant { color: #07F; }
+      .ruby_code .regex { color: #B66; }
+      .ruby_code .number { color: #D55; }
+      .ruby_code .attribute { color: #377; }
+      .ruby_code .global { color: #3B7; }
+      .ruby_code .expr { color: #227; }
+    </style>
+  </head>
+  <body>
+    <table id="body-table">
+      <tr>
+        <td id="body-left-border"></td>
+        <td id="body-center"><table class="page_nav"><tr><td class="page_nav_prev"><a href="s3_6_Uninstall_Operation.html">&laquo; Prev<br/>3.6 Uninstall Operation</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s4_1_Configuration_Operations.html">Next &raquo<br/>4.1 Configuration Operations</a></td></tr></table><div class="separator"></div><a name="s4_The_Build_Script" /><h1>4 The Build Script</h1>
+
+<p>Rscons looks for instructions for what to build by reading a build script file
+called <code>Rsconscript</code> (or <code>Rsconscript.rb</code>).
+Here is a simple example <code>Rsconscript</code> file:</p>
+
+<div class="code ruby_code">
+<pre><span class="ident">build</span> <span class="keyword">do</span>
+  <span class="constant">Environment</span><span class="punct">.</span><span class="ident">new</span> <span class="keyword">do</span> <span class="punct">|</span><span class="ident">env</span><span class="punct">|</span>
+    <span class="ident">env</span><span class="punct">.</span><span class="ident">Program</span><span class="punct">(&quot;</span><span class="string">myprog.exe</span><span class="punct">&quot;,</span> <span class="ident">glob</span><span class="punct">(&quot;</span><span class="string">src/**/*.c</span><span class="punct">&quot;))</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre>
+</div>
+
+<p>This <code>Rsconscript</code> file would instruct Rscons to produce a <em>Program</em> target
+called <code>myprog.exe</code> which is to be built from all C source files found
+(recursively) under the <code>src</code> directory.</p>
+
+<p>The <code>Rsconscript</code> file is a Ruby script.</p>
+<div class="separator"></div><table class="page_nav"><tr><td class="page_nav_prev"><a href="s3_6_Uninstall_Operation.html">&laquo; Prev<br/>3.6 Uninstall Operation</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s4_1_Configuration_Operations.html">Next &raquo<br/>4.1 Configuration Operations</a></td></tr></table></td>
+        <td id="body-right-border"></td>
+      </tr>
+    </table>
+  </body>
+</html>

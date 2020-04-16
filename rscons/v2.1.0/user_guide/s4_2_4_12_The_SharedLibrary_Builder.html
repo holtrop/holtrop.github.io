@@ -1,0 +1,116 @@
+<html>
+  <head>
+    <title>Rscons User Guide - 4.2.4.12 The SharedLibrary Builder - Version 2.1.0</title>
+    <style>
+      body {
+        background-color: #CCC;
+        margin: 0px;
+        padding: 0px;
+      }
+      #body-table {
+        margin-left: auto;
+        margin-right: auto;
+        border-collapse: collapse;
+      }
+      #body-left-border {
+        width: 10px;
+        background-image: linear-gradient(to right, #CCC, #000, #FFF);
+      }
+      #body-right-border {
+        width: 10px;
+        background-image: linear-gradient(to right, #FFF, #000, #CCC);
+      }
+      #body-center {
+        background-color: #FFF;
+        width: 120ex;
+        padding: 1ex;
+      }
+      a {
+        text-decoration: none;
+      }
+      .separator {
+        height: 2em;
+      }
+      .img_block_center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .page_nav {
+        width: 100%;
+        table-layout: fixed;
+      }
+      .page_nav_toc {
+        text-align: center;
+      }
+      .page_nav_next {
+        text-align: right;
+      }
+      .code {
+        padding-left: 2ex;
+        width: 116ex;
+        overflow-x: auto;
+      }
+      .ruby_code .normal {}
+      .ruby_code .comment { color: #005; font-style: italic; }
+      .ruby_code .keyword { color: #A00; font-weight: bold; }
+      .ruby_code .method { color: #077; }
+      .ruby_code .class { color: #074; }
+      .ruby_code .module { color: #050; }
+      .ruby_code .punct { color: #447; font-weight: bold; }
+      .ruby_code .symbol { color: #099; }
+      .ruby_code .string { color: #090; }
+      .ruby_code .char { color: #F07; }
+      .ruby_code .ident { color: #004; }
+      .ruby_code .constant { color: #07F; }
+      .ruby_code .regex { color: #B66; }
+      .ruby_code .number { color: #D55; }
+      .ruby_code .attribute { color: #377; }
+      .ruby_code .global { color: #3B7; }
+      .ruby_code .expr { color: #227; }
+    </style>
+  </head>
+  <body>
+    <table id="body-table">
+      <tr>
+        <td id="body-left-border"></td>
+        <td id="body-center"><table class="page_nav"><tr><td class="page_nav_prev"><a href="s4_2_4_11_The_Program_Builder.html">&laquo; Prev<br/>4.2.4.11 The Program Builder</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s4_2_4_13_The_SharedObject_Builder.html">Next &raquo<br/>4.2.4.13 The SharedObject Builder</a></td></tr></table><div class="separator"></div><a name="s4_2_4_12_The_SharedLibrary_Builder" /><h4>4.2.4.12 The SharedLibrary Builder</h4>
+
+<div class="code ruby_code">
+<pre><span class="ident">env</span><span class="punct">.</span><span class="ident">SharedLibrary</span><span class="punct">(</span><span class="ident">target</span><span class="punct">,</span> <span class="ident">sources</span><span class="punct">)</span>
+<span class="comment"># Example</span>
+<span class="ident">env</span><span class="punct">.</span><span class="ident">SharedLibrary</span><span class="punct">(&quot;</span><span class="string">mydll</span><span class="punct">&quot;,</span> <span class="ident">Rscons</span><span class="punct">.</span><span class="ident">glob</span><span class="punct">(&quot;</span><span class="string">src/**/*.cc</span><span class="punct">&quot;))</span>
+</pre>
+</div>
+
+<p>The <code>SharedLibrary</code> builder compiles and links the given sources to a
+dynamically loadable library.
+Object files or source files can be given as <code>sources</code>.
+A platform-dependent prefix and suffix will be appended to the target name if
+they are not specified by the user.
+These values can be controlled by overriding the <code>SHLIBPREFIX</code> and
+<code>SHLIBSUFFIX</code> construction variables.</p>
+<a name="s4_2_4_12_1_Direct_Mode" /><h5>4.2.4.12.1 Direct Mode</h5>
+
+<p>The SharedLibrary builder supports a &quot;direct&quot; mode which is activated by
+specifying the <code>:direct</code> option.
+In the direct mode, all source files are passed directly to the compiler
+together and compiled and linked in one step, rather than being individually
+compiled to separate object files first.
+This mode allows taking advantage of any multi-file compilation capabilities
+of the compiler.
+However, it also requires recompiling all source files when any one of them
+has changed.</p>
+
+<p>Example use:</p>
+
+<div class="code ruby_code">
+<pre><span class="ident">env</span><span class="punct">.</span><span class="ident">SharedLibrary</span><span class="punct">(&quot;</span><span class="string">mydll</span><span class="punct">&quot;,</span> <span class="ident">Rscons</span><span class="punct">.</span><span class="ident">glob</span><span class="punct">(&quot;</span><span class="string">src/**/*.c</span><span class="punct">&quot;),</span> <span class="ident">direct</span><span class="punct">:</span> <span class="constant">true</span><span class="punct">)</span>
+</pre>
+</div>
+<div class="separator"></div><table class="page_nav"><tr><td class="page_nav_prev"><a href="s4_2_4_11_The_Program_Builder.html">&laquo; Prev<br/>4.2.4.11 The Program Builder</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s4_2_4_13_The_SharedObject_Builder.html">Next &raquo<br/>4.2.4.13 The SharedObject Builder</a></td></tr></table></td>
+        <td id="body-right-border"></td>
+      </tr>
+    </table>
+  </body>
+</html>
