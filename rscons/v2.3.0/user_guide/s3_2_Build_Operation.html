@@ -1,0 +1,100 @@
+<html>
+  <head>
+    <title>Rscons User Guide - 3.2 Build Operation - Version 2.3.0</title>
+    <style>
+      body {
+        background-color: #CCC;
+        margin: 0px;
+        padding: 0px;
+      }
+      #body-table {
+        margin-left: auto;
+        margin-right: auto;
+        border-collapse: collapse;
+      }
+      #body-left-border {
+        width: 10px;
+        background-image: linear-gradient(to right, #CCC, #000, #FFF);
+      }
+      #body-right-border {
+        width: 10px;
+        background-image: linear-gradient(to right, #FFF, #000, #CCC);
+      }
+      #body-center {
+        background-color: #FFF;
+        width: 120ex;
+        padding: 1ex;
+      }
+      a {
+        text-decoration: none;
+      }
+      .separator {
+        height: 2em;
+      }
+      .img_block_center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .page_nav {
+        width: 100%;
+        table-layout: fixed;
+      }
+      .page_nav_toc {
+        text-align: center;
+      }
+      .page_nav_next {
+        text-align: right;
+      }
+      .code {
+        padding-left: 2ex;
+        width: 116ex;
+        overflow-x: auto;
+      }
+      .ruby_code .normal {}
+      .ruby_code .comment { color: #005; font-style: italic; }
+      .ruby_code .keyword { color: #A00; font-weight: bold; }
+      .ruby_code .method { color: #077; }
+      .ruby_code .class { color: #074; }
+      .ruby_code .module { color: #050; }
+      .ruby_code .punct { color: #447; font-weight: bold; }
+      .ruby_code .symbol { color: #099; }
+      .ruby_code .string { color: #090; }
+      .ruby_code .char { color: #F07; }
+      .ruby_code .ident { color: #004; }
+      .ruby_code .constant { color: #07F; }
+      .ruby_code .regex { color: #B66; }
+      .ruby_code .number { color: #D55; }
+      .ruby_code .attribute { color: #377; }
+      .ruby_code .global { color: #3B7; }
+      .ruby_code .expr { color: #227; }
+    </style>
+  </head>
+  <body>
+    <table id="body-table">
+      <tr>
+        <td id="body-left-border"></td>
+        <td id="body-center"><table class="page_nav"><tr><td class="page_nav_prev"><a href="s3_1_Configure_Operation.html">&laquo; Prev<br/>3.1 Configure Operation</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s3_3_Clean_Operation.html">Next &raquo<br/>3.3 Clean Operation</a></td></tr></table><div class="separator"></div><a name="s3_2_Build_Operation" /><h2>3.2 Build Operation</h2>
+
+<p>If a <code>build</code> operation is requested and a <code>configure</code> operation has not yet
+been performed, a <code>configure</code> operation will be automatically invoked.</p>
+
+<p>The <code>build</code> operation will execute all builders registered to produce build
+targets.</p>
+
+<p>If a <code>build</code> operation fails (e.g. due to a compilation failure), Rscons will
+log the failed commands.
+By default Rscons does not print the failed commands to the console so that it
+is easier for the user to focus on the actual compiler failure messages rather
+than the compilation command itself.
+However, if the user wishes to see the compilation commands, rscons can be
+invoked with the <code>-v</code> command-line option to show all complilation commands
+while building, or, alternatively, following a compilation failure, the user
+can invoke rscons with the -F option which will not rebuild but will show the
+failed command log from the previous build operation.</p>
+<div class="separator"></div><table class="page_nav"><tr><td class="page_nav_prev"><a href="s3_1_Configure_Operation.html">&laquo; Prev<br/>3.1 Configure Operation</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s3_3_Clean_Operation.html">Next &raquo<br/>3.3 Clean Operation</a></td></tr></table></td>
+        <td id="body-right-border"></td>
+      </tr>
+    </table>
+  </body>
+</html>

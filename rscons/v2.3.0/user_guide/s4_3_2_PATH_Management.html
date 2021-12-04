@@ -1,0 +1,98 @@
+<html>
+  <head>
+    <title>Rscons User Guide - 4.3.2 PATH Management - Version 2.3.0</title>
+    <style>
+      body {
+        background-color: #CCC;
+        margin: 0px;
+        padding: 0px;
+      }
+      #body-table {
+        margin-left: auto;
+        margin-right: auto;
+        border-collapse: collapse;
+      }
+      #body-left-border {
+        width: 10px;
+        background-image: linear-gradient(to right, #CCC, #000, #FFF);
+      }
+      #body-right-border {
+        width: 10px;
+        background-image: linear-gradient(to right, #FFF, #000, #CCC);
+      }
+      #body-center {
+        background-color: #FFF;
+        width: 120ex;
+        padding: 1ex;
+      }
+      a {
+        text-decoration: none;
+      }
+      .separator {
+        height: 2em;
+      }
+      .img_block_center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .page_nav {
+        width: 100%;
+        table-layout: fixed;
+      }
+      .page_nav_toc {
+        text-align: center;
+      }
+      .page_nav_next {
+        text-align: right;
+      }
+      .code {
+        padding-left: 2ex;
+        width: 116ex;
+        overflow-x: auto;
+      }
+      .ruby_code .normal {}
+      .ruby_code .comment { color: #005; font-style: italic; }
+      .ruby_code .keyword { color: #A00; font-weight: bold; }
+      .ruby_code .method { color: #077; }
+      .ruby_code .class { color: #074; }
+      .ruby_code .module { color: #050; }
+      .ruby_code .punct { color: #447; font-weight: bold; }
+      .ruby_code .symbol { color: #099; }
+      .ruby_code .string { color: #090; }
+      .ruby_code .char { color: #F07; }
+      .ruby_code .ident { color: #004; }
+      .ruby_code .constant { color: #07F; }
+      .ruby_code .regex { color: #B66; }
+      .ruby_code .number { color: #D55; }
+      .ruby_code .attribute { color: #377; }
+      .ruby_code .global { color: #3B7; }
+      .ruby_code .expr { color: #227; }
+    </style>
+  </head>
+  <body>
+    <table id="body-table">
+      <tr>
+        <td id="body-left-border"></td>
+        <td id="body-center"><table class="page_nav"><tr><td class="page_nav_prev"><a href="s4_3_1_Using_Subsidiary_Build_Scripts.html">&laquo; Prev<br/>4.3.1 Using Subsidiary Build Scripts</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s4_4_Extending_Rscons.html">Next &raquo<br/>4.4 Extending Rscons</a></td></tr></table><div class="separator"></div><a name="s4_3_2_PATH_Management" /><h3>4.3.2 PATH Management</h3>
+
+<p><code>rscons</code> provides methods for management of the <code>PATH</code> environment variable.</p>
+
+<p>The <code>path_append</code> and <code>path_prepend</code> methods can be used to append or prepend
+a path to the <code>PATH</code> environment variable.</p>
+
+<div class="code ruby_code">
+<pre><span class="ident">path_prepend</span> <span class="punct">&quot;</span><span class="string">i686-elf-gcc/bin</span><span class="punct">&quot;</span>
+</pre>
+</div>
+
+<p>The <code>path_set</code> method sets the <code>PATH</code> environment variable to the given
+Array or String.
+The <code>path_components</code> method returns an Array of the components in the <code>PATH</code>
+environment variable.</p>
+<div class="separator"></div><table class="page_nav"><tr><td class="page_nav_prev"><a href="s4_3_1_Using_Subsidiary_Build_Scripts.html">&laquo; Prev<br/>4.3.1 Using Subsidiary Build Scripts</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s4_4_Extending_Rscons.html">Next &raquo<br/>4.4 Extending Rscons</a></td></tr></table></td>
+        <td id="body-right-border"></td>
+      </tr>
+    </table>
+  </body>
+</html>

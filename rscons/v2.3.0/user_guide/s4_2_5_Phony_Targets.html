@@ -1,0 +1,97 @@
+<html>
+  <head>
+    <title>Rscons User Guide - 4.2.5 Phony Targets - Version 2.3.0</title>
+    <style>
+      body {
+        background-color: #CCC;
+        margin: 0px;
+        padding: 0px;
+      }
+      #body-table {
+        margin-left: auto;
+        margin-right: auto;
+        border-collapse: collapse;
+      }
+      #body-left-border {
+        width: 10px;
+        background-image: linear-gradient(to right, #CCC, #000, #FFF);
+      }
+      #body-right-border {
+        width: 10px;
+        background-image: linear-gradient(to right, #FFF, #000, #CCC);
+      }
+      #body-center {
+        background-color: #FFF;
+        width: 120ex;
+        padding: 1ex;
+      }
+      a {
+        text-decoration: none;
+      }
+      .separator {
+        height: 2em;
+      }
+      .img_block_center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .page_nav {
+        width: 100%;
+        table-layout: fixed;
+      }
+      .page_nav_toc {
+        text-align: center;
+      }
+      .page_nav_next {
+        text-align: right;
+      }
+      .code {
+        padding-left: 2ex;
+        width: 116ex;
+        overflow-x: auto;
+      }
+      .ruby_code .normal {}
+      .ruby_code .comment { color: #005; font-style: italic; }
+      .ruby_code .keyword { color: #A00; font-weight: bold; }
+      .ruby_code .method { color: #077; }
+      .ruby_code .class { color: #074; }
+      .ruby_code .module { color: #050; }
+      .ruby_code .punct { color: #447; font-weight: bold; }
+      .ruby_code .symbol { color: #099; }
+      .ruby_code .string { color: #090; }
+      .ruby_code .char { color: #F07; }
+      .ruby_code .ident { color: #004; }
+      .ruby_code .constant { color: #07F; }
+      .ruby_code .regex { color: #B66; }
+      .ruby_code .number { color: #D55; }
+      .ruby_code .attribute { color: #377; }
+      .ruby_code .global { color: #3B7; }
+      .ruby_code .expr { color: #227; }
+    </style>
+  </head>
+  <body>
+    <table id="body-table">
+      <tr>
+        <td id="body-left-border"></td>
+        <td id="body-center"><table class="page_nav"><tr><td class="page_nav_prev"><a href="s4_2_4_13_The_SharedObject_Builder.html">&laquo; Prev<br/>4.2.4.13 The SharedObject Builder</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s4_2_6_Explicit_Dependencies.html">Next &raquo<br/>4.2.6 Explicit Dependencies</a></td></tr></table><div class="separator"></div><a name="s4_2_5_Phony_Targets" /><h3>4.2.5 Phony Targets</h3>
+
+<p>rscons supports phony build targets.
+Normally, a builder produces an output file, and executes whenever the input
+files or command have changed.
+A phony build target can be used to register a builder that does not produce
+an output file.
+A custom builder can take some action when the input files change even if it
+does not produce an output file.
+Such a builder could perform verification or run a test on its source files,
+possibly failing if some conditions are not met.
+It could also simply output something to the console, such as an analysis of
+the source file, whenever it changes.
+A phony target is signified by passing a Symbol instead of a String as the
+first parameter (target) to a builder method.</p>
+<div class="separator"></div><table class="page_nav"><tr><td class="page_nav_prev"><a href="s4_2_4_13_The_SharedObject_Builder.html">&laquo; Prev<br/>4.2.4.13 The SharedObject Builder</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s4_2_6_Explicit_Dependencies.html">Next &raquo<br/>4.2.6 Explicit Dependencies</a></td></tr></table></td>
+        <td id="body-right-border"></td>
+      </tr>
+    </table>
+  </body>
+</html>
