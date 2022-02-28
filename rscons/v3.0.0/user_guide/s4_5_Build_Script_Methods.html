@@ -1,0 +1,126 @@
+<html>
+  <head>
+    <title>Rscons User Guide - 4.5 Build Script Methods - Version 3.0.0</title>
+    <style>
+      body {
+        background-color: #CCC;
+        margin: 0px;
+        padding: 0px;
+      }
+      #body-content {
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 1em;
+        margin-bottom: 1em;
+        border: 1px solid black;
+        background-color: #FFF;
+        width: 120ex;
+        padding: 2ex;
+      }
+      a {
+        text-decoration: none;
+      }
+      .separator {
+        height: 2em;
+      }
+      .img_block_center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .page_nav {
+        width: 100%;
+        table-layout: fixed;
+      }
+      .page_nav_toc {
+        text-align: center;
+      }
+      .page_nav_next {
+        text-align: right;
+      }
+      .code {
+        padding-left: 2ex;
+        width: 116ex;
+        overflow-x: auto;
+      }
+      .ruby_code .normal {}
+      .ruby_code .comment { color: #005; font-style: italic; }
+      .ruby_code .keyword { color: #A00; font-weight: bold; }
+      .ruby_code .method { color: #077; }
+      .ruby_code .class { color: #074; }
+      .ruby_code .module { color: #050; }
+      .ruby_code .punct { color: #447; font-weight: bold; }
+      .ruby_code .symbol { color: #099; }
+      .ruby_code .string { color: #090; }
+      .ruby_code .char { color: #F07; }
+      .ruby_code .ident { color: #004; }
+      .ruby_code .constant { color: #07F; }
+      .ruby_code .regex { color: #B66; }
+      .ruby_code .number { color: #D55; }
+      .ruby_code .attribute { color: #377; }
+      .ruby_code .global { color: #3B7; }
+      .ruby_code .expr { color: #227; }
+    </style>
+  </head>
+  <body>
+    <div id="body-content"><table class="page_nav"><tr><td class="page_nav_prev"><a href="s4_4_1_Variant_Groups.html">&laquo; Prev<br/>4.4.1 Variant Groups</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s4_5_1_Finding_Files__The_glob_Method.html">Next &raquo<br/>4.5.1 Finding Files: The glob Method</a></td></tr></table><div class="separator"></div><a name="s4_5_Build_Script_Methods" /><h2>4.5 Build Script Methods</h2>
+
+<p><code>rscons</code> provides several methods that a build script can use.</p>
+
+<ul>
+<li><code>autoconf</code> (see <a href="s4_1_2_1_Configure_Task.html#s4_1_2_1_Configure_Task">Configure Task</a>)</li>
+<li><code>build_dir</code> which returns the path to the top-level Rscons build directory</li>
+<li><code>clean</code> (see <a href="s4_1_2_3_Clean_Task.html#s4_1_2_3_Clean_Task">Clean Task</a>)</li>
+<li><code>configure</code> (see <a href="s4_1_2_1_Configure_Task.html#s4_1_2_1_Configure_Task">Configure Task</a>)</li>
+<li><code>default</code> (see <a href="s4_1_2_2_Default_Task.html#s4_1_2_2_Default_Task">Default Task</a>)</li>
+<li><code>download</code> (see <a href="s4_5_2_Downloading_Files__The_download_Method.html#s4_5_2_Downloading_Files__The_download_Method">Downloading Files: The download Method</a>)</li>
+<li><code>distclean</code> (see <a href="s4_1_2_4_Distclean_Task.html#s4_1_2_4_Distclean_Task">Distclean Task</a>)</li>
+<li><code>glob</code> (see <a href="s4_5_1_Finding_Files__The_glob_Method.html#s4_5_1_Finding_Files__The_glob_Method">Finding Files: The glob Method</a>)</li>
+<li><code>install</code> (see <a href="s4_1_2_5_Install_Task.html#s4_1_2_5_Install_Task">Install Task</a>)</li>
+<li><code>param</code> (see <a href="s4_1_1_Task_Parameters.html#s4_1_1_Task_Parameters">Task Parameters</a>)</li>
+<li><code>path_append</code> (see <a href="s4_5_3_PATH_Management.html#s4_5_3_PATH_Management">PATH Management</a>)</li>
+<li><code>path_components</code> (see <a href="s4_5_3_PATH_Management.html#s4_5_3_PATH_Management">PATH Management</a>)</li>
+<li><code>path_prepend</code> (see <a href="s4_5_3_PATH_Management.html#s4_5_3_PATH_Management">PATH Management</a>)</li>
+<li><code>path_set</code> (see <a href="s4_5_3_PATH_Management.html#s4_5_3_PATH_Management">PATH Management</a>)</li>
+<li><code>project_name</code> (see <a href="s4_1_2_1_Configure_Task.html#s4_1_2_1_Configure_Task">Configure Task</a>)</li>
+<li><code>rscons</code> (see <a href="s4_5_4_Using_Subsidiary_Build_Scripts__The_rscons_Method.html#s4_5_4_Using_Subsidiary_Build_Scripts__The_rscons_Method">Using Subsidiary Build Scripts: The rscons Method</a>)</li>
+<li><code>sh</code> (see (<a href="s4_5_5_Executing_Commands__The_sh_Method.html#s4_5_5_Executing_Commands__The_sh_Method">Executing Commands: The sh Method</a>)</li>
+<li><code>task</code> (see <a href="s4_1_Tasks.html#s4_1_Tasks">Tasks</a>)</li>
+<li><code>uninstall</code> (see <a href="s4_1_2_6_Uninstall_Task.html#s4_1_2_6_Uninstall_Task">Uninstall Task</a>)</li>
+<li><code>variant</code> (see <a href="s4_4_Variants.html#s4_4_Variants">Variants</a>)</li>
+<li><code>variant_enabled?</code> (see <a href="s4_4_1_Variant_Groups.html#s4_4_1_Variant_Groups">Variant Groups</a>)</li>
+<li><code>variant_group</code> (see <a href="s4_4_1_Variant_Groups.html#s4_4_1_Variant_Groups">Variant Groups</a>)</li>
+<li><code>with_variants</code> (see <a href="s4_4_1_Variant_Groups.html#s4_4_1_Variant_Groups">Variant Groups</a>)</li>
+</ul>
+
+<p>Additionally, the following methods from the Ruby
+<a href="https://ruby-doc.org/stdlib-3.1.0/libdoc/fileutils/rdoc/FileUtils.html">FileUtils</a>
+module are made available for the build script to call directly:</p>
+
+<ul>
+<li><code>cd</code></li>
+<li><code>chmod</code></li>
+<li><code>chmod_R</code></li>
+<li><code>chown</code></li>
+<li><code>chown_R</code></li>
+<li><code>cp</code></li>
+<li><code>cp_lr</code></li>
+<li><code>cp_r</code></li>
+<li><code>install</code></li>
+<li><code>ln</code></li>
+<li><code>ln_s</code></li>
+<li><code>ln_sf</code></li>
+<li><code>mkdir</code></li>
+<li><code>mkdir_p</code></li>
+<li><code>mv</code></li>
+<li><code>pwd</code></li>
+<li><code>rm</code></li>
+<li><code>rm_f</code></li>
+<li><code>rm_r</code></li>
+<li><code>rm_rf</code></li>
+<li><code>rmdir</code></li>
+<li><code>touch</code></li>
+</ul>
+<div class="separator"></div><table class="page_nav"><tr><td class="page_nav_prev"><a href="s4_4_1_Variant_Groups.html">&laquo; Prev<br/>4.4.1 Variant Groups</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s4_5_1_Finding_Files__The_glob_Method.html">Next &raquo<br/>4.5.1 Finding Files: The glob Method</a></td></tr></table></div>
+  </body>
+</html>

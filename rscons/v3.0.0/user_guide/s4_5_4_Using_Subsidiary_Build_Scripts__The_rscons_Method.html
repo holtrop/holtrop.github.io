@@ -1,0 +1,117 @@
+<html>
+  <head>
+    <title>Rscons User Guide - 4.5.4 Using Subsidiary Build Scripts: The rscons Method - Version 3.0.0</title>
+    <style>
+      body {
+        background-color: #CCC;
+        margin: 0px;
+        padding: 0px;
+      }
+      #body-content {
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 1em;
+        margin-bottom: 1em;
+        border: 1px solid black;
+        background-color: #FFF;
+        width: 120ex;
+        padding: 2ex;
+      }
+      a {
+        text-decoration: none;
+      }
+      .separator {
+        height: 2em;
+      }
+      .img_block_center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .page_nav {
+        width: 100%;
+        table-layout: fixed;
+      }
+      .page_nav_toc {
+        text-align: center;
+      }
+      .page_nav_next {
+        text-align: right;
+      }
+      .code {
+        padding-left: 2ex;
+        width: 116ex;
+        overflow-x: auto;
+      }
+      .ruby_code .normal {}
+      .ruby_code .comment { color: #005; font-style: italic; }
+      .ruby_code .keyword { color: #A00; font-weight: bold; }
+      .ruby_code .method { color: #077; }
+      .ruby_code .class { color: #074; }
+      .ruby_code .module { color: #050; }
+      .ruby_code .punct { color: #447; font-weight: bold; }
+      .ruby_code .symbol { color: #099; }
+      .ruby_code .string { color: #090; }
+      .ruby_code .char { color: #F07; }
+      .ruby_code .ident { color: #004; }
+      .ruby_code .constant { color: #07F; }
+      .ruby_code .regex { color: #B66; }
+      .ruby_code .number { color: #D55; }
+      .ruby_code .attribute { color: #377; }
+      .ruby_code .global { color: #3B7; }
+      .ruby_code .expr { color: #227; }
+    </style>
+  </head>
+  <body>
+    <div id="body-content"><table class="page_nav"><tr><td class="page_nav_prev"><a href="s4_5_3_PATH_Management.html">&laquo; Prev<br/>4.5.3 PATH Management</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s4_5_5_Executing_Commands__The_sh_Method.html">Next &raquo<br/>4.5.5 Executing Commands: The sh Method</a></td></tr></table><div class="separator"></div><a name="s4_5_4_Using_Subsidiary_Build_Scripts__The_rscons_Method" /><h3>4.5.4 Using Subsidiary Build Scripts: The rscons Method</h3>
+
+<p>The
+<a href="../yard/Rscons/Script/GlobalDsl.html#rscons-instance_method"><code>rscons</code></a>
+build script method can be used to invoke an rscons subprocess using a
+subsidiary rscons build script.
+This can be used, for example, when a subproject is imported and a top-level
+<code>configure</code> or <code>build</code> task should also perform the same task in the
+subproject directory.</p>
+
+<p>The first argument to the <code>rscons</code> method specifies either a directory name, or
+the path to the subsidiary Rsconscript file to execute.
+Any additional arguments are passed to <code>rscons</code> when it executes the subsidiary
+script.
+<code>rscons</code> will change working directories to the directory containing the
+subsidiary script when executing it.</p>
+
+<p>For example:</p>
+
+<div class="code ruby_code">
+<pre><span class="ident">configure</span> <span class="keyword">do</span>
+  <span class="ident">rscons</span> <span class="punct">&quot;</span><span class="string">subproject</span><span class="punct">&quot;,</span> <span class="punct">&quot;</span><span class="string">configure</span><span class="punct">&quot;</span>
+<span class="keyword">end</span>
+
+<span class="ident">task</span> <span class="punct">&quot;</span><span class="string">build</span><span class="punct">&quot;</span> <span class="keyword">do</span>
+  <span class="ident">rscons</span> <span class="punct">&quot;</span><span class="string">subproject/Rsconscript</span><span class="punct">&quot;,</span> <span class="punct">&quot;</span><span class="string">build</span><span class="punct">&quot;</span>
+<span class="keyword">end</span>
+</pre>
+</div>
+
+<p>It is also perfectly valid to perform different task(s) in the subsidiary
+script from the one being performed in the top-level script.
+For example, in a project that requires a particular cross compiler, the
+top-level <code>configure</code> script could build the necessary cross compiler using a
+subsidiary build script.
+This could look something like:</p>
+
+<div class="code ruby_code">
+<pre><span class="ident">configure</span> <span class="keyword">do</span>
+  <span class="ident">rscons</span> <span class="punct">&quot;</span><span class="string">cross/Rsconscript</span><span class="punct">&quot;</span>
+  <span class="ident">check_c_compiler</span> <span class="punct">&quot;</span><span class="string">i686-elf-gcc</span><span class="punct">&quot;</span>
+<span class="keyword">end</span>
+</pre>
+</div>
+
+<p>This would build, and if necessary first configure, using the cross/Rsconscript
+subsidiary build script.
+Subsidiary build scripts are executed from within the directory containing the
+build script.</p>
+<div class="separator"></div><table class="page_nav"><tr><td class="page_nav_prev"><a href="s4_5_3_PATH_Management.html">&laquo; Prev<br/>4.5.3 PATH Management</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s4_5_5_Executing_Commands__The_sh_Method.html">Next &raquo<br/>4.5.5 Executing Commands: The sh Method</a></td></tr></table></div>
+  </body>
+</html>
