@@ -1,0 +1,176 @@
+<html>
+  <head>
+    <title>Rscons User Guide - Table of Contents - Version 3.0.2</title>
+    <style>
+      body {
+        background-color: #CCC;
+        margin: 0px;
+        padding: 0px;
+      }
+      #body-content {
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 1em;
+        margin-bottom: 1em;
+        border: 1px solid black;
+        background-color: #FFF;
+        width: 120ex;
+        padding: 2ex;
+      }
+      a {
+        text-decoration: none;
+      }
+      .separator {
+        height: 2em;
+      }
+      .img_block_center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .page_nav {
+        width: 100%;
+        table-layout: fixed;
+      }
+      .page_nav_toc {
+        text-align: center;
+      }
+      .page_nav_next {
+        text-align: right;
+      }
+      .code {
+        padding-left: 2ex;
+        width: 116ex;
+        overflow-x: auto;
+      }
+      .ruby_code .normal {}
+      .ruby_code .comment { color: #005; font-style: italic; }
+      .ruby_code .keyword { color: #A00; font-weight: bold; }
+      .ruby_code .method { color: #077; }
+      .ruby_code .class { color: #074; }
+      .ruby_code .module { color: #050; }
+      .ruby_code .punct { color: #447; font-weight: bold; }
+      .ruby_code .symbol { color: #099; }
+      .ruby_code .string { color: #090; }
+      .ruby_code .char { color: #F07; }
+      .ruby_code .ident { color: #004; }
+      .ruby_code .constant { color: #07F; }
+      .ruby_code .regex { color: #B66; }
+      .ruby_code .number { color: #D55; }
+      .ruby_code .attribute { color: #377; }
+      .ruby_code .global { color: #3B7; }
+      .ruby_code .expr { color: #227; }
+    </style>
+  </head>
+  <body>
+    <div id="body-content"><table class="page_nav"><tr><td class="page_nav_prev"></td><td class="page_nav_toc"></td><td class="page_nav_next"><a href="s1_Overview.html">Next &raquo<br/>1 Overview</a></td></tr></table><div class="separator"></div><img class="img_block_center" src="rscons_logo_1000.png" /><h1>Table of Contents</h1>
+<span style="padding-left: 0ex;"><a href="s1_Overview.html#s1_Overview">1 Overview</a><br/>
+</span><span style="padding-left: 4ex;"><a href="s1_Overview.html#s1_1_Design_Principles">1.1 Design Principles</a><br/>
+</span><span style="padding-left: 8ex;"><a href="s1_Overview.html#s1_1_1_Build_Correctness">1.1.1 Build Correctness</a><br/>
+</span><span style="padding-left: 8ex;"><a href="s1_Overview.html#s1_1_2_Build_Flexibility">1.1.2 Build Flexibility</a><br/>
+</span><span style="padding-left: 8ex;"><a href="s1_Overview.html#s1_1_3_Build_Efficiency">1.1.3 Build Efficiency</a><br/>
+</span><span style="padding-left: 8ex;"><a href="s1_Overview.html#s1_1_4_Build_Directory">1.1.4 Build Directory</a><br/>
+</span><span style="padding-left: 4ex;"><a href="s1_Overview.html#s1_2_Getting_Started">1.2 Getting Started</a><br/>
+</span><span style="padding-left: 0ex;"><a href="s2_Installation.html#s2_Installation">2 Installation</a><br/>
+</span><span style="padding-left: 4ex;"><a href="s2_Installation.html#s2_1_Version_Control_Setup">2.1 Version Control Setup</a><br/>
+</span><span style="padding-left: 0ex;"><a href="s3_Command_Line_Operation.html#s3_Command_Line_Operation">3 Command-Line Operation</a><br/>
+</span><span style="padding-left: 4ex;"><a href="s3_Command_Line_Operation.html#s3_1_Rscons_Operation_Phases">3.1 Rscons Operation Phases</a><br/>
+</span><span style="padding-left: 0ex;"><a href="s4_The_Build_Script.html#s4_The_Build_Script">4 The Build Script</a><br/>
+</span><span style="padding-left: 4ex;"><a href="s4_1_Tasks.html#s4_1_Tasks">4.1 Tasks</a><br/>
+</span><span style="padding-left: 8ex;"><a href="s4_1_1_Task_Parameters.html#s4_1_1_Task_Parameters">4.1.1 Task Parameters</a><br/>
+</span><span style="padding-left: 8ex;"><a href="s4_1_2_Tasks_with_Special_Meaning.html#s4_1_2_Tasks_with_Special_Meaning">4.1.2 Tasks with Special Meaning</a><br/>
+</span><span style="padding-left: 12ex;"><a href="s4_1_2_1_Configure_Task.html#s4_1_2_1_Configure_Task">4.1.2.1 Configure Task</a><br/>
+</span><span style="padding-left: 12ex;"><a href="s4_1_2_2_Default_Task.html#s4_1_2_2_Default_Task">4.1.2.2 Default Task</a><br/>
+</span><span style="padding-left: 12ex;"><a href="s4_1_2_3_Clean_Task.html#s4_1_2_3_Clean_Task">4.1.2.3 Clean Task</a><br/>
+</span><span style="padding-left: 12ex;"><a href="s4_1_2_4_Distclean_Task.html#s4_1_2_4_Distclean_Task">4.1.2.4 Distclean Task</a><br/>
+</span><span style="padding-left: 12ex;"><a href="s4_1_2_5_Install_Task.html#s4_1_2_5_Install_Task">4.1.2.5 Install Task</a><br/>
+</span><span style="padding-left: 12ex;"><a href="s4_1_2_6_Uninstall_Task.html#s4_1_2_6_Uninstall_Task">4.1.2.6 Uninstall Task</a><br/>
+</span><span style="padding-left: 4ex;"><a href="s4_2_Configuring_the_Project.html#s4_2_Configuring_the_Project">4.2 Configuring the Project</a><br/>
+</span><span style="padding-left: 8ex;"><a href="s4_2_1_Checking_for_a_Compiler.html#s4_2_1_Checking_for_a_Compiler">4.2.1 Checking for a Compiler</a><br/>
+</span><span style="padding-left: 8ex;"><a href="s4_2_2_Checking_for_a_Header_File.html#s4_2_2_Checking_for_a_Header_File">4.2.2 Checking for a Header File</a><br/>
+</span><span style="padding-left: 12ex;"><a href="s4_2_2_Checking_for_a_Header_File.html#s4_2_2_1_Options">4.2.2.1 Options</a><br/>
+</span><span style="padding-left: 16ex;"><a href="s4_2_2_Checking_for_a_Header_File.html#s4_2_2_1_1___check_cpppath_">4.2.2.1.1 :check_cpppath</a><br/>
+</span><span style="padding-left: 8ex;"><a href="s4_2_3_Checking_for_a_D_Import.html#s4_2_3_Checking_for_a_D_Import">4.2.3 Checking for a D Import</a><br/>
+</span><span style="padding-left: 12ex;"><a href="s4_2_3_Checking_for_a_D_Import.html#s4_2_3_1_Options">4.2.3.1 Options</a><br/>
+</span><span style="padding-left: 16ex;"><a href="s4_2_3_Checking_for_a_D_Import.html#s4_2_3_1_1___check_d_import_path_">4.2.3.1.1 :check_d_import_path</a><br/>
+</span><span style="padding-left: 8ex;"><a href="s4_2_4_Checking_for_a_Library.html#s4_2_4_Checking_for_a_Library">4.2.4 Checking for a Library</a><br/>
+</span><span style="padding-left: 12ex;"><a href="s4_2_4_Checking_for_a_Library.html#s4_2_4_1_Options">4.2.4.1 Options</a><br/>
+</span><span style="padding-left: 16ex;"><a href="s4_2_4_Checking_for_a_Library.html#s4_2_4_1_1___check_libpath_">4.2.4.1.1 :check_libpath</a><br/>
+</span><span style="padding-left: 16ex;"><a href="s4_2_4_Checking_for_a_Library.html#s4_2_4_1_2___use_">4.2.4.1.2 :use</a><br/>
+</span><span style="padding-left: 8ex;"><a href="s4_2_5_Checking_for_a_Program.html#s4_2_5_Checking_for_a_Program">4.2.5 Checking for a Program</a><br/>
+</span><span style="padding-left: 8ex;"><a href="s4_2_6_Checking_for_a_Package_Configuration.html#s4_2_6_Checking_for_a_Package_Configuration">4.2.6 Checking for a Package Configuration</a><br/>
+</span><span style="padding-left: 12ex;"><a href="s4_2_6_Checking_for_a_Package_Configuration.html#s4_2_6_1_Options">4.2.6.1 Options</a><br/>
+</span><span style="padding-left: 16ex;"><a href="s4_2_6_Checking_for_a_Package_Configuration.html#s4_2_6_1_1___package_">4.2.6.1.1 :package</a><br/>
+</span><span style="padding-left: 16ex;"><a href="s4_2_6_Checking_for_a_Package_Configuration.html#s4_2_6_1_2___program_">4.2.6.1.2 :program</a><br/>
+</span><span style="padding-left: 16ex;"><a href="s4_2_6_Checking_for_a_Package_Configuration.html#s4_2_6_1_3___use_">4.2.6.1.3 :use</a><br/>
+</span><span style="padding-left: 8ex;"><a href="s4_2_7_Custom_Configuration_Checks.html#s4_2_7_Custom_Configuration_Checks">4.2.7 Custom Configuration Checks</a><br/>
+</span><span style="padding-left: 8ex;"><a href="s4_2_8_Global_Configuration_Check_Options.html#s4_2_8_Global_Configuration_Check_Options">4.2.8 Global Configuration Check Options</a><br/>
+</span><span style="padding-left: 12ex;"><a href="s4_2_8_Global_Configuration_Check_Options.html#s4_2_8_1___fail_">4.2.8.1 :fail</a><br/>
+</span><span style="padding-left: 12ex;"><a href="s4_2_8_Global_Configuration_Check_Options.html#s4_2_8_2___on_fail_">4.2.8.2 :on_fail</a><br/>
+</span><span style="padding-left: 12ex;"><a href="s4_2_8_Global_Configuration_Check_Options.html#s4_2_8_3___set_define_">4.2.8.3 :set_define</a><br/>
+</span><span style="padding-left: 4ex;"><a href="s4_3_Building_Targets.html#s4_3_Building_Targets">4.3 Building Targets</a><br/>
+</span><span style="padding-left: 8ex;"><a href="s4_3_1_Environments.html#s4_3_1_Environments">4.3.1 Environments</a><br/>
+</span><span style="padding-left: 8ex;"><a href="s4_3_2_Construction_Variables.html#s4_3_2_Construction_Variables">4.3.2 Construction Variables</a><br/>
+</span><span style="padding-left: 12ex;"><a href="s4_3_2_Construction_Variables.html#s4_3_2_1_Construction_Variable_Naming">4.3.2.1 Construction Variable Naming</a><br/>
+</span><span style="padding-left: 8ex;"><a href="s4_3_3_Builders.html#s4_3_3_Builders">4.3.3 Builders</a><br/>
+</span><span style="padding-left: 12ex;"><a href="s4_3_3_1_The_Command_Builder.html#s4_3_3_1_The_Command_Builder">4.3.3.1 The Command Builder</a><br/>
+</span><span style="padding-left: 12ex;"><a href="s4_3_3_2_The_CFile_Builder.html#s4_3_3_2_The_CFile_Builder">4.3.3.2 The CFile Builder</a><br/>
+</span><span style="padding-left: 12ex;"><a href="s4_3_3_3_The_Copy_Builder.html#s4_3_3_3_The_Copy_Builder">4.3.3.3 The Copy Builder</a><br/>
+</span><span style="padding-left: 12ex;"><a href="s4_3_3_4_The_Directory_Builder.html#s4_3_3_4_The_Directory_Builder">4.3.3.4 The Directory Builder</a><br/>
+</span><span style="padding-left: 12ex;"><a href="s4_3_3_5_The_Disassemble_Builder.html#s4_3_3_5_The_Disassemble_Builder">4.3.3.5 The Disassemble Builder</a><br/>
+</span><span style="padding-left: 12ex;"><a href="s4_3_3_6_The_Install_Builder.html#s4_3_3_6_The_Install_Builder">4.3.3.6 The Install Builder</a><br/>
+</span><span style="padding-left: 12ex;"><a href="s4_3_3_7_The_InstallDirectory_Builder.html#s4_3_3_7_The_InstallDirectory_Builder">4.3.3.7 The InstallDirectory Builder</a><br/>
+</span><span style="padding-left: 12ex;"><a href="s4_3_3_8_The_Library_Builder.html#s4_3_3_8_The_Library_Builder">4.3.3.8 The Library Builder</a><br/>
+</span><span style="padding-left: 12ex;"><a href="s4_3_3_9_The_Object_Builder.html#s4_3_3_9_The_Object_Builder">4.3.3.9 The Object Builder</a><br/>
+</span><span style="padding-left: 12ex;"><a href="s4_3_3_10_The_Preprocess_Builder.html#s4_3_3_10_The_Preprocess_Builder">4.3.3.10 The Preprocess Builder</a><br/>
+</span><span style="padding-left: 12ex;"><a href="s4_3_3_11_The_Program_Builder.html#s4_3_3_11_The_Program_Builder">4.3.3.11 The Program Builder</a><br/>
+</span><span style="padding-left: 16ex;"><a href="s4_3_3_11_The_Program_Builder.html#s4_3_3_11_1_Direct_Mode">4.3.3.11.1 Direct Mode</a><br/>
+</span><span style="padding-left: 12ex;"><a href="s4_3_3_12_The_SharedLibrary_Builder.html#s4_3_3_12_The_SharedLibrary_Builder">4.3.3.12 The SharedLibrary Builder</a><br/>
+</span><span style="padding-left: 16ex;"><a href="s4_3_3_12_The_SharedLibrary_Builder.html#s4_3_3_12_1_Direct_Mode">4.3.3.12.1 Direct Mode</a><br/>
+</span><span style="padding-left: 12ex;"><a href="s4_3_3_13_The_SharedObject_Builder.html#s4_3_3_13_The_SharedObject_Builder">4.3.3.13 The SharedObject Builder</a><br/>
+</span><span style="padding-left: 12ex;"><a href="s4_3_3_14_The_Size_Builder.html#s4_3_3_14_The_Size_Builder">4.3.3.14 The Size Builder</a><br/>
+</span><span style="padding-left: 8ex;"><a href="s4_3_4_Phony_Targets.html#s4_3_4_Phony_Targets">4.3.4 Phony Targets</a><br/>
+</span><span style="padding-left: 8ex;"><a href="s4_3_5_Explicit_Dependencies.html#s4_3_5_Explicit_Dependencies">4.3.5 Explicit Dependencies</a><br/>
+</span><span style="padding-left: 8ex;"><a href="s4_3_6_Build_Hooks.html#s4_3_6_Build_Hooks">4.3.6 Build Hooks</a><br/>
+</span><span style="padding-left: 8ex;"><a href="s4_3_7_Barriers.html#s4_3_7_Barriers">4.3.7 Barriers</a><br/>
+</span><span style="padding-left: 4ex;"><a href="s4_4_Variants.html#s4_4_Variants">4.4 Variants</a><br/>
+</span><span style="padding-left: 8ex;"><a href="s4_4_1_Variant_Groups.html#s4_4_1_Variant_Groups">4.4.1 Variant Groups</a><br/>
+</span><span style="padding-left: 4ex;"><a href="s4_5_Build_Script_Methods.html#s4_5_Build_Script_Methods">4.5 Build Script Methods</a><br/>
+</span><span style="padding-left: 8ex;"><a href="s4_5_1_Finding_Files__The_glob_Method.html#s4_5_1_Finding_Files__The_glob_Method">4.5.1 Finding Files: The glob Method</a><br/>
+</span><span style="padding-left: 8ex;"><a href="s4_5_2_Downloading_Files__The_download_Method.html#s4_5_2_Downloading_Files__The_download_Method">4.5.2 Downloading Files: The download Method</a><br/>
+</span><span style="padding-left: 8ex;"><a href="s4_5_3_PATH_Management.html#s4_5_3_PATH_Management">4.5.3 PATH Management</a><br/>
+</span><span style="padding-left: 8ex;"><a href="s4_5_4_Using_Subsidiary_Build_Scripts__The_rscons_Method.html#s4_5_4_Using_Subsidiary_Build_Scripts__The_rscons_Method">4.5.4 Using Subsidiary Build Scripts: The rscons Method</a><br/>
+</span><span style="padding-left: 8ex;"><a href="s4_5_5_Executing_Commands__The_sh_Method.html#s4_5_5_Executing_Commands__The_sh_Method">4.5.5 Executing Commands: The sh Method</a><br/>
+</span><span style="padding-left: 4ex;"><a href="s4_6_Extending_Rscons.html#s4_6_Extending_Rscons">4.6 Extending Rscons</a><br/>
+</span><span style="padding-left: 8ex;"><a href="s4_6_Extending_Rscons.html#s4_6_1_Adding_New_Languages">4.6.1 Adding New Languages</a><br/>
+</span><span style="padding-left: 8ex;"><a href="s4_6_2_Adding_Custom_Builders.html#s4_6_2_Adding_Custom_Builders">4.6.2 Adding Custom Builders</a><br/>
+</span><span style="padding-left: 12ex;"><a href="s4_6_2_1_Adding_a_Custom_Builder_to_an_Environment.html#s4_6_2_1_Adding_a_Custom_Builder_to_an_Environment">4.6.2.1 Adding a Custom Builder to an Environment</a><br/>
+</span><span style="padding-left: 12ex;"><a href="s4_6_2_2_Builder_Name.html#s4_6_2_2_Builder_Name">4.6.2.2 Builder Name</a><br/>
+</span><span style="padding-left: 12ex;"><a href="s4_6_2_3_Custom_Builder_Constructor.html#s4_6_2_3_Custom_Builder_Constructor">4.6.2.3 Custom Builder Constructor</a><br/>
+</span><span style="padding-left: 12ex;"><a href="s4_6_2_4_Custom_Builder_Operation.html#s4_6_2_4_Custom_Builder_Operation">4.6.2.4 Custom Builder Operation</a><br/>
+</span><span style="padding-left: 16ex;"><a href="s4_6_2_4_Custom_Builder_Operation.html#s4_6_2_4_1_Return_Value">4.6.2.4.1 Return Value</a><br/>
+</span><span style="padding-left: 16ex;"><a href="s4_6_2_4_Custom_Builder_Operation.html#s4_6_2_4_2_Printing_Build_Status">4.6.2.4.2 Printing Build Status</a><br/>
+</span><span style="padding-left: 16ex;"><a href="s4_6_2_4_Custom_Builder_Operation.html#s4_6_2_4_3_Custom_Builder_Cache_Usage___Only_Rebuild_When_Necessary">4.6.2.4.3 Custom Builder Cache Usage - Only Rebuild When Necessary</a><br/>
+</span><span style="padding-left: 16ex;"><a href="s4_6_2_4_Custom_Builder_Operation.html#s4_6_2_4_4_Custom_Builder_Parallelization">4.6.2.4.4 Custom Builder Parallelization</a><br/>
+</span><span style="padding-left: 20ex;"><a href="s4_6_2_4_Custom_Builder_Operation.html#s4_6_2_4_4_1_Using_a_Ruby_Thread_to_Parallelize_a_Builder">4.6.2.4.4.1 Using a Ruby Thread to Parallelize a Builder</a><br/>
+</span><span style="padding-left: 20ex;"><a href="s4_6_2_4_Custom_Builder_Operation.html#s4_6_2_4_4_2_Executing_a_Subcommand_from_a_Custom_Builder">4.6.2.4.4.2 Executing a Subcommand from a Custom Builder</a><br/>
+</span><span style="padding-left: 12ex;"><a href="s4_6_2_5_Simple_custom_builders_added_with_add_builder.html#s4_6_2_5_Simple_custom_builders_added_with_add_builder">4.6.2.5 Simple custom builders added with add_builder</a><br/>
+</span><span style="padding-left: 0ex;"><a href="s5_Appendix.html#s5_Appendix">5 Appendix</a><br/>
+</span><span style="padding-left: 4ex;"><a href="s5_Appendix.html#s5_1_Default_Construction_Variables">5.1 Default Construction Variables</a><br/>
+</span><span style="padding-left: 4ex;"><a href="s5_2_Example_Build_Scripts.html#s5_2_Example_Build_Scripts">5.2 Example Build Scripts</a><br/>
+</span><span style="padding-left: 8ex;"><a href="s5_2_Example_Build_Scripts.html#s5_2_1_Example__Building_a_C_Program">5.2.1 Example: Building a C Program</a><br/>
+</span><span style="padding-left: 8ex;"><a href="s5_2_Example_Build_Scripts.html#s5_2_2_Example__Building_a_D_Program">5.2.2 Example: Building a D Program</a><br/>
+</span><span style="padding-left: 8ex;"><a href="s5_2_Example_Build_Scripts.html#s5_2_3_Example__Cloning_an_Environment">5.2.3 Example: Cloning an Environment</a><br/>
+</span><span style="padding-left: 8ex;"><a href="s5_2_Example_Build_Scripts.html#s5_2_4_Example__Custom_Builder">5.2.4 Example: Custom Builder</a><br/>
+</span><span style="padding-left: 8ex;"><a href="s5_2_Example_Build_Scripts.html#s5_2_5_Example__Using_different_compilation_flags_for_some_sources">5.2.5 Example: Using different compilation flags for some sources</a><br/>
+</span><span style="padding-left: 8ex;"><a href="s5_2_Example_Build_Scripts.html#s5_2_6_Example__Creating_a_static_library">5.2.6 Example: Creating a static library</a><br/>
+</span><span style="padding-left: 8ex;"><a href="s5_2_Example_Build_Scripts.html#s5_2_7_Example__Creating_a_C___parser_source_from_a_Yacc_Bison_input_file">5.2.7 Example: Creating a C++ parser source from a Yacc/Bison input file</a><br/>
+</span><span style="padding-left: 8ex;"><a href="s5_2_Example_Build_Scripts.html#s5_2_8_Example__GCC_Cross_Compiler">5.2.8 Example: GCC Cross Compiler</a><br/>
+</span><span style="padding-left: 4ex;"><a href="s5_3___configure____make.html#s5_3___configure____make">5.3 ./configure && make</a><br/>
+</span><span style="padding-left: 4ex;"><a href="s5_4_YARD_API_Documentation.html#s5_4_YARD_API_Documentation">5.4 YARD API Documentation</a><br/>
+</span><span style="padding-left: 0ex;"><a href="s6_License.html#s6_License">6 License</a><br/>
+</span><span style="padding-left: 0ex;"><a href="s7_Contributing.html#s7_Contributing">7 Contributing</a><br/>
+</span><span style="padding-left: 0ex;"><a href="s8_Change_Log.html#s8_Change_Log">8 Change Log</a><br/>
+</span><div class="separator"></div><table class="page_nav"><tr><td class="page_nav_prev"></td><td class="page_nav_toc"></td><td class="page_nav_next"><a href="s1_Overview.html">Next &raquo<br/>1 Overview</a></td></tr></table></div>
+  </body>
+</html>

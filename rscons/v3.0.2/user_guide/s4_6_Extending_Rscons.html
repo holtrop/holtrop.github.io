@@ -1,0 +1,96 @@
+<html>
+  <head>
+    <title>Rscons User Guide - 4.6 Extending Rscons - Version 3.0.2</title>
+    <style>
+      body {
+        background-color: #CCC;
+        margin: 0px;
+        padding: 0px;
+      }
+      #body-content {
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 1em;
+        margin-bottom: 1em;
+        border: 1px solid black;
+        background-color: #FFF;
+        width: 120ex;
+        padding: 2ex;
+      }
+      a {
+        text-decoration: none;
+      }
+      .separator {
+        height: 2em;
+      }
+      .img_block_center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .page_nav {
+        width: 100%;
+        table-layout: fixed;
+      }
+      .page_nav_toc {
+        text-align: center;
+      }
+      .page_nav_next {
+        text-align: right;
+      }
+      .code {
+        padding-left: 2ex;
+        width: 116ex;
+        overflow-x: auto;
+      }
+      .ruby_code .normal {}
+      .ruby_code .comment { color: #005; font-style: italic; }
+      .ruby_code .keyword { color: #A00; font-weight: bold; }
+      .ruby_code .method { color: #077; }
+      .ruby_code .class { color: #074; }
+      .ruby_code .module { color: #050; }
+      .ruby_code .punct { color: #447; font-weight: bold; }
+      .ruby_code .symbol { color: #099; }
+      .ruby_code .string { color: #090; }
+      .ruby_code .char { color: #F07; }
+      .ruby_code .ident { color: #004; }
+      .ruby_code .constant { color: #07F; }
+      .ruby_code .regex { color: #B66; }
+      .ruby_code .number { color: #D55; }
+      .ruby_code .attribute { color: #377; }
+      .ruby_code .global { color: #3B7; }
+      .ruby_code .expr { color: #227; }
+    </style>
+  </head>
+  <body>
+    <div id="body-content"><table class="page_nav"><tr><td class="page_nav_prev"><a href="s4_5_5_Executing_Commands__The_sh_Method.html">&laquo; Prev<br/>4.5.5 Executing Commands: The sh Method</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s4_6_2_Adding_Custom_Builders.html">Next &raquo<br/>4.6.2 Adding Custom Builders</a></td></tr></table><div class="separator"></div><a name="s4_6_Extending_Rscons" /><h2>4.6 Extending Rscons</h2>
+<a name="s4_6_1_Adding_New_Languages" /><h3>4.6.1 Adding New Languages</h3>
+
+<p>The <code>Object</code> and <code>SharedObject</code> builders that ship with Rscons have an API that
+allows the user to register extra languages that can be suppored by the
+builders.
+In fact, the built-in support for assembly, C, C++, and D compilation all make
+use of this built-in API.
+To see an example of how this API is used, see the
+<code>lib/rscons/builders/lang/*.rb</code> files in the Rscons source repository.
+For example, here is how the C++ language is registered:</p>
+
+<div class="code ruby_code">
+<pre><span class="constant">Rscons</span><span class="punct">::</span><span class="constant">Builders</span><span class="punct">::</span><span class="constant">Object</span><span class="punct">.</span><span class="ident">register</span><span class="punct">(</span><span class="ident">command</span><span class="punct">:</span> <span class="punct">&quot;</span><span class="string">${CXXCMD}</span><span class="punct">&quot;,</span> <span class="ident">direct_command</span><span class="punct">:</span> <span class="punct">&quot;</span><span class="string">${CXXCMD:direct}</span><span class="punct">&quot;,</span> <span class="ident">suffix</span><span class="punct">:</span> <span class="punct">&quot;</span><span class="string">${CXXSUFFIX}</span><span class="punct">&quot;,</span> <span class="ident">preferred_ld</span><span class="punct">:</span> <span class="punct">&quot;</span><span class="string">${CXX}</span><span class="punct">&quot;)</span>
+<span class="constant">Rscons</span><span class="punct">::</span><span class="constant">Builders</span><span class="punct">::</span><span class="constant">SharedObject</span><span class="punct">.</span><span class="ident">register</span><span class="punct">(</span><span class="ident">command</span><span class="punct">:</span> <span class="punct">&quot;</span><span class="string">${SHCXXCMD}</span><span class="punct">&quot;,</span> <span class="ident">direct_command</span><span class="punct">:</span> <span class="punct">&quot;</span><span class="string">${SHCXXCMD:direct}</span><span class="punct">&quot;,</span> <span class="ident">suffix</span><span class="punct">:</span> <span class="punct">&quot;</span><span class="string">${CXXSUFFIX}</span><span class="punct">&quot;,</span> <span class="ident">preferred_ld</span><span class="punct">:</span> <span class="punct">&quot;</span><span class="string">${SHCXX}</span><span class="punct">&quot;)</span>
+</pre>
+</div>
+
+<p>There are also default construction variables registered to go along with the
+language registration as specified above.
+New default construction variables can be registered globally by assigning to
+the <code>Rscons::DEFAULT_CONSTRUCTION_VARIABLES</code> Hash.
+For example:</p>
+
+<div class="code ruby_code">
+<pre><span class="constant">Rscons</span><span class="punct">::</span><span class="constant">DEFAULT_CONSTRUCTION_VARIABLES</span><span class="punct">[&quot;</span><span class="string">CXXCMD</span><span class="punct">&quot;]</span> <span class="punct">=</span> <span class="punct">%w[</span><span class="string">${CXX} -c -o ${_TARGET} ${CXXDEPGEN} ${INCPREFIX}${CPPPATH} ${CPPFLAGS} ${CXXFLAGS} ${CCFLAGS} ${_SOURCES}</span><span class="punct">]</span>
+</pre>
+</div>
+<div class="separator"></div><table class="page_nav"><tr><td class="page_nav_prev"><a href="s4_5_5_Executing_Commands__The_sh_Method.html">&laquo; Prev<br/>4.5.5 Executing Commands: The sh Method</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s4_6_2_Adding_Custom_Builders.html">Next &raquo<br/>4.6.2 Adding Custom Builders</a></td></tr></table></div>
+  </body>
+</html>

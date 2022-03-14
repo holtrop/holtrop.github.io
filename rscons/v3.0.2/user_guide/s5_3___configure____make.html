@@ -1,0 +1,106 @@
+<html>
+  <head>
+    <title>Rscons User Guide - 5.3 ./configure && make - Version 3.0.2</title>
+    <style>
+      body {
+        background-color: #CCC;
+        margin: 0px;
+        padding: 0px;
+      }
+      #body-content {
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 1em;
+        margin-bottom: 1em;
+        border: 1px solid black;
+        background-color: #FFF;
+        width: 120ex;
+        padding: 2ex;
+      }
+      a {
+        text-decoration: none;
+      }
+      .separator {
+        height: 2em;
+      }
+      .img_block_center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .page_nav {
+        width: 100%;
+        table-layout: fixed;
+      }
+      .page_nav_toc {
+        text-align: center;
+      }
+      .page_nav_next {
+        text-align: right;
+      }
+      .code {
+        padding-left: 2ex;
+        width: 116ex;
+        overflow-x: auto;
+      }
+      .ruby_code .normal {}
+      .ruby_code .comment { color: #005; font-style: italic; }
+      .ruby_code .keyword { color: #A00; font-weight: bold; }
+      .ruby_code .method { color: #077; }
+      .ruby_code .class { color: #074; }
+      .ruby_code .module { color: #050; }
+      .ruby_code .punct { color: #447; font-weight: bold; }
+      .ruby_code .symbol { color: #099; }
+      .ruby_code .string { color: #090; }
+      .ruby_code .char { color: #F07; }
+      .ruby_code .ident { color: #004; }
+      .ruby_code .constant { color: #07F; }
+      .ruby_code .regex { color: #B66; }
+      .ruby_code .number { color: #D55; }
+      .ruby_code .attribute { color: #377; }
+      .ruby_code .global { color: #3B7; }
+      .ruby_code .expr { color: #227; }
+    </style>
+  </head>
+  <body>
+    <div id="body-content"><table class="page_nav"><tr><td class="page_nav_prev"><a href="s5_2_Example_Build_Scripts.html">&laquo; Prev<br/>5.2 Example Build Scripts</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s5_4_YARD_API_Documentation.html">Next &raquo<br/>5.4 YARD API Documentation</a></td></tr></table><div class="separator"></div><a name="s5_3___configure____make" /><h2>5.3 ./configure &amp;&amp; make</h2>
+
+<p>You can make your Rscons-based project more familiar to users of
+autoconf-generated projects by creating a <code>configure</code> script and a <code>Makefile</code>
+for the user.
+Such users may be used to executing:</p>
+
+<div class="code">
+<pre>./configure
+make
+</pre>
+</div>
+
+<p>to build a project.
+To do this, create a <code>configure</code> script with contents similar to the following:</p>
+
+<div class="code">
+<pre>#!/bin/sh
+exec "$(dirname "$0")"/rscons configure "$@"
+</pre>
+</div>
+
+<p>and make it executable with <code>chmod +x configure</code>.</p>
+
+<p>If you want your users to be able to build/clean a project with <code>make</code> but
+still make use of Rscons under the hood, you can create a <code>Makefile</code> with
+contents something like this:</p>
+
+<div class="code">
+<pre>.PHONY: all
+all:
+    ./rscons build
+
+.PHONY: clean
+clean:
+    ./rscons clean
+</pre>
+</div>
+<div class="separator"></div><table class="page_nav"><tr><td class="page_nav_prev"><a href="s5_2_Example_Build_Scripts.html">&laquo; Prev<br/>5.2 Example Build Scripts</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s5_4_YARD_API_Documentation.html">Next &raquo<br/>5.4 YARD API Documentation</a></td></tr></table></div>
+  </body>
+</html>

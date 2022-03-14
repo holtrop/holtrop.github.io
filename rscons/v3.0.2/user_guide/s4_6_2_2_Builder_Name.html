@@ -1,0 +1,87 @@
+<html>
+  <head>
+    <title>Rscons User Guide - 4.6.2.2 Builder Name - Version 3.0.2</title>
+    <style>
+      body {
+        background-color: #CCC;
+        margin: 0px;
+        padding: 0px;
+      }
+      #body-content {
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 1em;
+        margin-bottom: 1em;
+        border: 1px solid black;
+        background-color: #FFF;
+        width: 120ex;
+        padding: 2ex;
+      }
+      a {
+        text-decoration: none;
+      }
+      .separator {
+        height: 2em;
+      }
+      .img_block_center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .page_nav {
+        width: 100%;
+        table-layout: fixed;
+      }
+      .page_nav_toc {
+        text-align: center;
+      }
+      .page_nav_next {
+        text-align: right;
+      }
+      .code {
+        padding-left: 2ex;
+        width: 116ex;
+        overflow-x: auto;
+      }
+      .ruby_code .normal {}
+      .ruby_code .comment { color: #005; font-style: italic; }
+      .ruby_code .keyword { color: #A00; font-weight: bold; }
+      .ruby_code .method { color: #077; }
+      .ruby_code .class { color: #074; }
+      .ruby_code .module { color: #050; }
+      .ruby_code .punct { color: #447; font-weight: bold; }
+      .ruby_code .symbol { color: #099; }
+      .ruby_code .string { color: #090; }
+      .ruby_code .char { color: #F07; }
+      .ruby_code .ident { color: #004; }
+      .ruby_code .constant { color: #07F; }
+      .ruby_code .regex { color: #B66; }
+      .ruby_code .number { color: #D55; }
+      .ruby_code .attribute { color: #377; }
+      .ruby_code .global { color: #3B7; }
+      .ruby_code .expr { color: #227; }
+    </style>
+  </head>
+  <body>
+    <div id="body-content"><table class="page_nav"><tr><td class="page_nav_prev"><a href="s4_6_2_1_Adding_a_Custom_Builder_to_an_Environment.html">&laquo; Prev<br/>4.6.2.1 Adding a Custom Builder to an Environment</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s4_6_2_3_Custom_Builder_Constructor.html">Next &raquo<br/>4.6.2.3 Custom Builder Constructor</a></td></tr></table><div class="separator"></div><a name="s4_6_2_2_Builder_Name" /><h4>4.6.2.2 Builder Name</h4>
+
+<p>By default, the builder name is taken from the last component of the class name.
+For example, a class called <code>Rscons::Builders::Mine</code> would be usable in the
+Rsconscript with <code>env.Mine()</code>.
+A builder author can override the builder name by defining a class method
+within the builder class called <code>name</code>.
+For example, with the following builder definition:</p>
+
+<div class="code ruby_code">
+<pre><span class="keyword">class </span><span class="class">Rscons::Builders::MySpecialBuilder</span> <span class="punct">&lt;</span> <span class="constant">Rscons</span><span class="punct">::</span><span class="constant">Builder</span>
+  <span class="keyword">def </span><span class="method">self.name</span>
+    <span class="punct">&quot;</span><span class="string">Special</span><span class="punct">&quot;</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre>
+</div>
+
+<p>This builder would be registered in the Rsconscript with <code>env.Special()</code>.</p>
+<div class="separator"></div><table class="page_nav"><tr><td class="page_nav_prev"><a href="s4_6_2_1_Adding_a_Custom_Builder_to_an_Environment.html">&laquo; Prev<br/>4.6.2.1 Adding a Custom Builder to an Environment</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s4_6_2_3_Custom_Builder_Constructor.html">Next &raquo<br/>4.6.2.3 Custom Builder Constructor</a></td></tr></table></div>
+  </body>
+</html>
