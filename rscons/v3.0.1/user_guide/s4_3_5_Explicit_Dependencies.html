@@ -1,0 +1,86 @@
+<html>
+  <head>
+    <title>Rscons User Guide - 4.3.5 Explicit Dependencies - Version 3.0.1</title>
+    <style>
+      body {
+        background-color: #CCC;
+        margin: 0px;
+        padding: 0px;
+      }
+      #body-content {
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 1em;
+        margin-bottom: 1em;
+        border: 1px solid black;
+        background-color: #FFF;
+        width: 120ex;
+        padding: 2ex;
+      }
+      a {
+        text-decoration: none;
+      }
+      .separator {
+        height: 2em;
+      }
+      .img_block_center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .page_nav {
+        width: 100%;
+        table-layout: fixed;
+      }
+      .page_nav_toc {
+        text-align: center;
+      }
+      .page_nav_next {
+        text-align: right;
+      }
+      .code {
+        padding-left: 2ex;
+        width: 116ex;
+        overflow-x: auto;
+      }
+      .ruby_code .normal {}
+      .ruby_code .comment { color: #005; font-style: italic; }
+      .ruby_code .keyword { color: #A00; font-weight: bold; }
+      .ruby_code .method { color: #077; }
+      .ruby_code .class { color: #074; }
+      .ruby_code .module { color: #050; }
+      .ruby_code .punct { color: #447; font-weight: bold; }
+      .ruby_code .symbol { color: #099; }
+      .ruby_code .string { color: #090; }
+      .ruby_code .char { color: #F07; }
+      .ruby_code .ident { color: #004; }
+      .ruby_code .constant { color: #07F; }
+      .ruby_code .regex { color: #B66; }
+      .ruby_code .number { color: #D55; }
+      .ruby_code .attribute { color: #377; }
+      .ruby_code .global { color: #3B7; }
+      .ruby_code .expr { color: #227; }
+    </style>
+  </head>
+  <body>
+    <div id="body-content"><table class="page_nav"><tr><td class="page_nav_prev"><a href="s4_3_4_Phony_Targets.html">&laquo; Prev<br/>4.3.4 Phony Targets</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s4_3_6_Build_Hooks.html">Next &raquo<br/>4.3.6 Build Hooks</a></td></tr></table><div class="separator"></div><a name="s4_3_5_Explicit_Dependencies" /><h3>4.3.5 Explicit Dependencies</h3>
+
+<p>A target can be marked as depending on another file that Rscons would not
+otherwise know about via the <code>Environment#depends</code> function. For example,
+to force the linker to re-link a Program output when a linker script changes:</p>
+
+<div class="code ruby_code">
+<pre><span class="ident">env</span><span class="punct">.</span><span class="ident">Program</span><span class="punct">(&quot;</span><span class="string">a.out</span><span class="punct">&quot;,</span> <span class="punct">&quot;</span><span class="string">foo.c</span><span class="punct">&quot;,</span> <span class="punct">&quot;</span><span class="string">LDFLAGS</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">-T linker_script.ld</span><span class="punct">])</span>
+<span class="ident">env</span><span class="punct">.</span><span class="ident">depends</span><span class="punct">(&quot;</span><span class="string">a.out</span><span class="punct">&quot;,</span> <span class="punct">&quot;</span><span class="string">linker_script.ld</span><span class="punct">&quot;)</span>
+</pre>
+</div>
+
+<p>You can pass multiple dependency files to <code>Environment#depends</code>:</p>
+
+<div class="code ruby_code">
+<pre><span class="ident">env</span><span class="punct">.</span><span class="ident">depends</span><span class="punct">(&quot;</span><span class="string">my_app</span><span class="punct">&quot;,</span> <span class="punct">&quot;</span><span class="string">config/link.ld</span><span class="punct">&quot;,</span> <span class="punct">&quot;</span><span class="string">README.txt</span><span class="punct">&quot;,</span> <span class="punct">*</span><span class="ident">glob</span><span class="punct">(&quot;</span><span class="string">assets/**/*</span><span class="punct">&quot;))</span>
+</pre>
+</div>
+<div class="separator"></div><table class="page_nav"><tr><td class="page_nav_prev"><a href="s4_3_4_Phony_Targets.html">&laquo; Prev<br/>4.3.4 Phony Targets</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s4_3_6_Build_Hooks.html">Next &raquo<br/>4.3.6 Build Hooks</a></td></tr></table></div>
+  </body>
+</html>

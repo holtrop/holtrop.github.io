@@ -1,0 +1,168 @@
+<html>
+  <head>
+    <title>Rscons User Guide - 3 Command-Line Operation - Version 3.0.1</title>
+    <style>
+      body {
+        background-color: #CCC;
+        margin: 0px;
+        padding: 0px;
+      }
+      #body-content {
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 1em;
+        margin-bottom: 1em;
+        border: 1px solid black;
+        background-color: #FFF;
+        width: 120ex;
+        padding: 2ex;
+      }
+      a {
+        text-decoration: none;
+      }
+      .separator {
+        height: 2em;
+      }
+      .img_block_center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .page_nav {
+        width: 100%;
+        table-layout: fixed;
+      }
+      .page_nav_toc {
+        text-align: center;
+      }
+      .page_nav_next {
+        text-align: right;
+      }
+      .code {
+        padding-left: 2ex;
+        width: 116ex;
+        overflow-x: auto;
+      }
+      .ruby_code .normal {}
+      .ruby_code .comment { color: #005; font-style: italic; }
+      .ruby_code .keyword { color: #A00; font-weight: bold; }
+      .ruby_code .method { color: #077; }
+      .ruby_code .class { color: #074; }
+      .ruby_code .module { color: #050; }
+      .ruby_code .punct { color: #447; font-weight: bold; }
+      .ruby_code .symbol { color: #099; }
+      .ruby_code .string { color: #090; }
+      .ruby_code .char { color: #F07; }
+      .ruby_code .ident { color: #004; }
+      .ruby_code .constant { color: #07F; }
+      .ruby_code .regex { color: #B66; }
+      .ruby_code .number { color: #D55; }
+      .ruby_code .attribute { color: #377; }
+      .ruby_code .global { color: #3B7; }
+      .ruby_code .expr { color: #227; }
+    </style>
+  </head>
+  <body>
+    <div id="body-content"><table class="page_nav"><tr><td class="page_nav_prev"><a href="s2_Installation.html">&laquo; Prev<br/>2 Installation</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s4_The_Build_Script.html">Next &raquo<br/>4 The Build Script</a></td></tr></table><div class="separator"></div><a name="s3_Command_Line_Operation" /><h1>3 Command-Line Operation</h1>
+
+<p>Rscons is typically invoked from the command-line as <code>./rscons</code>.</p>
+
+<pre><code>Usage: ./rscons [global options] [[task] [task options] ...]
+
+Global options:
+  -A, --all
+    Show all tasks (even those without descriptions) in task list. Use in
+    conjunction with the -T argument.
+
+  -b BUILD, --build=BUILD
+    Set build directory (default: build).
+
+  -e VS, --variants=VS
+    Enable or disable variants. VS is a comma-separated list of variant
+    entries. If the entry begins with &quot;-&quot; the variant is disabled instead of
+    enabled. If the full list begins with &quot;+&quot; or &quot;-&quot; then it modifies the
+    variants that are enabled by default by only enabling or disabling the
+    listed variants. Otherwise, the enabled set of variants is as given and
+    any variants not listed are disabled. The set of enabled variants is
+    remembered from when the project is configured.
+
+  -f FILE
+    Use FILE as Rsconscript.
+
+  -F, --show-failure
+    Show failed command log from previous build and exit (does not load build
+    script).
+
+  -h, --help
+    Show rscons help and exit (does not load build script).
+
+  -j N, --nthreads=N
+    Set number of threads (local default: 16).
+
+  -r COLOR, --color=COLOR
+    Set color mode (off, auto, force).
+
+  -T, --tasks
+    Show task list and parameters and exit (loads build script). By default
+    only tasks with a description are listed. Use -AT to show all tasks whether
+    they have a description or not.
+
+  -v, --verbose
+    Run verbosely. This causes Rscons to print the full build command used by
+    each builder.
+
+  --version
+    Show rscons version and exit (does not load build script).
+</code></pre>
+
+<p>The user can list any number of tasks on the command line.
+Any parameters beginning with a &quot;-&quot; that follow a task are interpreted as task
+arguments until another parameter is seen that does not begin with &quot;-&quot;.
+For example:</p>
+
+<pre><code>./rscons -v build1 --build1-opt=val1 --flag build2
+</code></pre>
+
+<p>The above command line is interpreted as follows:</p>
+
+<ul>
+<li>The user is passing the -v global option to run verbosely.</li>
+<li>The user requests to run task build1 with task parameters &quot;--build1-opt=val1&quot; and &quot;--flag&quot;.</li>
+<li>The user requests to run task build2 with no task parameters.</li>
+</ul>
+
+<p>If no tasks are specified on the command line, Rscons executes the <code>default</code>
+task.</p>
+
+<p>If a task fails due to a command failure (e.g. compilation or linking failed),
+Rscons will log the failed commands.
+By default Rscons does not print the failed commands to the console so that it
+is easier for the user to focus on the actual compiler failure messages rather
+than the compilation command itself.
+The user can run <code>./rscons -F</code> to see the command that failed on the prior
+Rscons execution.
+The user can also invoke Rscons with the <code>-v</code> global command-line option which
+will cause Rscons to print each command it is executing.</p>
+<a name="s3_1_Rscons_Operation_Phases" /><h2>3.1 Rscons Operation Phases</h2>
+
+<p>When Rscons executes, it performs the following phases:</p>
+
+<ul>
+<li>Parse the command line.
+
+<ul>
+<li>This is the last step if --help, --version, or --show-failure is specified.</li>
+</ul></li>
+<li>Load the build script.
+
+<ul>
+<li>This is the last step if --tasks is specified.</li>
+</ul></li>
+<li>Configure the project by running the <code>configure</code> task if necessary (the
+project has not yet been configured, autoconf is set to true, and the user
+is requesting to execute a task that is marked with autoconf set to true)</li>
+<li>Execute user-requested tasks.</li>
+</ul>
+<div class="separator"></div><table class="page_nav"><tr><td class="page_nav_prev"><a href="s2_Installation.html">&laquo; Prev<br/>2 Installation</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s4_The_Build_Script.html">Next &raquo<br/>4 The Build Script</a></td></tr></table></div>
+  </body>
+</html>
