@@ -1,0 +1,105 @@
+<html>
+  <head>
+    <title>Propane - an LALR Parser Generator</title>
+    <style>
+      body {
+        background-color: #CCC;
+        margin: 0px;
+        padding: 0px;
+      }
+      #body-table {
+        margin-left: auto;
+        margin-right: auto;
+        border-collapse: collapse;
+      }
+      #body-left-border {
+        width: 10px;
+        background-image: linear-gradient(to right, #CCC, #000, #FFF);
+      }
+      #body-right-border {
+        width: 10px;
+        background-image: linear-gradient(to right, #FFF, #000, #CCC);
+      }
+      #body-center {
+        background-color: #FFF;
+        width: 120ex;
+        padding: 1ex;
+      }
+      a {
+        text-decoration: none;
+      }
+      .separator {
+        height: 2em;
+      }
+      .img_block_center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .page_nav {
+        width: 100%;
+        table-layout: fixed;
+      }
+      .page_nav_toc {
+        text-align: center;
+      }
+      .page_nav_next {
+        text-align: right;
+      }
+      .code {
+        padding-left: 2ex;
+        width: 116ex;
+        overflow-x: auto;
+      }
+      .ruby_code .normal {}
+      .ruby_code .comment { color: #005; font-style: italic; }
+      .ruby_code .keyword { color: #A00; font-weight: bold; }
+      .ruby_code .method { color: #077; }
+      .ruby_code .class { color: #074; }
+      .ruby_code .module { color: #050; }
+      .ruby_code .punct { color: #447; font-weight: bold; }
+      .ruby_code .symbol { color: #099; }
+      .ruby_code .string { color: #090; }
+      .ruby_code .char { color: #F07; }
+      .ruby_code .ident { color: #004; }
+      .ruby_code .constant { color: #07F; }
+      .ruby_code .regex { color: #B66; }
+      .ruby_code .number { color: #D55; }
+      .ruby_code .attribute { color: #377; }
+      .ruby_code .global { color: #3B7; }
+      .ruby_code .expr { color: #227; }
+    </style>
+  </head>
+  <body>
+    <table id="body-table">
+      <tr>
+        <td id="body-left-border"></td>
+        <td id="body-center">
+          <p>Propane is a LALR Parser Generator (LPG) which:</p>
+          <ul>
+            <li>accepts LR(0), SLR, and LALR grammars</li>
+            <li>generates a built-in lexer to tokenize input</li>
+            <li>supports UTF-8 lexer inputs</li>
+            <li>generates a table-driven shift/reduce parser to parse input in linear time</li>
+            <li>target C or D language outputs</li>
+            <li>is MIT-licensed</li>
+            <li>is distributable as a standalone Ruby script</li>
+          </ul>
+          <p>See <a href="https://github.com/holtrop/propane">https://github.com/holtrop/propane</a> for development, downloads, and issues.</p>
+          <p>Releases:</p>
+          <ul>
+            <li>1.0.0
+              <ul>
+                <li><a href="https://github.com/holtrop/propane/releases/download/v1.0.0/propane">Download</a> (sha256sum: a749e8e31e8e9a058560f1a46f93a38e2975722184569dcf9142b32874a6f048)</li>
+                <li><a href="v1.0.0/user_guide/user_guide.html">User Guide - Single Page (HTML)</a></li>
+                <li><a href="v1.0.0/user_guide/toc.html">User Guide - Multiple Pages (HTML)</a></li>
+              </ul>
+            </li>
+          </ul>
+          <p><a href="https://github.com/holtrop/propane/blob/master/CHANGELOG.md">CHANGELOG</a></p>
+        </td>
+        <td id="body-right-border"></td>
+      </tr>
+    </table>
+  </body>
+</html>
