@@ -1,0 +1,149 @@
+<html>
+  <head>
+    <title>Propane User Guide - 5.3 Functions - Version 1.1.0</title>
+    <style>
+      body {
+        background-color: #CCC;
+        margin: 0px;
+        padding: 0px;
+      }
+      #body-content {
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 1em;
+        margin-bottom: 1em;
+        border: 1px solid black;
+        background-color: #FFF;
+        width: 120ex;
+        padding: 2ex;
+      }
+      a {
+        text-decoration: none;
+      }
+      .separator {
+        height: 2em;
+      }
+      .img_block_center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .page_nav {
+        width: 100%;
+        table-layout: fixed;
+      }
+      .page_nav_toc {
+        text-align: center;
+      }
+      .page_nav_next {
+        text-align: right;
+      }
+      .code {
+        padding-left: 2ex;
+        width: 116ex;
+        overflow-x: auto;
+      }
+      .ruby_code .normal {}
+      .ruby_code .comment { color: #005; font-style: italic; }
+      .ruby_code .keyword { color: #A00; font-weight: bold; }
+      .ruby_code .method { color: #077; }
+      .ruby_code .class { color: #074; }
+      .ruby_code .module { color: #050; }
+      .ruby_code .punct { color: #447; font-weight: bold; }
+      .ruby_code .symbol { color: #099; }
+      .ruby_code .string { color: #090; }
+      .ruby_code .char { color: #F07; }
+      .ruby_code .ident { color: #004; }
+      .ruby_code .constant { color: #07F; }
+      .ruby_code .regex { color: #B66; }
+      .ruby_code .number { color: #D55; }
+      .ruby_code .attribute { color: #377; }
+      .ruby_code .global { color: #3B7; }
+      .ruby_code .expr { color: #227; }
+    </style>
+  </head>
+  <body>
+    <div id="body-content"><table class="page_nav"><tr><td class="page_nav_prev"><a href="s5_2_Types.html">&laquo; Prev<br/>5.2 Types</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s6_License.html">Next &raquo<br/>6 License</a></td></tr></table><div class="separator"></div><a name="s5_3_Functions" /><h2>5.3 Functions</h2>
+<a name="s5_3_1__p_context_init_" /><h3>5.3.1 <code>p_context_init</code></h3>
+
+<p>The <code>p_context_init()</code> function must be called to initialize the context
+structure.
+The input to be used for lexing/parsing is passed in when initializing the
+context structure.</p>
+
+<p>Example:</p>
+
+<div class="code">
+<pre>p_context_t context;
+p_context_init(&context, input, input_length);
+</pre>
+</div>
+<a name="s5_3_2__p_parse_" /><h3>5.3.2 <code>p_parse</code></h3>
+
+<p>The <code>p_parse()</code> function is the main entry point to the parser.
+It must be passed a pointer to an initialized context structure.</p>
+
+<p>Example:</p>
+
+<div class="code">
+<pre>p_context_t context;
+p_context_init(&context, input, input_length);
+size_t result = p_parse(&context);
+</pre>
+</div>
+<a name="s5_3_3__p_result_" /><h3>5.3.3 <code>p_result</code></h3>
+
+<p>The <code>p_result()</code> function can be used to retrieve the final parse value after
+<code>p_parse()</code> returns a <code>P_SUCCESS</code> value.</p>
+
+<p>Example:</p>
+
+<div class="code">
+<pre>p_context_t context;
+p_context_init(&context, input, input_length);
+size_t result = p_parse(&context);
+if (p_parse(&context) == P_SUCCESS)
+{
+    result = p_result(&context);
+}
+</pre>
+</div>
+<a name="s5_3_4__p_position_" /><h3>5.3.4 <code>p_position</code></h3>
+
+<p>The <code>p_position()</code> function can be used to retrieve the parser position where
+an error occurred.</p>
+
+<p>Example:</p>
+
+<div class="code">
+<pre>p_context_t context;
+p_context_init(&context, input, input_length);
+size_t result = p_parse(&context);
+if (p_parse(&context) == P_UNEXPECTED_TOKEN)
+{
+    p_position_t error_position = p_position(&context);
+    fprintf(stderr, "Error: unexpected token at row %u column %u\n",
+        error_position.row + 1, error_position.col + 1);
+}
+</pre>
+</div>
+<a name="s5_3_5__p_user_terminate_code_" /><h3>5.3.5 <code>p_user_terminate_code</code></h3>
+
+<p>The <code>p_user_terminate_code()</code> function can be used to retrieve the user
+terminate code after <code>p_parse()</code> returns a <code>P_USER_TERMINATED</code> value.
+User terminate codes are arbitrary values that can be defined by the user to
+be returned when the user requests to terminate parsing.
+They have no particular meaning to Propane.</p>
+
+<p>Example:</p>
+
+<div class="code">
+<pre>if (p_parse(&context) == P_USER_TERMINATED)
+{
+    size_t user_terminate_code = p_user_terminate_code(&context);
+}
+</pre>
+</div>
+<div class="separator"></div><table class="page_nav"><tr><td class="page_nav_prev"><a href="s5_2_Types.html">&laquo; Prev<br/>5.2 Types</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s6_License.html">Next &raquo<br/>6 License</a></td></tr></table></div>
+  </body>
+</html>

@@ -1,0 +1,131 @@
+<html>
+  <head>
+    <title>Propane User Guide - 4.6 Regular expression syntax - Version 1.1.0</title>
+    <style>
+      body {
+        background-color: #CCC;
+        margin: 0px;
+        padding: 0px;
+      }
+      #body-content {
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 1em;
+        margin-bottom: 1em;
+        border: 1px solid black;
+        background-color: #FFF;
+        width: 120ex;
+        padding: 2ex;
+      }
+      a {
+        text-decoration: none;
+      }
+      .separator {
+        height: 2em;
+      }
+      .img_block_center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .page_nav {
+        width: 100%;
+        table-layout: fixed;
+      }
+      .page_nav_toc {
+        text-align: center;
+      }
+      .page_nav_next {
+        text-align: right;
+      }
+      .code {
+        padding-left: 2ex;
+        width: 116ex;
+        overflow-x: auto;
+      }
+      .ruby_code .normal {}
+      .ruby_code .comment { color: #005; font-style: italic; }
+      .ruby_code .keyword { color: #A00; font-weight: bold; }
+      .ruby_code .method { color: #077; }
+      .ruby_code .class { color: #074; }
+      .ruby_code .module { color: #050; }
+      .ruby_code .punct { color: #447; font-weight: bold; }
+      .ruby_code .symbol { color: #099; }
+      .ruby_code .string { color: #090; }
+      .ruby_code .char { color: #F07; }
+      .ruby_code .ident { color: #004; }
+      .ruby_code .constant { color: #07F; }
+      .ruby_code .regex { color: #B66; }
+      .ruby_code .number { color: #D55; }
+      .ruby_code .attribute { color: #377; }
+      .ruby_code .global { color: #3B7; }
+      .ruby_code .expr { color: #227; }
+    </style>
+  </head>
+  <body>
+    <div id="body-content"><table class="page_nav"><tr><td class="page_nav_prev"><a href="s4_5_Ignoring_input_sections___the__drop__statement.html">&laquo; Prev<br/>4.5 Ignoring input sections - the drop statement</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s4_7_Lexer_modes.html">Next &raquo<br/>4.7 Lexer modes</a></td></tr></table><div class="separator"></div><a name="s4_6_Regular_expression_syntax" /><h2>4.6 Regular expression syntax</h2>
+
+<p>A regular expression (&quot;regex&quot;) is used to define lexer patterns in <code>token</code>,
+pattern, and <code>drop</code> statements.
+A regular expression begins and ends with a <code>/</code> character.</p>
+
+<p>Example:</p>
+
+<div class="code">
+<pre>/#.*$/
+</pre>
+</div>
+
+<p>Regular expressions can include many special characters:</p>
+
+<ul>
+<li>The <code>.</code> character matches any input character other than a newline.</li>
+<li>The <code>*</code> character matches any number of the previous regex element.</li>
+<li>The <code>+</code> character matches one or more of the previous regex element.</li>
+<li>The <code>?</code> character matches 0 or 1 of the previous regex element.</li>
+<li>The <code>[</code> character begins a character class.</li>
+<li>The <code>(</code> character begins a matching group.</li>
+<li>The <code>{</code> character begins a count qualifier.</li>
+<li>The <code>\</code> character escapes the following character and changes its meaning:
+
+<ul>
+<li>The <code>\d</code> sequence matches any character <code>0</code> through <code>9</code>.</li>
+<li>The <code>\s</code> sequence matches a space, horizontal tab <code>\t</code>, carriage return
+<code>\r</code>, a form feed <code>\f</code>, or a vertical tab <code>\v</code> character.</li>
+<li>Any other character matches itself.</li>
+</ul></li>
+<li>The <code>|</code> character creates an alternate match.</li>
+</ul>
+
+<p>Any other character just matches itself in the input stream.</p>
+
+<p>A character class consists of a list of character alternates or character
+ranges that can be matched by the character class.
+For example <code>[a-zA-Z_]</code> matches any lowercase character between <code>a</code> and <code>z</code> or
+any uppercase character between <code>A</code> and <code>Z</code> or the underscore <code>_</code> character.
+Character classes can also be negative character classes if the first character
+after the <code>[</code> is a <code>^</code> character.
+In this case, the set of characters matched by the character class is the
+inverse of what it otherwise would have been.
+For example, <code>[^0-9]</code> matches any character other than 0 through 9.</p>
+
+<p>A matching group can be used to override the pattern sequence that multiplicity
+specifiers apply to.
+For example, the pattern <code>/foo+/</code> matches &quot;foo&quot; or &quot;foooo&quot;, while the pattern
+<code>/(foo)+/</code> matches &quot;foo&quot; or &quot;foofoofoo&quot;, but not &quot;foooo&quot;.</p>
+
+<p>A count qualifier in curly braces can be used to restrict the number of matches
+of the preceding atom to an explicit minimum and maximum range.
+For example, the pattern <code>\d{3}</code> matches exactly 3 digits 0-9.
+Both a minimum and maximum multiplicity count can be specified and separated by
+a comma.
+For example, <code>/a{1,5}/</code> matches between 1 and 5 <code>a</code> characters.
+Either the minimum or maximum count can be omitted to omit the corresponding
+restriction in the number of matches allowed.</p>
+
+<p>An alternate match is created with the <code>|</code> character.
+For example, the pattern <code>/foo|bar/</code> matches either the sequence &quot;foo&quot; or the
+sequence &quot;bar&quot;.</p>
+<div class="separator"></div><table class="page_nav"><tr><td class="page_nav_prev"><a href="s4_5_Ignoring_input_sections___the__drop__statement.html">&laquo; Prev<br/>4.5 Ignoring input sections - the drop statement</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s4_7_Lexer_modes.html">Next &raquo<br/>4.7 Lexer modes</a></td></tr></table></div>
+  </body>
+</html>
