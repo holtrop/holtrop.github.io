@@ -1,0 +1,129 @@
+<html>
+  <head>
+    <title>Rscons User Guide - 4.1.2.1 Configure Task - Version 3.2.0</title>
+    <style>
+      body {
+        background-color: #CCC;
+        margin: 0px;
+        padding: 0px;
+      }
+      #body-content {
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 1em;
+        margin-bottom: 1em;
+        border: 1px solid black;
+        background-color: #FFF;
+        width: 120ex;
+        padding: 2ex;
+      }
+      a {
+        text-decoration: none;
+      }
+      .separator {
+        height: 2em;
+      }
+      .img_block_center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .page_nav {
+        width: 100%;
+        table-layout: fixed;
+      }
+      .page_nav_toc {
+        text-align: center;
+      }
+      .page_nav_next {
+        text-align: right;
+      }
+      .code {
+        padding-left: 2ex;
+        width: 116ex;
+        overflow-x: auto;
+      }
+      .ruby_code .normal {}
+      .ruby_code .comment { color: #005; font-style: italic; }
+      .ruby_code .keyword { color: #A00; font-weight: bold; }
+      .ruby_code .method { color: #077; }
+      .ruby_code .class { color: #074; }
+      .ruby_code .module { color: #050; }
+      .ruby_code .punct { color: #447; font-weight: bold; }
+      .ruby_code .symbol { color: #099; }
+      .ruby_code .string { color: #090; }
+      .ruby_code .char { color: #F07; }
+      .ruby_code .ident { color: #004; }
+      .ruby_code .constant { color: #07F; }
+      .ruby_code .regex { color: #B66; }
+      .ruby_code .number { color: #D55; }
+      .ruby_code .attribute { color: #377; }
+      .ruby_code .global { color: #3B7; }
+      .ruby_code .expr { color: #227; }
+    </style>
+  </head>
+  <body>
+    <div id="body-content"><table class="page_nav"><tr><td class="page_nav_prev"><a href="s4_1_2_Tasks_with_Special_Meaning.html">&laquo; Prev<br/>4.1.2 Tasks with Special Meaning</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s4_1_2_2_Default_Task.html">Next &raquo<br/>4.1.2.2 Default Task</a></td></tr></table><div class="separator"></div><a name="s4_1_2_1_Configure_Task" /><h4>4.1.2.1 Configure Task</h4>
+
+<p>The <code>configure</code> task allows Rscons to perform any one-time setup operations
+required by a project, for example locating compilers and setting any initial
+construction variable values based on the host environment in use.
+It will also perform any configuration checks requested by the build script.
+Such configuration checks can include:</p>
+
+<ul>
+<li>verifying operation of a compiler</li>
+<li>loading compilation/linker flags from a config program (e.g. <code>pkg-config</code>)</li>
+<li>verifying presence of a C/C++ header file</li>
+<li>verifying presence of a D import</li>
+<li>verifying presence of a library</li>
+<li>verifying presence of an executable</li>
+<li>any custom user-supplied configuration check</li>
+</ul>
+
+<p>The configure task is implicitly a dependency of every other task unless that
+task is configured with its <code>autoconf</code> option set to <code>false</code>.</p>
+
+<p>The global build script <code>autoconf</code> setting can also be set to <code>false</code> to
+disable automatic invocation of the configure task.
+For example:</p>
+
+<div class="code ruby_code">
+<pre><span class="ident">autoconf</span> <span class="constant">false</span>
+
+<span class="ident">configure</span> <span class="keyword">do</span>
+  <span class="ident">puts</span> <span class="punct">&quot;</span><span class="string">configure</span><span class="punct">&quot;</span>
+<span class="keyword">end</span>
+
+<span class="ident">default</span> <span class="keyword">do</span>
+  <span class="ident">puts</span> <span class="punct">&quot;</span><span class="string">default</span><span class="punct">&quot;</span>
+<span class="keyword">end</span>
+</pre>
+</div>
+
+<p>With the above Rsconscript, even if the project has not yet been configured,
+a configure operation would not take place when the default task is executed.
+The user would have to explicitly request the configure task from the command
+line.</p>
+
+<p>The build script method <code>project_name</code> can be used to set the project name
+which will be reported to the user during a configure operation.
+For example:</p>
+
+<div class="code ruby_code">
+<pre><span class="ident">project_name</span> <span class="punct">&quot;</span><span class="string">My awesome project</span><span class="punct">&quot;</span>
+
+<span class="ident">configure</span> <span class="keyword">do</span>
+  <span class="ident">check_d_compiler</span>
+<span class="keyword">end</span>
+</pre>
+</div>
+
+<p>See <a href="s4_2_Configuring_the_Project.html#s4_2_Configuring_the_Project">Configuring the Project</a> for more details on how to make use of the
+configuration functionality that Rscons provides.</p>
+
+<p>Configure blocks must be defined in the Rsconscript file before any
+environments are created.</p>
+<div class="separator"></div><table class="page_nav"><tr><td class="page_nav_prev"><a href="s4_1_2_Tasks_with_Special_Meaning.html">&laquo; Prev<br/>4.1.2 Tasks with Special Meaning</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s4_1_2_2_Default_Task.html">Next &raquo<br/>4.1.2.2 Default Task</a></td></tr></table></div>
+  </body>
+</html>
