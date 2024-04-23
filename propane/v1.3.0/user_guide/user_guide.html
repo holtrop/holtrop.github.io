@@ -1,0 +1,1089 @@
+<html>
+  <head>
+    <title>Propane User Guide - Version 1.3.0</title>
+    <style>
+      body {
+        background-color: #CCC;
+        margin: 0px;
+        padding: 0px;
+      }
+      #body-content {
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 1em;
+        margin-bottom: 1em;
+        border: 1px solid black;
+        background-color: #FFF;
+        width: 120ex;
+        padding: 2ex;
+      }
+      a {
+        text-decoration: none;
+      }
+      .separator {
+        height: 2em;
+      }
+      .img_block_center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .page_nav {
+        width: 100%;
+        table-layout: fixed;
+      }
+      .page_nav_toc {
+        text-align: center;
+      }
+      .page_nav_next {
+        text-align: right;
+      }
+      .code {
+        padding-left: 2ex;
+        width: 116ex;
+        overflow-x: auto;
+      }
+      .ruby_code .normal {}
+      .ruby_code .comment { color: #005; font-style: italic; }
+      .ruby_code .keyword { color: #A00; font-weight: bold; }
+      .ruby_code .method { color: #077; }
+      .ruby_code .class { color: #074; }
+      .ruby_code .module { color: #050; }
+      .ruby_code .punct { color: #447; font-weight: bold; }
+      .ruby_code .symbol { color: #099; }
+      .ruby_code .string { color: #090; }
+      .ruby_code .char { color: #F07; }
+      .ruby_code .ident { color: #004; }
+      .ruby_code .constant { color: #07F; }
+      .ruby_code .regex { color: #B66; }
+      .ruby_code .number { color: #D55; }
+      .ruby_code .attribute { color: #377; }
+      .ruby_code .global { color: #3B7; }
+      .ruby_code .expr { color: #227; }
+    </style>
+  </head>
+  <body>
+    <div id="body-content"><h1>Table of Contents</h1>
+<span style="padding-left: 0ex;"><a href="user_guide.html#s1_Overview">1 Overview</a><br/>
+</span><span style="padding-left: 0ex;"><a href="user_guide.html#s2_Installation">2 Installation</a><br/>
+</span><span style="padding-left: 0ex;"><a href="user_guide.html#s3_Command_Line_Usage">3 Command Line Usage</a><br/>
+</span><span style="padding-left: 0ex;"><a href="user_guide.html#s4_Propane_Grammar_File">4 Propane Grammar File</a><br/>
+</span><span style="padding-left: 4ex;"><a href="user_guide.html#s4_1_User_Code_Blocks">4.1 User Code Blocks</a><br/>
+</span><span style="padding-left: 8ex;"><a href="user_guide.html#s4_1_1_Standalone_Code_Blocks">4.1.1 Standalone Code Blocks</a><br/>
+</span><span style="padding-left: 8ex;"><a href="user_guide.html#s4_1_2_Lexer_pattern_code_blocks">4.1.2 Lexer pattern code blocks</a><br/>
+</span><span style="padding-left: 8ex;"><a href="user_guide.html#s4_1_3_Parser_rule_code_blocks">4.1.3 Parser rule code blocks</a><br/>
+</span><span style="padding-left: 4ex;"><a href="user_guide.html#s4_2_AST_generation_mode___the__ast__statement">4.2 AST generation mode - the ast statement</a><br/>
+</span><span style="padding-left: 4ex;"><a href="user_guide.html#s4_3_Specifying_tokens___the__token__statement">4.3 Specifying tokens - the token statement</a><br/>
+</span><span style="padding-left: 4ex;"><a href="user_guide.html#s4_4_Defining_tokens_without_a_matching_pattern___the__tokenid__statement">4.4 Defining tokens without a matching pattern - the tokenid statement</a><br/>
+</span><span style="padding-left: 4ex;"><a href="user_guide.html#s4_5_Specifying_a_lexer_pattern___the_pattern_statement">4.5 Specifying a lexer pattern - the pattern statement</a><br/>
+</span><span style="padding-left: 4ex;"><a href="user_guide.html#s4_6_Ignoring_input_sections___the__drop__statement">4.6 Ignoring input sections - the drop statement</a><br/>
+</span><span style="padding-left: 4ex;"><a href="user_guide.html#s4_7_Regular_expression_syntax">4.7 Regular expression syntax</a><br/>
+</span><span style="padding-left: 4ex;"><a href="user_guide.html#s4_8_Lexer_modes">4.8 Lexer modes</a><br/>
+</span><span style="padding-left: 4ex;"><a href="user_guide.html#s4_9_Specifying_parser_value_types___the__ptype__statement">4.9 Specifying parser value types - the ptype statement</a><br/>
+</span><span style="padding-left: 4ex;"><a href="user_guide.html#s4_10_Specifying_a_parser_rule___the_rule_statement">4.10 Specifying a parser rule - the rule statement</a><br/>
+</span><span style="padding-left: 4ex;"><a href="user_guide.html#s4_11_Specifying_the_parser_module_name___the__module__statement">4.11 Specifying the parser module name - the module statement</a><br/>
+</span><span style="padding-left: 4ex;"><a href="user_guide.html#s4_12_Specifying_the_generated_API_prefix___the__prefix__statement">4.12 Specifying the generated API prefix - the prefix statement</a><br/>
+</span><span style="padding-left: 4ex;"><a href="user_guide.html#s4_13_User_termination_of_the_lexer_or_parser">4.13 User termination of the lexer or parser</a><br/>
+</span><span style="padding-left: 0ex;"><a href="user_guide.html#s5_Propane_generated_API">5 Propane generated API</a><br/>
+</span><span style="padding-left: 4ex;"><a href="user_guide.html#s5_1_Constants">5.1 Constants</a><br/>
+</span><span style="padding-left: 4ex;"><a href="user_guide.html#s5_2_Types">5.2 Types</a><br/>
+</span><span style="padding-left: 8ex;"><a href="user_guide.html#s5_2_1__p_context_t_">5.2.1 p_context_t</a><br/>
+</span><span style="padding-left: 8ex;"><a href="user_guide.html#s5_2_2__p_position_t_">5.2.2 p_position_t</a><br/>
+</span><span style="padding-left: 8ex;"><a href="user_guide.html#s5_2_3_AST_Node_Types">5.2.3 AST Node Types</a><br/>
+</span><span style="padding-left: 12ex;"><a href="user_guide.html#s5_2_3_1_AST_Node_Fields">5.2.3.1 AST Node Fields</a><br/>
+</span><span style="padding-left: 4ex;"><a href="user_guide.html#s5_3_Functions">5.3 Functions</a><br/>
+</span><span style="padding-left: 8ex;"><a href="user_guide.html#s5_3_1__p_context_init_">5.3.1 p_context_init</a><br/>
+</span><span style="padding-left: 8ex;"><a href="user_guide.html#s5_3_2__p_parse_">5.3.2 p_parse</a><br/>
+</span><span style="padding-left: 8ex;"><a href="user_guide.html#s5_3_3__p_result_">5.3.3 p_result</a><br/>
+</span><span style="padding-left: 8ex;"><a href="user_guide.html#s5_3_4__p_position_">5.3.4 p_position</a><br/>
+</span><span style="padding-left: 8ex;"><a href="user_guide.html#s5_3_5__p_user_terminate_code_">5.3.5 p_user_terminate_code</a><br/>
+</span><span style="padding-left: 8ex;"><a href="user_guide.html#s5_3_6__p_token_">5.3.6 p_token</a><br/>
+</span><span style="padding-left: 4ex;"><a href="user_guide.html#s5_4_Data">5.4 Data</a><br/>
+</span><span style="padding-left: 8ex;"><a href="user_guide.html#s5_4_1__p_token_names_">5.4.1 p_token_names</a><br/>
+</span><span style="padding-left: 0ex;"><a href="user_guide.html#s6_License">6 License</a><br/>
+</span><span style="padding-left: 0ex;"><a href="user_guide.html#s7_Contributing">7 Contributing</a><br/>
+</span><span style="padding-left: 0ex;"><a href="user_guide.html#s8_Change_Log">8 Change Log</a><br/>
+</span><a name="s1_Overview" /><h1>1 Overview</h1>
+
+<p>Propane is a LALR Parser Generator (LPG) which:</p>
+
+<ul>
+<li>accepts LR(0), SLR, and LALR grammars</li>
+<li>generates a built-in lexer to tokenize input</li>
+<li>supports UTF-8 lexer inputs</li>
+<li>generates a table-driven shift/reduce parser to parse input in linear time</li>
+<li>targets C or D language outputs</li>
+<li>optionally supports automatic full AST generation</li>
+<li>is MIT-licensed</li>
+<li>is distributable as a standalone Ruby script</li>
+</ul>
+<a name="s2_Installation" /><h1>2 Installation</h1>
+
+<p>Propane is designed to be distributed as a stand-alone single file script that
+can be copied into and versioned in a project&#39;s source tree.
+The only requirement to run Propane is that the system has a Ruby interpreter
+installed.
+The latest release can be downloaded from <a href="https://github.com/holtrop/propane/releases">https://github.com/holtrop/propane/releases</a>.
+Simply copy the <code>propane</code> executable script into the desired location within
+the project to be built (typically the root of the repository) and mark it
+executable.</p>
+<a name="s3_Command_Line_Usage" /><h1>3 Command Line Usage</h1>
+
+<p>Propane is typically invoked from the command-line as <code>./propane</code>.</p>
+
+<pre><code>Usage: ./propane [options] &lt;input-file&gt; &lt;output-file&gt;
+Options:
+  --log LOG   Write log file
+  --version   Show program version and exit
+  -h, --help  Show this usage and exit
+</code></pre>
+
+<p>The user must specify the path to a Propane input grammar file and a path to an
+output file.
+The generated source code will be written to the output file.
+If a log file path is specified, Propane will write a log file containing
+detailed information about the parser states and transitions.</p>
+<a name="s4_Propane_Grammar_File" /><h1>4 Propane Grammar File</h1>
+
+<p>A Propane grammar file provides Propane with the patterns, tokens, grammar
+rules, and user code blocks from which to build the generated lexer and parser.</p>
+
+<p>Example grammar file:</p>
+
+<div class="code">
+<pre><<
+import std.math;
+>>
+
+# Parser values are unsigned integers.
+ptype ulong;
+
+# A few basic arithmetic operators.
+token plus /\\+/;
+token times /\\*/;
+token power /\\*\\*/;
+token integer /\\d+/ <<
+  ulong v;
+  foreach (c; match)
+  {
+    v *= 10;
+    v += (c - '0');
+  }
+  $$ = v;
+>>
+token lparen /\\(/;
+token rparen /\\)/;
+# Drop whitespace.
+drop /\\s+/;
+
+Start -> E1 << $$ = $1; >>
+E1 -> E2 << $$ = $1; >>
+E1 -> E1 plus E2 << $$ = $1 + $3; >>
+E2 -> E3 << $$ = $1; >>
+E2 -> E2 times E3 << $$ = $1 * $3; >>
+E3 -> E4 << $$ = $1; >>
+E3 -> E3 power E4 << $$ = pow($1, $3); >>
+E4 -> integer << $$ = $1; >>
+E4 -> lparen E1 rparen << $$ = $2; >>
+</pre>
+</div>
+
+<p>Grammar files can contain comment lines beginning with <code>#</code> which are ignored.
+White space in the grammar file is also ignored.</p>
+
+<p>It is convention to use the extension <code>.propane</code> for the Propane grammar file,
+however any file name is accepted by Propane.</p>
+
+<p>This user guide follows the convention of beginning a token name with a
+lowercase character and beginning a rule name with an uppercase character.</p>
+<a name="s4_1_User_Code_Blocks" /><h2>4.1 User Code Blocks</h2>
+
+<p>User code blocks begin following a &quot;&lt;&lt;&quot; token and end with a &quot;&gt;&gt;&quot; token found
+at the end of a line.
+All text lines in the code block are copied verbatim into the output file.</p>
+<a name="s4_1_1_Standalone_Code_Blocks" /><h3>4.1.1 Standalone Code Blocks</h3>
+
+<p>C example:</p>
+
+<div class="code">
+<pre><<
+#include &lt;stdio.h>
+>>
+</pre>
+</div>
+
+<p>D example:</p>
+
+<div class="code">
+<pre><<
+import std.stdio;
+>>
+</pre>
+</div>
+
+<p>Standalone code blocks are emitted early in the output file as top-level code
+outside the context of any function.
+Standalone code blocks are a good place to include/import any other necessary
+supporting code modules.
+They can also define helper functions that can be reused by lexer or parser
+user code blocks.
+They are emitted in the order they are defined in the grammar file.</p>
+
+<p>For a C target, the word &quot;header&quot; may immediately follow the &quot;&lt;&lt;&quot; token to
+cause Propane to emit the code block in the generated header file rather than
+the generated implementation file.
+This allows including another header that may be necessary to define any types
+needed by a <code>ptype</code> directive, for example:</p>
+
+<div class="code">
+<pre><&lt;header
+#include "mytypes.h"
+>>
+</pre>
+</div>
+<a name="s4_1_2_Lexer_pattern_code_blocks" /><h3>4.1.2 Lexer pattern code blocks</h3>
+
+<p>Example:</p>
+
+<div class="code">
+<pre>ptype ulong;
+
+token integer /\\d+/ <<
+  ulong v;
+  foreach (c; match)
+  {
+    v *= 10;
+    v += (c - '0');
+  }
+  $$ = v;
+>>
+</pre>
+</div>
+
+<p>Lexer code blocks appear following a <code>token</code> or pattern expression.
+User code in a lexer code block will be executed when the lexer matches the
+given pattern.
+Assignment to the <code>$$</code> symbol will associate a parser value with the lexed
+token.
+This parser value can then be used later in a parser rule.</p>
+<a name="s4_1_3_Parser_rule_code_blocks" /><h3>4.1.3 Parser rule code blocks</h3>
+
+<p>Example:</p>
+
+<div class="code">
+<pre>E1 -> E1 plus E2 << $$ = $1 + $3; >>
+</pre>
+</div>
+
+<p>Parser rule code blocks appear following a rule expression.
+User code in a parser rule code block will be executed when the parser reduces
+the given rule.
+Assignment to the <code>$$</code> symbol will associate a parser value with the reduced
+rule.
+Parser values for the rules or tokens in the rule pattern can be accessed
+positionally with tokens <code>$1</code>, <code>$2</code>, <code>$3</code>, etc...</p>
+
+<p>Parser rule code blocks are not available in AST generation mode.
+In AST generation mode, a full parse tree is automatically constructed in
+memory for user code to traverse after parsing is complete.</p>
+<a name="s4_2_AST_generation_mode___the__ast__statement" /><h2>4.2 AST generation mode - the <code>ast</code> statement</h2>
+
+<p>To activate AST generation mode, place the <code>ast</code> statement in your grammar file:</p>
+
+<div class="code">
+<pre>ast;
+</pre>
+</div>
+
+<p>It is recommended to place this statement early in the grammar.</p>
+
+<p>In AST generation mode various aspects of propane&#39;s behavior are changed:</p>
+
+<ul>
+<li>Only one <code>ptype</code> is allowed.</li>
+<li>Parser user code blocks are not supported.</li>
+<li>Structure types are generated to represent the parsed tokens and rules as
+defined in the grammar.</li>
+<li>The parse result from <code>p_result()</code> points to a <code>Start</code> structure containing
+the entire parse tree for the input.</li>
+</ul>
+
+<p>Example AST generation grammar:</p>
+
+<div class="code">
+<pre>ast;
+
+ptype int;
+
+token a << $$ = 11; >>
+token b << $$ = 22; >>
+token one /1/;
+token two /2/;
+token comma /,/ <<
+  $$ = 42;
+>>
+token lparen /\\(/;
+token rparen /\\)/;
+drop /\\s+/;
+
+Start -> Items;
+
+Items -> Item ItemsMore;
+Items -> ;
+
+ItemsMore -> comma Item ItemsMore;
+ItemsMore -> ;
+
+Item -> a;
+Item -> b;
+Item -> lparen Item rparen;
+Item -> Dual;
+
+Dual -> One Two;
+Dual -> Two One;
+One -> one;
+Two -> two;
+</pre>
+</div>
+
+<p>The following unit test describes the fields that will be present for an
+example parse:</p>
+
+<div class="code">
+<pre>string input = "a, ((b)), b";
+p_context_t context;
+p_context_init(&context, input);
+assert_eq(P_SUCCESS, p_parse(&context));
+Start * start = p_result(&context);
+assert(start.pItems1 !is null);
+assert(start.pItems !is null);
+Items * items = start.pItems;
+assert(items.pItem !is null);
+assert(items.pItem.pToken1 !is null);
+assert_eq(TOKEN_a, items.pItem.pToken1.token);
+assert_eq(11, items.pItem.pToken1.pvalue);
+assert(items.pItemsMore !is null);
+ItemsMore * itemsmore = items.pItemsMore;
+assert(itemsmore.pItem !is null);
+assert(itemsmore.pItem.pItem !is null);
+assert(itemsmore.pItem.pItem.pItem !is null);
+assert(itemsmore.pItem.pItem.pItem.pToken1 !is null);
+assert_eq(TOKEN_b, itemsmore.pItem.pItem.pItem.pToken1.token);
+assert_eq(22, itemsmore.pItem.pItem.pItem.pToken1.pvalue);
+assert(itemsmore.pItemsMore !is null);
+itemsmore = itemsmore.pItemsMore;
+assert(itemsmore.pItem !is null);
+assert(itemsmore.pItem.pToken1 !is null);
+assert_eq(TOKEN_b, itemsmore.pItem.pToken1.token);
+assert_eq(22, itemsmore.pItem.pToken1.pvalue);
+assert(itemsmore.pItemsMore is null);
+</pre>
+</div>
+<a name="s4_3_Specifying_tokens___the__token__statement" /><h2>4.3 Specifying tokens - the <code>token</code> statement</h2>
+
+<p>The <code>token</code> statement allows defining a lexer token and a pattern to match that
+token.
+The name of the token must be specified immediately following the <code>token</code>
+keyword.
+A regular expression pattern may optionally follow the token name.
+If a regular expression pattern is not specified, the name of the token is
+taken to be the pattern.
+See also: <a href="user_guide.html#s4_7_Regular_expression_syntax">Regular expression syntax</a>.</p>
+
+<p>Example:</p>
+
+<div class="code">
+<pre>token for;
+</pre>
+</div>
+
+<p>In this example, the token name is <code>for</code> and the pattern to match it is
+<code>/for/</code>.</p>
+
+<p>Example:</p>
+
+<div class="code">
+<pre>token lbrace /\{/;
+</pre>
+</div>
+
+<p>In this example, the token name is <code>lbrace</code> and a single left curly brace will
+match it.</p>
+
+<p>The <code>token</code> statement can also include a user code block.
+The user code block will be executed whenever the token is matched by the
+lexer.</p>
+
+<p>Example:</p>
+
+<div class="code">
+<pre>token if << writeln("'if' keyword lexed"); >>
+</pre>
+</div>
+
+<p>The <code>token</code> statement is actually a shortcut statement for a combination of a
+<code>tokenid</code> statement and a pattern statement.
+To define a lexer token without an associated pattern to match it, use a
+<code>tokenid</code> statement.
+To define a lexer pattern that may or may not result in a matched token, use
+a pattern statement.</p>
+<a name="s4_4_Defining_tokens_without_a_matching_pattern___the__tokenid__statement" /><h2>4.4 Defining tokens without a matching pattern - the <code>tokenid</code> statement</h2>
+
+<p>The <code>tokenid</code> statement can be used to define a token without associating it
+with a lexer pattern that matches it.</p>
+
+<p>Example:</p>
+
+<div class="code">
+<pre>tokenid string;
+</pre>
+</div>
+
+<p>The <code>tokenid</code> statement can be useful when defining a token that may optionally
+be returned by user code associated with a pattern.</p>
+
+<p>It is also useful when lexer modes and multiple lexer patterns are required to
+build up a full token.
+A common example is parsing a string.
+See the <a href="user_guide.html#s4_8_Lexer_modes">Lexer modes</a> chapter for more information.</p>
+<a name="s4_5_Specifying_a_lexer_pattern___the_pattern_statement" /><h2>4.5 Specifying a lexer pattern - the pattern statement</h2>
+
+<p>A pattern statement is used to define a lexer pattern that can execute user
+code but may not result in a matched token.</p>
+
+<p>Example:</p>
+
+<div class="code">
+<pre>/foo+/ << writeln("saw a foo pattern"); >>
+</pre>
+</div>
+
+<p>This can be especially useful with <a href="user_guide.html#s4_8_Lexer_modes">Lexer modes</a>.</p>
+
+<p>See also <a href="user_guide.html#s4_7_Regular_expression_syntax">Regular expression syntax</a>.</p>
+<a name="s4_6_Ignoring_input_sections___the__drop__statement" /><h2>4.6 Ignoring input sections - the <code>drop</code> statement</h2>
+
+<p>A <code>drop</code> statement can be used to specify a lexer pattern that when matched
+should result in the matched input being dropped and lexing continuing after
+the matched input.</p>
+
+<p>A common use for a <code>drop</code> statement would be to ignore whitespace sequences in
+the user input.</p>
+
+<p>Example:</p>
+
+<div class="code">
+<pre>drop /\s+/;
+</pre>
+</div>
+
+<p>See also <a href="user_guide.html#s4_7_Regular_expression_syntax">Regular expression syntax</a>.</p>
+<a name="s4_7_Regular_expression_syntax" /><h2>4.7 Regular expression syntax</h2>
+
+<p>A regular expression (&quot;regex&quot;) is used to define lexer patterns in <code>token</code>,
+pattern, and <code>drop</code> statements.
+A regular expression begins and ends with a <code>/</code> character.</p>
+
+<p>Example:</p>
+
+<div class="code">
+<pre>/#.*$/
+</pre>
+</div>
+
+<p>Regular expressions can include many special characters:</p>
+
+<ul>
+<li>The <code>.</code> character matches any input character other than a newline.</li>
+<li>The <code>*</code> character matches any number of the previous regex element.</li>
+<li>The <code>+</code> character matches one or more of the previous regex element.</li>
+<li>The <code>?</code> character matches 0 or 1 of the previous regex element.</li>
+<li>The <code>[</code> character begins a character class.</li>
+<li>The <code>(</code> character begins a matching group.</li>
+<li>The <code>{</code> character begins a count qualifier.</li>
+<li>The <code>\</code> character escapes the following character and changes its meaning:
+
+<ul>
+<li>The <code>\a</code> sequence matches an ASCII bell character (0x07).</li>
+<li>The <code>\b</code> sequence matches an ASCII backspace character (0x08).</li>
+<li>The <code>\d</code> sequence matches any character <code>0</code> through <code>9</code>.</li>
+<li>The <code>\f</code> sequence matches an ASCII form feed character (0x0C).</li>
+<li>The <code>\n</code> sequence matches an ASCII new line character (0x0A).</li>
+<li>The <code>\r</code> sequence matches an ASCII carriage return character (0x0D).</li>
+<li>The <code>\s</code> sequence matches a space, horizontal tab <code>\t</code>, carriage return
+<code>\r</code>, a form feed <code>\f</code>, or a vertical tab <code>\v</code> character.</li>
+<li>The <code>\t</code> sequence matches an ASCII tab character (0x09).</li>
+<li>The <code>\v</code> sequence matches an ASCII vertical tab character (0x0B).</li>
+<li>Any other character matches itself.</li>
+</ul></li>
+<li>The <code>|</code> character creates an alternate match.</li>
+</ul>
+
+<p>Any other character just matches itself in the input stream.</p>
+
+<p>A character class consists of a list of character alternates or character
+ranges that can be matched by the character class.
+For example <code>[a-zA-Z_]</code> matches any lowercase character between <code>a</code> and <code>z</code> or
+any uppercase character between <code>A</code> and <code>Z</code> or the underscore <code>_</code> character.
+Character classes can also be negative character classes if the first character
+after the <code>[</code> is a <code>^</code> character.
+In this case, the set of characters matched by the character class is the
+inverse of what it otherwise would have been.
+For example, <code>[^0-9]</code> matches any character other than 0 through 9.</p>
+
+<p>A matching group can be used to override the pattern sequence that multiplicity
+specifiers apply to.
+For example, the pattern <code>/foo+/</code> matches &quot;foo&quot; or &quot;foooo&quot;, while the pattern
+<code>/(foo)+/</code> matches &quot;foo&quot; or &quot;foofoofoo&quot;, but not &quot;foooo&quot;.</p>
+
+<p>A count qualifier in curly braces can be used to restrict the number of matches
+of the preceding atom to an explicit minimum and maximum range.
+For example, the pattern <code>\d{3}</code> matches exactly 3 digits 0-9.
+Both a minimum and maximum multiplicity count can be specified and separated by
+a comma.
+For example, <code>/a{1,5}/</code> matches between 1 and 5 <code>a</code> characters.
+Either the minimum or maximum count can be omitted to omit the corresponding
+restriction in the number of matches allowed.</p>
+
+<p>An alternate match is created with the <code>|</code> character.
+For example, the pattern <code>/foo|bar/</code> matches either the sequence &quot;foo&quot; or the
+sequence &quot;bar&quot;.</p>
+<a name="s4_8_Lexer_modes" /><h2>4.8 Lexer modes</h2>
+
+<p>Lexer modes can be used to change the set of patterns that are matched by the
+lexer.
+A common use for lexer modes is to match strings.</p>
+
+<p>Example:</p>
+
+<div class="code">
+<pre><<
+string mystringvalue;
+>>
+
+tokenid str;
+
+# String processing
+/"/ <<
+  mystringvalue = "";
+  $mode(string);
+>>
+string: /[^"]+/ << mystringvalue += match; >>
+string: /"/ <<
+  $mode(default);
+  return $token(str);
+>>
+</pre>
+</div>
+
+<p>A lexer mode is defined by placing the name before a colon (<code>:</code>) character that
+precedes a token or pattern statement.
+The token or pattern statement is restricted to only applying if the named mode
+is active.</p>
+
+<p>By default, the active lexer mode is named <code>default</code>.
+A <code>$mode()</code> call within a lexer code block can be used to change lexer modes.</p>
+
+<p>In the above example, when the lexer in the default mode sees a doublequote
+(<code>&quot;</code>) character, the lexer code block will clear the <code>mystringvalue</code> variable
+and will set the lexer mode to <code>string</code>.
+When the lexer begins looking for patterns to match against the input, it will
+now look only for patterns tagged for the <code>string</code> lexer mode.
+Any non-<code>&quot;</code> character will be appended to the <code>mystringvalue</code> string.
+A <code>&quot;</code> character will end the <code>string</code> lexer mode and return to the <code>default</code>
+lexer mode.
+It also returns the <code>str</code> token now that the token is complete.</p>
+
+<p>Note that the token name <code>str</code> above could have been <code>string</code> instead - the
+namespace for token names is distinct from the namespace for lexer modes.</p>
+<a name="s4_9_Specifying_parser_value_types___the__ptype__statement" /><h2>4.9 Specifying parser value types - the <code>ptype</code> statement</h2>
+
+<p>The <code>ptype</code> statement is used to define parser value type(s).
+Example:</p>
+
+<div class="code">
+<pre>ptype void *;
+</pre>
+</div>
+
+<p>This defines the default parser value type to be <code>void *</code> (this is, in fact,
+the default parser value type if the grammar file does not specify otherwise).</p>
+
+<p>Each defined lexer token type and parser rule has an associated parser value
+type.
+When the lexer runs, each lexed token has a parser value associated with it.
+When the parser runs, each instance of a reduced rule has a parser value
+associated with it.
+Propane supports using different parser value types for different rules and
+token types.
+The example <code>ptype</code> statement above defines the default parser value type.
+A parser value type name can optionally be specified following the <code>ptype</code>
+keyword.
+For example:</p>
+
+<div class="code">
+<pre>ptype Value;
+ptype array = Value[];
+ptype dict = Value[string];
+
+Object -> lbrace rbrace << $$ = new Value(); >>
+
+Values (array) -> Value << $$ = [$1]; >>
+Values -> Values comma Value << $$ = $1 ~ [$3]; >>
+
+KeyValue (dict) -> string colon Value << $$ = [$1: $3]; >>
+</pre>
+</div>
+
+<p>In this example, the default parser value type is <code>Value</code>.
+A parser value type named <code>array</code> is defined to mean <code>Value[]</code>.
+A parser value type named <code>dict</code> is defined to mean <code>Value[string]</code>.
+Any defined tokens or rules that do not specify a parser value type will have
+the default parser value type associated with them.
+To associate a different parser value type with a token or rule, write the
+parser value type name in parentheses following the name of the token or rule.
+In this example:</p>
+
+<ul>
+<li>a reduced <code>Object</code>&#39;s parser value has a type of <code>Value</code>.</li>
+<li>a reduced <code>Values</code>&#39;s parser value has a type of <code>Value[]</code>.</li>
+<li>a reduced <code>KeyValue</code>&#39;s parser value has a type of <code>Value[string]</code>.</li>
+</ul>
+
+<p>When AST generation mode is active, the <code>ptype</code> functionality works differently.
+In this mode, only one <code>ptype</code> is used by the parser.
+Lexer user code blocks may assign a parse value to the generated <code>Token</code> node
+by assigning to <code>$$</code> within a lexer code block.
+The type of the parse value <code>$$</code> is given by the global <code>ptype</code> type.</p>
+<a name="s4_10_Specifying_a_parser_rule___the_rule_statement" /><h2>4.10 Specifying a parser rule - the rule statement</h2>
+
+<p>Rule statements create parser rules which define the grammar that will be
+parsed by the generated parser.</p>
+
+<p>Multiple rules with the same name can be specified.
+Rules with the same name define a rule set for that name and act as
+alternatives that the parser can accept when attempting to match a reference to
+that rule.</p>
+
+<p>The grammar file must define a rule with the name <code>Start</code> which will be used as
+the top-level starting rule that the parser attempts to reduce.</p>
+
+<p>Example:</p>
+
+<div class="code">
+<pre>ptype ulong;
+token word /[a-z]+/ << $$ = match.length; >>
+Start -> word << $$ = $1; >>
+</pre>
+</div>
+
+<p>In the above example the <code>Start</code> rule is defined to match a single <code>word</code>
+token.</p>
+
+<p>Example:</p>
+
+<div class="code">
+<pre>Start -> E1 << $$ = $1; >>
+E1 -> E2 << $$ = $1; >>
+E1 -> E1 plus E2 << $$ = $1 + $3; >>
+E2 -> E3 << $$ = $1; >>
+E2 -> E2 times E3 << $$ = $1 * $3; >>
+E3 -> E4 << $$ = $1; >>
+E3 -> E3 power E4 << $$ = pow($1, $3); >>
+E4 -> integer << $$ = $1; >>
+E4 -> lparen E1 rparen << $$ = $2; >>
+</pre>
+</div>
+
+<p>A parser rule has zero or more terms on the right side of its definition.
+Each of these terms is either a token name or a rule name.</p>
+
+<p>In a parser rule code block, parser values for the right side terms are
+accessible as <code>$1</code> for the first term&#39;s parser value, <code>$2</code> for the second
+term&#39;s parser value, etc...
+The <code>$$</code> symbol accesses the output parser value for this rule.
+The above examples demonstrate how the parser values for the rule components
+can be used to produce the parser value for the accepted rule.</p>
+
+<p>Parser rule code blocks are not allowed and not used when AST generation mode
+is active.</p>
+<a name="s4_11_Specifying_the_parser_module_name___the__module__statement" /><h2>4.11 Specifying the parser module name - the <code>module</code> statement</h2>
+
+<p>The <code>module</code> statement can be used to specify the module name for a generated
+D module.</p>
+
+<div class="code">
+<pre>module proj.parser;
+</pre>
+</div>
+
+<p>If a module statement is not present, then the generated D module will not
+contain a module statement and the default module name will be used.</p>
+<a name="s4_12_Specifying_the_generated_API_prefix___the__prefix__statement" /><h2>4.12 Specifying the generated API prefix - the <code>prefix</code> statement</h2>
+
+<p>By default the public API (types, constants, and functions) of the generated
+lexer and parser uses a prefix of <code>p_</code>.</p>
+
+<p>This prefix can be changed with the <code>prefix</code> statement.</p>
+
+<p>Example:</p>
+
+<div class="code">
+<pre>prefix myparser_;
+</pre>
+</div>
+
+<p>With a parser generated with this <code>prefix</code> statement, instead of calling
+<code>p_context_init()</code> you would call <code>myparser_context_init()</code>.</p>
+
+<p>The <code>prefix</code> statement can be optionally used if you would like to change the
+prefix used by your generated lexer and parser to something other than the
+default.</p>
+
+<p>It can also be used when generating multiple lexers/parsers to be used in the
+same program to avoid symbol collisions.</p>
+<a name="s4_13_User_termination_of_the_lexer_or_parser" /><h2>4.13 User termination of the lexer or parser</h2>
+
+<p>Propane supports allowing lexer or parser user code blocks to terminate
+execution of the parser.
+Some example uses of this functionality could be to:</p>
+
+<ul>
+<li>Detect integer overflow when lexing an integer literal constant.</li>
+<li>Detect and report an error as soon as possible during parsing before continuing to parse any more of the input.</li>
+<li>Determine whether parsing should stop and instead be performed using a different parser version.</li>
+</ul>
+
+<p>To terminate parsing from a lexer or parser user code block, use the
+<code>$terminate(code)</code> function, passing an integer expression argument.
+For example:</p>
+
+<div class="code">
+<pre>NewExpression -> new Expression << $terminate(42); >>
+</pre>
+</div>
+
+<p>The value passed to the <code>$terminate()</code> function is known as the &quot;user terminate
+code&quot;.
+If the parser returns a <code>P_USER_TERMINATED</code> result code, then the user
+terminate code can be accessed using the <code>p_user_terminate_code()</code> API
+function.</p>
+<a name="s5_Propane_generated_API" /><h1>5 Propane generated API</h1>
+
+<p>By default, Propane uses a prefix of <code>p_</code> when generating a lexer/parser.
+This prefix is used for all publicly declared types and functions.
+The uppercase version of the prefix is used for all constant values.</p>
+
+<p>This section documents the generated API using the default <code>p_</code> or <code>P_</code> names.</p>
+<a name="s5_1_Constants" /><h2>5.1 Constants</h2>
+
+<p>Propane generates the following result code constants:</p>
+
+<ul>
+<li><code>P_SUCCESS</code>: A successful decode/lex/parse operation has taken place.</li>
+<li><code>P_DECODE_ERROR</code>: An error occurred when decoding UTF-8 input.</li>
+<li><code>P_UNEXPECTED_INPUT</code>: Input was received by the lexer that does not match any lexer pattern.</li>
+<li><code>P_UNEXPECTED_TOKEN</code>: A token was seen in a location that does not match any parser rule.</li>
+<li><code>P_DROP</code>: The lexer matched a drop pattern.</li>
+<li><code>P_EOF</code>: The lexer reached the end of the input string.</li>
+<li><code>P_USER_TERMINATED</code>: A parser user code block has requested to terminate the parser.</li>
+</ul>
+
+<p>Result codes are returned by the functions <code>p_decode_input()</code>, <code>p_lex()</code>, and <code>p_parse()</code>.</p>
+<a name="s5_2_Types" /><h2>5.2 Types</h2>
+<a name="s5_2_1__p_context_t_" /><h3>5.2.1 <code>p_context_t</code></h3>
+
+<p>Propane defines a <code>p_context_t</code> structure type.
+The structure is intended to be used opaquely and stores information related to
+the state of the lexer and parser.
+Integrating code must define an instance of the <code>p_context_t</code> structure.
+A pointer to this instance is passed to the generated functions.</p>
+<a name="s5_2_2__p_position_t_" /><h3>5.2.2 <code>p_position_t</code></h3>
+
+<p>The <code>p_position_t</code> structure contains two fields <code>row</code> and <code>col</code>.
+These fields contain the 0-based row and column describing a parser position.</p>
+<a name="s5_2_3_AST_Node_Types" /><h3>5.2.3 AST Node Types</h3>
+
+<p>If AST generation mode is enabled, a structure type for each rule will be
+generated.
+The name of the structure type is given by the name of the rule.
+Additionally a structure type called <code>Token</code> is generated to represent an
+AST node which refers to a raw parser token rather than a composite rule.</p>
+<a name="s5_2_3_1_AST_Node_Fields" /><h4>5.2.3.1 AST Node Fields</h4>
+
+<p>A <code>Token</code> node has two fields:</p>
+
+<ul>
+<li><code>token</code> which specifies which token was parsed (one of <code>TOKEN_*</code>)</li>
+<li><code>pvalue</code> which specifies the parser value for the token. If a lexer user
+code block assigned to <code>$$</code>, the assigned value will be stored here.</li>
+</ul>
+
+<p>The other generated AST node structures have fields generated based on the
+right hand side components specified for all rules of a given name.</p>
+
+<p>In this example:</p>
+
+<div class="code">
+<pre>Start -> Items;
+
+Items -> Item ItemsMore;
+Items -> ;
+</pre>
+</div>
+
+<p>The <code>Start</code> structure will have a field called <code>pItems</code> and another field of
+the same name but with a positional suffix (<code>pItems1</code>) which both point to the
+parsed <code>Items</code> node.
+Their value will be null if the parsed <code>Items</code> rule was empty.</p>
+
+<p>The <code>Items</code> structure will have fields:</p>
+
+<ul>
+<li><code>pItem</code> and <code>pItem1</code> which point to the parsed <code>Item</code> structure.</li>
+<li><code>pItemsMore</code> and <code>pItemsMore2</code> which point to the parsed <code>ItemsMore</code> structure.</li>
+</ul>
+
+<p>If a rule can be empty (for example in the second <code>Items</code> rule above), then
+an instance of a pointer to that rule&#39;s generated AST node will be null if the
+parser matches the empty rule definition.</p>
+
+<p>The non-positional AST node field pointer will not be generated if there are
+multiple positions in which an instance of the node it points to could be
+present.
+For example, in the below rules:</p>
+
+<div class="code">
+<pre>Dual -> One Two;
+Dual -> Two One;
+</pre>
+</div>
+
+<p>The generated <code>Dual</code> structure will contain <code>pOne1</code>, <code>pTwo2</code>, <code>pTwo1</code>, and
+<code>pOne2</code> fields.
+However, a <code>pOne</code> field and <code>pTwo</code> field will not be generated since it would
+be ambiguous which one was matched.</p>
+
+<p>If the first rule is matched, then <code>pOne1</code> and <code>pTwo2</code> will be non-null while
+<code>pTwo1</code> and <code>pOne2</code> will be null.
+If the second rule is matched instead, then the opposite would be the case.</p>
+<a name="s5_3_Functions" /><h2>5.3 Functions</h2>
+<a name="s5_3_1__p_context_init_" /><h3>5.3.1 <code>p_context_init</code></h3>
+
+<p>The <code>p_context_init()</code> function must be called to initialize the context
+structure.
+The input to be used for lexing/parsing is passed in when initializing the
+context structure.</p>
+
+<p>C example:</p>
+
+<div class="code">
+<pre>p_context_t context;
+p_context_init(&context, input, input_length);
+</pre>
+</div>
+
+<p>D example:</p>
+
+<div class="code">
+<pre>p_context_t context;
+p_context_init(&context, input);
+</pre>
+</div>
+<a name="s5_3_2__p_parse_" /><h3>5.3.2 <code>p_parse</code></h3>
+
+<p>The <code>p_parse()</code> function is the main entry point to the parser.
+It must be passed a pointer to an initialized context structure.</p>
+
+<p>Example:</p>
+
+<div class="code">
+<pre>p_context_t context;
+p_context_init(&context, input, input_length);
+size_t result = p_parse(&context);
+</pre>
+</div>
+<a name="s5_3_3__p_result_" /><h3>5.3.3 <code>p_result</code></h3>
+
+<p>The <code>p_result()</code> function can be used to retrieve the final parse value after
+<code>p_parse()</code> returns a <code>P_SUCCESS</code> value.</p>
+
+<p>Example:</p>
+
+<div class="code">
+<pre>p_context_t context;
+p_context_init(&context, input, input_length);
+size_t result = p_parse(&context);
+if (p_parse(&context) == P_SUCCESS)
+{
+    result = p_result(&context);
+}
+</pre>
+</div>
+
+<p>If AST generation mode is active, then the <code>p_result()</code> function returns a
+<code>Start *</code> pointing to the <code>Start</code> AST structure.</p>
+<a name="s5_3_4__p_position_" /><h3>5.3.4 <code>p_position</code></h3>
+
+<p>The <code>p_position()</code> function can be used to retrieve the parser position where
+an error occurred.</p>
+
+<p>Example:</p>
+
+<div class="code">
+<pre>p_context_t context;
+p_context_init(&context, input, input_length);
+size_t result = p_parse(&context);
+if (p_parse(&context) == P_UNEXPECTED_TOKEN)
+{
+    p_position_t error_position = p_position(&context);
+    fprintf(stderr, "Error: unexpected token at row %u column %u\n",
+        error_position.row + 1, error_position.col + 1);
+}
+</pre>
+</div>
+<a name="s5_3_5__p_user_terminate_code_" /><h3>5.3.5 <code>p_user_terminate_code</code></h3>
+
+<p>The <code>p_user_terminate_code()</code> function can be used to retrieve the user
+terminate code after <code>p_parse()</code> returns a <code>P_USER_TERMINATED</code> value.
+User terminate codes are arbitrary values that can be defined by the user to
+be returned when the user requests to terminate parsing.
+They have no particular meaning to Propane.</p>
+
+<p>Example:</p>
+
+<div class="code">
+<pre>if (p_parse(&context) == P_USER_TERMINATED)
+{
+    size_t user_terminate_code = p_user_terminate_code(&context);
+}
+</pre>
+</div>
+<a name="s5_3_6__p_token_" /><h3>5.3.6 <code>p_token</code></h3>
+
+<p>The <code>p_token()</code> function can be used to retrieve the current parse token.
+This is useful after <code>p_parse()</code> returns a <code>P_UNEXPECTED_TOKEN</code> value.
+terminate code after <code>p_parse()</code> returns a <code>P_USER_TERMINATED</code> value to
+indicate what token the parser was not expecting.</p>
+
+<p>Example:</p>
+
+<div class="code">
+<pre>if (p_parse(&context) == P_UNEXPECTED_TOKEN)
+{
+    p_token_t unexpected_token = p_token(&context);
+}
+</pre>
+</div>
+<a name="s5_4_Data" /><h2>5.4 Data</h2>
+<a name="s5_4_1__p_token_names_" /><h3>5.4.1 <code>p_token_names</code></h3>
+
+<p>The <code>p_token_names</code> array contains the grammar-specified token names.
+It is indexed by the token ID.</p>
+
+<p>C example:</p>
+
+<div class="code">
+<pre>p_context_t context;
+p_context_init(&context, input, input_length);
+size_t result = p_parse(&context);
+if (p_parse(&context) == P_UNEXPECTED_TOKEN)
+{
+    p_position_t error_position = p_position(&context);
+    fprintf(stderr, "Error: unexpected token `%s' at row %u column %u\n",
+        p_token_names[context.token],
+        error_position.row + 1, error_position.col + 1);
+}
+</pre>
+</div>
+<a name="s6_License" /><h1>6 License</h1>
+
+<p>Propane is licensed under the terms of the MIT License:</p>
+
+<div class="code">
+<pre>The MIT License (MIT)
+
+Copyright (c) 2010-2024 Josh Holtrop
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+
+</pre>
+</div>
+<a name="s7_Contributing" /><h1>7 Contributing</h1>
+
+<p>Propane is developed on <a href="https://github.com/holtrop/propane">github</a>.</p>
+
+<p>Issues may be submitted to <a href="https://github.com/holtrop/propane/issues">https://github.com/holtrop/propane/issues</a>.</p>
+
+<p>Pull requests may be submitted as well:</p>
+
+<ol>
+<li>Fork it</li>
+<li>Create your feature branch (<code>git checkout -b my-new-feature</code>)</li>
+<li>Commit your changes (<code>git commit -am &#39;Add some feature&#39;</code>)</li>
+<li>Push to the branch (<code>git push origin my-new-feature</code>)</li>
+<li>Create new Pull Request</li>
+</ol>
+<a name="s8_Change_Log" /><h1>8 Change Log</h1>
+
+<p><h2>v1.3.0</h2>
+
+<h3>New Features</h3>
+
+<ul>
+<li>Add AST generation (#22)</li>
+</ul>
+
+<h2>v1.2.0</h2>
+
+<h3>New Features</h3>
+
+<ul>
+<li>Allow one line user code blocks (#21)</li>
+<li>Add backslash escape codes (#19)</li>
+<li>Add API to access unexpected token found (#18)</li>
+<li>Add token_names API (#17)</li>
+<li>Add D example to user guide for p<em>context</em>init() (#16)</li>
+<li>Allow user termination from lexer code blocks (#15)</li>
+</ul>
+
+<h3>Fixes</h3>
+
+<ul>
+<li>Fix generator hang when state transition cycle is present (#20)</li>
+</ul>
+
+<h2>v1.1.0</h2>
+
+<h3>New Features</h3>
+
+<ul>
+<li>Add user parser terminations (#13)</li>
+<li>Document generated parser API in user guide (#14)</li>
+</ul>
+
+<h2>v1.0.0</h2>
+
+<ul>
+<li>Initial release</li>
+</ul>
+</p>
+</div>
+  </body>
+</html>
