@@ -1,0 +1,116 @@
+<html>
+  <head>
+    <title>Propane User Guide - 4.9 Lexer modes - Version 1.4.0</title>
+    <style>
+      body {
+        background-color: #CCC;
+        margin: 0px;
+        padding: 0px;
+      }
+      #body-content {
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 1em;
+        margin-bottom: 1em;
+        border: 1px solid black;
+        background-color: #FFF;
+        width: 120ex;
+        padding: 2ex;
+      }
+      a {
+        text-decoration: none;
+      }
+      .separator {
+        height: 2em;
+      }
+      .img_block_center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .page_nav {
+        width: 100%;
+        table-layout: fixed;
+      }
+      .page_nav_toc {
+        text-align: center;
+      }
+      .page_nav_next {
+        text-align: right;
+      }
+      .code {
+        padding-left: 2ex;
+        width: 116ex;
+        overflow-x: auto;
+      }
+      .ruby_code .normal {}
+      .ruby_code .comment { color: #005; font-style: italic; }
+      .ruby_code .keyword { color: #A00; font-weight: bold; }
+      .ruby_code .method { color: #077; }
+      .ruby_code .class { color: #074; }
+      .ruby_code .module { color: #050; }
+      .ruby_code .punct { color: #447; font-weight: bold; }
+      .ruby_code .symbol { color: #099; }
+      .ruby_code .string { color: #090; }
+      .ruby_code .char { color: #F07; }
+      .ruby_code .ident { color: #004; }
+      .ruby_code .constant { color: #07F; }
+      .ruby_code .regex { color: #B66; }
+      .ruby_code .number { color: #D55; }
+      .ruby_code .attribute { color: #377; }
+      .ruby_code .global { color: #3B7; }
+      .ruby_code .expr { color: #227; }
+    </style>
+  </head>
+  <body>
+    <div id="body-content"><table class="page_nav"><tr><td class="page_nav_prev"><a href="s4_8_Regular_expression_syntax.html">&laquo; Prev<br/>4.8 Regular expression syntax</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s4_10_Specifying_parser_value_types___the__ptype__statement.html">Next &raquo<br/>4.10 Specifying parser value types - the ptype statement</a></td></tr></table><div class="separator"></div><a name="s4_9_Lexer_modes" /><h2>4.9 Lexer modes</h2>
+
+<p>Lexer modes can be used to change the set of patterns that are matched by the
+lexer.
+A common use for lexer modes is to match strings.</p>
+
+<p>Example:</p>
+
+<div class="code">
+<pre><<
+string mystringvalue;
+>>
+
+tokenid str;
+
+# String processing
+/"/ <<
+  mystringvalue = "";
+  $mode(string);
+>>
+string: /[^"]+/ << mystringvalue += match; >>
+string: /"/ <<
+  $mode(default);
+  return $token(str);
+>>
+</pre>
+</div>
+
+<p>A lexer mode is defined by placing the name before a colon (<code>:</code>) character that
+precedes a token or pattern statement.
+The token or pattern statement is restricted to only applying if the named mode
+is active.</p>
+
+<p>By default, the active lexer mode is named <code>default</code>.
+A <code>$mode()</code> call within a lexer code block can be used to change lexer modes.</p>
+
+<p>In the above example, when the lexer in the default mode sees a doublequote
+(<code>&quot;</code>) character, the lexer code block will clear the <code>mystringvalue</code> variable
+and will set the lexer mode to <code>string</code>.
+When the lexer begins looking for patterns to match against the input, it will
+now look only for patterns tagged for the <code>string</code> lexer mode.
+Any non-<code>&quot;</code> character will be appended to the <code>mystringvalue</code> string.
+A <code>&quot;</code> character will end the <code>string</code> lexer mode and return to the <code>default</code>
+lexer mode.
+It also returns the <code>str</code> token now that the token is complete.</p>
+
+<p>Note that the token name <code>str</code> above could have been <code>string</code> instead - the
+namespace for token names is distinct from the namespace for lexer modes.</p>
+<div class="separator"></div><table class="page_nav"><tr><td class="page_nav_prev"><a href="s4_8_Regular_expression_syntax.html">&laquo; Prev<br/>4.8 Regular expression syntax</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s4_10_Specifying_parser_value_types___the__ptype__statement.html">Next &raquo<br/>4.10 Specifying parser value types - the ptype statement</a></td></tr></table></div>
+  </body>
+</html>

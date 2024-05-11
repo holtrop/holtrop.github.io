@@ -1,0 +1,158 @@
+<html>
+  <head>
+    <title>Propane User Guide - 4.1 User Code Blocks - Version 1.4.0</title>
+    <style>
+      body {
+        background-color: #CCC;
+        margin: 0px;
+        padding: 0px;
+      }
+      #body-content {
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 1em;
+        margin-bottom: 1em;
+        border: 1px solid black;
+        background-color: #FFF;
+        width: 120ex;
+        padding: 2ex;
+      }
+      a {
+        text-decoration: none;
+      }
+      .separator {
+        height: 2em;
+      }
+      .img_block_center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .page_nav {
+        width: 100%;
+        table-layout: fixed;
+      }
+      .page_nav_toc {
+        text-align: center;
+      }
+      .page_nav_next {
+        text-align: right;
+      }
+      .code {
+        padding-left: 2ex;
+        width: 116ex;
+        overflow-x: auto;
+      }
+      .ruby_code .normal {}
+      .ruby_code .comment { color: #005; font-style: italic; }
+      .ruby_code .keyword { color: #A00; font-weight: bold; }
+      .ruby_code .method { color: #077; }
+      .ruby_code .class { color: #074; }
+      .ruby_code .module { color: #050; }
+      .ruby_code .punct { color: #447; font-weight: bold; }
+      .ruby_code .symbol { color: #099; }
+      .ruby_code .string { color: #090; }
+      .ruby_code .char { color: #F07; }
+      .ruby_code .ident { color: #004; }
+      .ruby_code .constant { color: #07F; }
+      .ruby_code .regex { color: #B66; }
+      .ruby_code .number { color: #D55; }
+      .ruby_code .attribute { color: #377; }
+      .ruby_code .global { color: #3B7; }
+      .ruby_code .expr { color: #227; }
+    </style>
+  </head>
+  <body>
+    <div id="body-content"><table class="page_nav"><tr><td class="page_nav_prev"><a href="s4_Propane_Grammar_File.html">&laquo; Prev<br/>4 Propane Grammar File</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s4_2_AST_generation_mode___the__ast__statement.html">Next &raquo<br/>4.2 AST generation mode - the ast statement</a></td></tr></table><div class="separator"></div><a name="s4_1_User_Code_Blocks" /><h2>4.1 User Code Blocks</h2>
+
+<p>User code blocks begin following a &quot;&lt;&lt;&quot; token and end with a &quot;&gt;&gt;&quot; token found
+at the end of a line.
+All text lines in the code block are copied verbatim into the output file.</p>
+<a name="s4_1_1_Standalone_Code_Blocks" /><h3>4.1.1 Standalone Code Blocks</h3>
+
+<p>C example:</p>
+
+<div class="code">
+<pre><<
+#include &lt;stdio.h>
+>>
+</pre>
+</div>
+
+<p>D example:</p>
+
+<div class="code">
+<pre><<
+import std.stdio;
+>>
+</pre>
+</div>
+
+<p>Standalone code blocks are emitted early in the output file as top-level code
+outside the context of any function.
+Standalone code blocks are a good place to include/import any other necessary
+supporting code modules.
+They can also define helper functions that can be reused by lexer or parser
+user code blocks.
+They are emitted in the order they are defined in the grammar file.</p>
+
+<p>For a C target, the word &quot;header&quot; may immediately follow the &quot;&lt;&lt;&quot; token to
+cause Propane to emit the code block in the generated header file rather than
+the generated implementation file.
+This allows including another header that may be necessary to define any types
+needed by a <code>ptype</code> directive, for example:</p>
+
+<div class="code">
+<pre><&lt;header
+#include "mytypes.h"
+>>
+</pre>
+</div>
+<a name="s4_1_2_Lexer_pattern_code_blocks" /><h3>4.1.2 Lexer pattern code blocks</h3>
+
+<p>Example:</p>
+
+<div class="code">
+<pre>ptype ulong;
+
+token integer /\\d+/ <<
+  ulong v;
+  foreach (c; match)
+  {
+    v *= 10;
+    v += (c - '0');
+  }
+  $$ = v;
+>>
+</pre>
+</div>
+
+<p>Lexer code blocks appear following a <code>token</code> or pattern expression.
+User code in a lexer code block will be executed when the lexer matches the
+given pattern.
+Assignment to the <code>$$</code> symbol will associate a parser value with the lexed
+token.
+This parser value can then be used later in a parser rule.</p>
+<a name="s4_1_3_Parser_rule_code_blocks" /><h3>4.1.3 Parser rule code blocks</h3>
+
+<p>Example:</p>
+
+<div class="code">
+<pre>E1 -> E1 plus E2 << $$ = $1 + $3; >>
+</pre>
+</div>
+
+<p>Parser rule code blocks appear following a rule expression.
+User code in a parser rule code block will be executed when the parser reduces
+the given rule.
+Assignment to the <code>$$</code> symbol will associate a parser value with the reduced
+rule.
+Parser values for the rules or tokens in the rule pattern can be accessed
+positionally with tokens <code>$1</code>, <code>$2</code>, <code>$3</code>, etc...</p>
+
+<p>Parser rule code blocks are not available in AST generation mode.
+In AST generation mode, a full parse tree is automatically constructed in
+memory for user code to traverse after parsing is complete.</p>
+<div class="separator"></div><table class="page_nav"><tr><td class="page_nav_prev"><a href="s4_Propane_Grammar_File.html">&laquo; Prev<br/>4 Propane Grammar File</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s4_2_AST_generation_mode___the__ast__statement.html">Next &raquo<br/>4.2 AST generation mode - the ast statement</a></td></tr></table></div>
+  </body>
+</html>
