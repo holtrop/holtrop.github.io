@@ -1,0 +1,206 @@
+<html>
+  <head>
+    <title>Propane User Guide - 4.2 AST generation mode - the ast statement - Version 1.5.0</title>
+    <style>
+      body {
+        background-color: #CCC;
+        margin: 0px;
+        padding: 0px;
+      }
+      #body-content {
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 1em;
+        margin-bottom: 1em;
+        border: 1px solid black;
+        background-color: #FFF;
+        width: 120ex;
+        padding: 2ex;
+      }
+      a {
+        text-decoration: none;
+      }
+      .separator {
+        height: 2em;
+      }
+      .img_block_center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .page_nav {
+        width: 100%;
+        table-layout: fixed;
+      }
+      .page_nav_toc {
+        text-align: center;
+      }
+      .page_nav_next {
+        text-align: right;
+      }
+      .code {
+        padding-left: 2ex;
+        width: 116ex;
+        overflow-x: auto;
+      }
+      .ruby_code .normal {}
+      .ruby_code .comment { color: #005; font-style: italic; }
+      .ruby_code .keyword { color: #A00; font-weight: bold; }
+      .ruby_code .method { color: #077; }
+      .ruby_code .class { color: #074; }
+      .ruby_code .module { color: #050; }
+      .ruby_code .punct { color: #447; font-weight: bold; }
+      .ruby_code .symbol { color: #099; }
+      .ruby_code .string { color: #090; }
+      .ruby_code .char { color: #F07; }
+      .ruby_code .ident { color: #004; }
+      .ruby_code .constant { color: #07F; }
+      .ruby_code .regex { color: #B66; }
+      .ruby_code .number { color: #D55; }
+      .ruby_code .attribute { color: #377; }
+      .ruby_code .global { color: #3B7; }
+      .ruby_code .expr { color: #227; }
+    </style>
+  </head>
+  <body>
+    <div id="body-content"><table class="page_nav"><tr><td class="page_nav_prev"><a href="s4_1_User_Code_Blocks.html">&laquo; Prev<br/>4.1 User Code Blocks</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s4_4_Specifying_tokens___the__token__statement.html">Next &raquo<br/>4.4 Specifying tokens - the token statement</a></td></tr></table><div class="separator"></div><a name="s4_2_AST_generation_mode___the__ast__statement" /><h2>4.2 AST generation mode - the <code>ast</code> statement</h2>
+
+<p>To activate AST generation mode, place the <code>ast</code> statement in your grammar file:</p>
+
+<div class="code">
+<pre>ast;
+</pre>
+</div>
+
+<p>It is recommended to place this statement early in the grammar.</p>
+
+<p>In AST generation mode various aspects of propane&#39;s behavior are changed:</p>
+
+<ul>
+<li>Only one <code>ptype</code> is allowed.</li>
+<li>Parser user code blocks are not supported.</li>
+<li>Structure types are generated to represent the parsed tokens and rules as
+defined in the grammar.</li>
+<li>The parse result from <code>p_result()</code> points to a <code>Start</code> struct containing
+the entire parse tree for the input. If the user has changed the start rule
+with the <code>start</code> grammar statement, the name of the start struct will be
+given by the user-specified start rule instead of <code>Start</code>.</li>
+</ul>
+
+<p>Example AST generation grammar:</p>
+
+<div class="code">
+<pre>ast;
+
+ptype int;
+
+token a << $$ = 11; >>
+token b << $$ = 22; >>
+token one /1/;
+token two /2/;
+token comma /,/ <<
+  $$ = 42;
+>>
+token lparen /\\(/;
+token rparen /\\)/;
+drop /\\s+/;
+
+Start -> Items;
+
+Items -> Item:item ItemsMore;
+Items -> ;
+
+ItemsMore -> comma Item:item ItemsMore;
+ItemsMore -> ;
+
+Item -> a;
+Item -> b;
+Item -> lparen Item:item rparen;
+Item -> Dual;
+
+Dual -> One Two;
+Dual -> Two One;
+One -> one;
+Two -> two;
+</pre>
+</div>
+
+<p>The following unit test describes the fields that will be present for an
+example parse:</p>
+
+<div class="code">
+<pre>string input = "a, ((b)), b";
+p_context_t context;
+p_context_init(&context, input);
+assert_eq(P_SUCCESS, p_parse(&context));
+Start * start = p_result(&context);
+assert(start.pItems1 !is null);
+assert(start.pItems !is null);
+Items * items = start.pItems;
+assert(items.item !is null);
+assert(items.item.pToken1 !is null);
+assert_eq(TOKEN_a, items.item.pToken1.token);
+assert_eq(11, items.item.pToken1.pvalue);
+assert(items.pItemsMore !is null);
+ItemsMore * itemsmore = items.pItemsMore;
+assert(itemsmore.item !is null);
+assert(itemsmore.item.item !is null);
+assert(itemsmore.item.item.item !is null);
+assert(itemsmore.item.item.item.pToken1 !is null);
+assert_eq(TOKEN_b, itemsmore.item.item.item.pToken1.token);
+assert_eq(22, itemsmore.item.item.item.pToken1.pvalue);
+assert(itemsmore.pItemsMore !is null);
+itemsmore = itemsmore.pItemsMore;
+assert(itemsmore.item !is null);
+assert(itemsmore.item.pToken1 !is null);
+assert_eq(TOKEN_b, itemsmore.item.pToken1.token);
+assert_eq(22, itemsmore.item.pToken1.pvalue);
+assert(itemsmore.pItemsMore is null);
+</pre>
+</div>
+<a name="s4_3__ast_prefix__and__ast_suffix__statements" /><h2>4.3 <code>ast_prefix</code> and <code>ast_suffix</code> statements</h2>
+
+<p>In AST generation mode, structure types are defined and named based on the
+rules in the grammar.
+Additionally, a structure type called <code>Token</code> is generated to hold parsed
+token information.</p>
+
+<p>These structure names can be modified by using the <code>ast_prefix</code> or <code>ast_suffix</code>
+statements in the grammar file.
+The field names that point to instances of the structures are not affected by
+the <code>ast_prefix</code> or <code>ast_suffix</code> values.</p>
+
+<p>For example, if the following two lines were added to the example above:</p>
+
+<div class="code">
+<pre>ast_prefix ABC;
+ast_suffix XYZ;
+</pre>
+</div>
+
+<p>Then the types would be used as such instead:</p>
+
+<div class="code">
+<pre>string input = "a, ((b)), b";
+p_context_t context;
+p_context_init(&context, input);
+assert_eq(P_SUCCESS, p_parse(&context));
+ABCStartXYZ * start = p_result(&context);
+assert(start.pItems1 !is null);
+assert(start.pItems !is null);
+ABCItemsXYZ * items = start.pItems;
+assert(items.pItem !is null);
+assert(items.pItem.pToken1 !is null);
+assert_eq(TOKEN_a, items.pItem.pToken1.token);
+assert_eq(11, items.pItem.pToken1.pvalue);
+assert(items.pItemsMore !is null);
+ABCItemsMoreXYZ * itemsmore = items.pItemsMore;
+assert(itemsmore.pItem !is null);
+assert(itemsmore.pItem.pItem !is null);
+assert(itemsmore.pItem.pItem.pItem !is null);
+assert(itemsmore.pItem.pItem.pItem.pToken1 !is null);
+</pre>
+</div>
+<div class="separator"></div><table class="page_nav"><tr><td class="page_nav_prev"><a href="s4_1_User_Code_Blocks.html">&laquo; Prev<br/>4.1 User Code Blocks</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s4_4_Specifying_tokens___the__token__statement.html">Next &raquo<br/>4.4 Specifying tokens - the token statement</a></td></tr></table></div>
+  </body>
+</html>
