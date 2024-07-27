@@ -1,0 +1,116 @@
+<html>
+  <head>
+    <title>Propane User Guide - 4.4 Specifying tokens - the token statement - Version 1.5.1</title>
+    <style>
+      body {
+        background-color: #CCC;
+        margin: 0px;
+        padding: 0px;
+      }
+      #body-content {
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 1em;
+        margin-bottom: 1em;
+        border: 1px solid black;
+        background-color: #FFF;
+        width: 120ex;
+        padding: 2ex;
+      }
+      a {
+        text-decoration: none;
+      }
+      .separator {
+        height: 2em;
+      }
+      .img_block_center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .page_nav {
+        width: 100%;
+        table-layout: fixed;
+      }
+      .page_nav_toc {
+        text-align: center;
+      }
+      .page_nav_next {
+        text-align: right;
+      }
+      .code {
+        padding-left: 2ex;
+        width: 116ex;
+        overflow-x: auto;
+      }
+      .ruby_code .normal {}
+      .ruby_code .comment { color: #005; font-style: italic; }
+      .ruby_code .keyword { color: #A00; font-weight: bold; }
+      .ruby_code .method { color: #077; }
+      .ruby_code .class { color: #074; }
+      .ruby_code .module { color: #050; }
+      .ruby_code .punct { color: #447; font-weight: bold; }
+      .ruby_code .symbol { color: #099; }
+      .ruby_code .string { color: #090; }
+      .ruby_code .char { color: #F07; }
+      .ruby_code .ident { color: #004; }
+      .ruby_code .constant { color: #07F; }
+      .ruby_code .regex { color: #B66; }
+      .ruby_code .number { color: #D55; }
+      .ruby_code .attribute { color: #377; }
+      .ruby_code .global { color: #3B7; }
+      .ruby_code .expr { color: #227; }
+    </style>
+  </head>
+  <body>
+    <div id="body-content"><table class="page_nav"><tr><td class="page_nav_prev"><a href="s4_2_AST_generation_mode___the__ast__statement.html">&laquo; Prev<br/>4.2 AST generation mode - the ast statement</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s4_5_Defining_tokens_without_a_matching_pattern___the__tokenid__statement.html">Next &raquo<br/>4.5 Defining tokens without a matching pattern - the tokenid statement</a></td></tr></table><div class="separator"></div><a name="s4_4_Specifying_tokens___the__token__statement" /><h2>4.4 Specifying tokens - the <code>token</code> statement</h2>
+
+<p>The <code>token</code> statement allows defining a lexer token and a pattern to match that
+token.
+The name of the token must be specified immediately following the <code>token</code>
+keyword.
+A regular expression pattern may optionally follow the token name.
+If a regular expression pattern is not specified, the name of the token is
+taken to be the pattern.
+See also: <a href="s4_8_Regular_expression_syntax.html#s4_8_Regular_expression_syntax">Regular expression syntax</a>.</p>
+
+<p>Example:</p>
+
+<div class="code">
+<pre>token for;
+</pre>
+</div>
+
+<p>In this example, the token name is <code>for</code> and the pattern to match it is
+<code>/for/</code>.</p>
+
+<p>Example:</p>
+
+<div class="code">
+<pre>token lbrace /\{/;
+</pre>
+</div>
+
+<p>In this example, the token name is <code>lbrace</code> and a single left curly brace will
+match it.</p>
+
+<p>The <code>token</code> statement can also include a user code block.
+The user code block will be executed whenever the token is matched by the
+lexer.</p>
+
+<p>Example:</p>
+
+<div class="code">
+<pre>token if << writeln("'if' keyword lexed"); >>
+</pre>
+</div>
+
+<p>The <code>token</code> statement is actually a shortcut statement for a combination of a
+<code>tokenid</code> statement and a pattern statement.
+To define a lexer token without an associated pattern to match it, use a
+<code>tokenid</code> statement.
+To define a lexer pattern that may or may not result in a matched token, use
+a pattern statement.</p>
+<div class="separator"></div><table class="page_nav"><tr><td class="page_nav_prev"><a href="s4_2_AST_generation_mode___the__ast__statement.html">&laquo; Prev<br/>4.2 AST generation mode - the ast statement</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s4_5_Defining_tokens_without_a_matching_pattern___the__tokenid__statement.html">Next &raquo<br/>4.5 Defining tokens without a matching pattern - the tokenid statement</a></td></tr></table></div>
+  </body>
+</html>
