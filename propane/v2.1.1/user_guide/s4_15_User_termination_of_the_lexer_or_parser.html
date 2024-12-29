@@ -1,0 +1,94 @@
+<html>
+  <head>
+    <title>Propane User Guide - 4.15 User termination of the lexer or parser - Version 2.1.1</title>
+    <style>
+      body {
+        background-color: #CCC;
+        margin: 0px;
+        padding: 0px;
+      }
+      #body-content {
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 1em;
+        margin-bottom: 1em;
+        border: 1px solid black;
+        background-color: #FFF;
+        width: 120ex;
+        padding: 2ex;
+      }
+      a {
+        text-decoration: none;
+      }
+      .separator {
+        height: 2em;
+      }
+      .img_block_center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .page_nav {
+        width: 100%;
+        table-layout: fixed;
+      }
+      .page_nav_toc {
+        text-align: center;
+      }
+      .page_nav_next {
+        text-align: right;
+      }
+      .code {
+        padding-left: 2ex;
+        width: 116ex;
+        overflow-x: auto;
+      }
+      .ruby_code .normal {}
+      .ruby_code .comment { color: #005; font-style: italic; }
+      .ruby_code .keyword { color: #A00; font-weight: bold; }
+      .ruby_code .method { color: #077; }
+      .ruby_code .class { color: #074; }
+      .ruby_code .module { color: #050; }
+      .ruby_code .punct { color: #447; font-weight: bold; }
+      .ruby_code .symbol { color: #099; }
+      .ruby_code .string { color: #090; }
+      .ruby_code .char { color: #F07; }
+      .ruby_code .ident { color: #004; }
+      .ruby_code .constant { color: #07F; }
+      .ruby_code .regex { color: #B66; }
+      .ruby_code .number { color: #D55; }
+      .ruby_code .attribute { color: #377; }
+      .ruby_code .global { color: #3B7; }
+      .ruby_code .expr { color: #227; }
+    </style>
+  </head>
+  <body>
+    <div id="body-content"><table class="page_nav"><tr><td class="page_nav_prev"><a href="s4_14_Specifying_the_generated_API_prefix___the__prefix__statement.html">&laquo; Prev<br/>4.14 Specifying the generated API prefix - the prefix statement</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s5_Propane_generated_API.html">Next &raquo<br/>5 Propane generated API</a></td></tr></table><div class="separator"></div><a name="s4_15_User_termination_of_the_lexer_or_parser" /><h2>4.15 User termination of the lexer or parser</h2>
+
+<p>Propane supports allowing lexer or parser user code blocks to terminate
+execution of the parser.
+Some example uses of this functionality could be to:</p>
+
+<ul>
+<li>Detect integer overflow when lexing an integer literal constant.</li>
+<li>Detect and report an error as soon as possible during parsing before continuing to parse any more of the input.</li>
+<li>Determine whether parsing should stop and instead be performed using a different parser version.</li>
+</ul>
+
+<p>To terminate parsing from a lexer or parser user code block, use the
+<code>$terminate(code)</code> function, passing an integer expression argument.
+For example:</p>
+
+<div class="code">
+<pre>NewExpression -> new Expression << $terminate(42); >>
+</pre>
+</div>
+
+<p>The value passed to the <code>$terminate()</code> function is known as the &quot;user terminate
+code&quot;.
+If the parser returns a <code>P_USER_TERMINATED</code> result code, then the user
+terminate code can be accessed using the <code>p_user_terminate_code()</code> API
+function.</p>
+<div class="separator"></div><table class="page_nav"><tr><td class="page_nav_prev"><a href="s4_14_Specifying_the_generated_API_prefix___the__prefix__statement.html">&laquo; Prev<br/>4.14 Specifying the generated API prefix - the prefix statement</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s5_Propane_generated_API.html">Next &raquo<br/>5 Propane generated API</a></td></tr></table></div>
+  </body>
+</html>
