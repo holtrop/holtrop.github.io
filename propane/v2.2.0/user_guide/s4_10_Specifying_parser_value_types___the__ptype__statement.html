@@ -1,0 +1,127 @@
+<html>
+  <head>
+    <title>Propane User Guide - 4.10 Specifying parser value types - the ptype statement - Version 2.2.0</title>
+    <style>
+      body {
+        background-color: #CCC;
+        margin: 0px;
+        padding: 0px;
+      }
+      #body-content {
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 1em;
+        margin-bottom: 1em;
+        border: 1px solid black;
+        background-color: #FFF;
+        width: 120ex;
+        padding: 2ex;
+      }
+      a {
+        text-decoration: none;
+      }
+      .separator {
+        height: 2em;
+      }
+      .img_block_center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .page_nav {
+        width: 100%;
+        table-layout: fixed;
+      }
+      .page_nav_toc {
+        text-align: center;
+      }
+      .page_nav_next {
+        text-align: right;
+      }
+      .code {
+        padding-left: 2ex;
+        width: 116ex;
+        overflow-x: auto;
+      }
+      .ruby_code .normal {}
+      .ruby_code .comment { color: #005; font-style: italic; }
+      .ruby_code .keyword { color: #A00; font-weight: bold; }
+      .ruby_code .method { color: #077; }
+      .ruby_code .class { color: #074; }
+      .ruby_code .module { color: #050; }
+      .ruby_code .punct { color: #447; font-weight: bold; }
+      .ruby_code .symbol { color: #099; }
+      .ruby_code .string { color: #090; }
+      .ruby_code .char { color: #F07; }
+      .ruby_code .ident { color: #004; }
+      .ruby_code .constant { color: #07F; }
+      .ruby_code .regex { color: #B66; }
+      .ruby_code .number { color: #D55; }
+      .ruby_code .attribute { color: #377; }
+      .ruby_code .global { color: #3B7; }
+      .ruby_code .expr { color: #227; }
+    </style>
+  </head>
+  <body>
+    <div id="body-content"><table class="page_nav"><tr><td class="page_nav_prev"><a href="s4_9_Lexer_modes.html">&laquo; Prev<br/>4.9 Lexer modes</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s4_11_Specifying_a_parser_rule___the_rule_statement.html">Next &raquo<br/>4.11 Specifying a parser rule - the rule statement</a></td></tr></table><div class="separator"></div><a name="s4_10_Specifying_parser_value_types___the__ptype__statement" /><h2>4.10 Specifying parser value types - the <code>ptype</code> statement</h2>
+
+<p>The <code>ptype</code> statement is used to define parser value type(s).
+Example:</p>
+
+<div class="code">
+<pre>ptype void *;
+</pre>
+</div>
+
+<p>This defines the default parser value type to be <code>void *</code> (this is, in fact,
+the default parser value type if the grammar file does not specify otherwise).</p>
+
+<p>Each defined lexer token type and parser rule has an associated parser value
+type.
+When the lexer runs, each lexed token has a parser value associated with it.
+When the parser runs, each instance of a reduced rule has a parser value
+associated with it.
+Propane supports using different parser value types for different rules and
+token types.
+The example <code>ptype</code> statement above defines the default parser value type.
+A parser value type name can optionally be specified following the <code>ptype</code>
+keyword.
+For example:</p>
+
+<div class="code">
+<pre>ptype Value;
+ptype array = Value[];
+ptype dict = Value[string];
+
+Object -> lbrace rbrace << $$ = new Value(); >>
+
+Values (array) -> Value << $$ = [$1]; >>
+Values -> Values comma Value << $$ = $1 ~ [$3]; >>
+
+KeyValue (dict) -> string colon Value << $$ = [$1: $3]; >>
+</pre>
+</div>
+
+<p>In this example, the default parser value type is <code>Value</code>.
+A parser value type named <code>array</code> is defined to mean <code>Value[]</code>.
+A parser value type named <code>dict</code> is defined to mean <code>Value[string]</code>.
+Any defined tokens or rules that do not specify a parser value type will have
+the default parser value type associated with them.
+To associate a different parser value type with a token or rule, write the
+parser value type name in parentheses following the name of the token or rule.
+In this example:</p>
+
+<ul>
+<li>a reduced <code>Object</code>&#39;s parser value has a type of <code>Value</code>.</li>
+<li>a reduced <code>Values</code>&#39;s parser value has a type of <code>Value[]</code>.</li>
+<li>a reduced <code>KeyValue</code>&#39;s parser value has a type of <code>Value[string]</code>.</li>
+</ul>
+
+<p>When AST generation mode is active, the <code>ptype</code> functionality works differently.
+In this mode, only one <code>ptype</code> is used by the parser.
+Lexer user code blocks may assign a parse value to the generated <code>Token</code> node
+by assigning to <code>$$</code> within a lexer code block.
+The type of the parse value <code>$$</code> is given by the global <code>ptype</code> type.</p>
+<div class="separator"></div><table class="page_nav"><tr><td class="page_nav_prev"><a href="s4_9_Lexer_modes.html">&laquo; Prev<br/>4.9 Lexer modes</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s4_11_Specifying_a_parser_rule___the_rule_statement.html">Next &raquo<br/>4.11 Specifying a parser rule - the rule statement</a></td></tr></table></div>
+  </body>
+</html>
