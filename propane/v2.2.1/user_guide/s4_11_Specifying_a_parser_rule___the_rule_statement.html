@@ -1,0 +1,151 @@
+<html>
+  <head>
+    <title>Propane User Guide - 4.11 Specifying a parser rule - the rule statement - Version 2.2.1</title>
+    <style>
+      body {
+        background-color: #CCC;
+        margin: 0px;
+        padding: 0px;
+      }
+      #body-content {
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 1em;
+        margin-bottom: 1em;
+        border: 1px solid black;
+        background-color: #FFF;
+        width: 120ex;
+        padding: 2ex;
+      }
+      a {
+        text-decoration: none;
+      }
+      .separator {
+        height: 2em;
+      }
+      .img_block_center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .page_nav {
+        width: 100%;
+        table-layout: fixed;
+      }
+      .page_nav_toc {
+        text-align: center;
+      }
+      .page_nav_next {
+        text-align: right;
+      }
+      .code {
+        padding-left: 2ex;
+        width: 116ex;
+        overflow-x: auto;
+      }
+      .ruby_code .normal {}
+      .ruby_code .comment { color: #005; font-style: italic; }
+      .ruby_code .keyword { color: #A00; font-weight: bold; }
+      .ruby_code .method { color: #077; }
+      .ruby_code .class { color: #074; }
+      .ruby_code .module { color: #050; }
+      .ruby_code .punct { color: #447; font-weight: bold; }
+      .ruby_code .symbol { color: #099; }
+      .ruby_code .string { color: #090; }
+      .ruby_code .char { color: #F07; }
+      .ruby_code .ident { color: #004; }
+      .ruby_code .constant { color: #07F; }
+      .ruby_code .regex { color: #B66; }
+      .ruby_code .number { color: #D55; }
+      .ruby_code .attribute { color: #377; }
+      .ruby_code .global { color: #3B7; }
+      .ruby_code .expr { color: #227; }
+    </style>
+  </head>
+  <body>
+    <div id="body-content"><table class="page_nav"><tr><td class="page_nav_prev"><a href="s4_10_Specifying_parser_value_types___the__ptype__statement.html">&laquo; Prev<br/>4.10 Specifying parser value types - the ptype statement</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s4_12_Specifying_the_parser_start_rule_name___the__start__statement.html">Next &raquo<br/>4.12 Specifying the parser start rule name - the start statement</a></td></tr></table><div class="separator"></div><a name="s4_11_Specifying_a_parser_rule___the_rule_statement" /><h2>4.11 Specifying a parser rule - the rule statement</h2>
+
+<p>Rule statements create parser rules which define the grammar that will be
+parsed by the generated parser.</p>
+
+<p>Multiple rules with the same name can be specified.
+Rules with the same name define a rule set for that name and act as
+alternatives that the parser can accept when attempting to match a reference to
+that rule.</p>
+
+<p>The default start rule name is <code>Start</code>.
+This can be changed with the <code>start</code> statement.
+The grammar file must define a rule with the name of the start rule name which
+will be used as the top-level starting rule that the parser attempts to reduce.</p>
+
+<p>Rule statements are composed of the name of the rule, a <code>-&gt;</code> token, the fields
+defining the rule pattern that must be matched, and a terminating semicolon or
+user code block.</p>
+
+<p>Example:</p>
+
+<div class="code">
+<pre>ptype ulong;
+start Top;
+token word /[a-z]+/ << $$ = match.length; >>
+Top -> word << $$ = $1; >>
+</pre>
+</div>
+
+<p>In the above example the <code>Top</code> rule is defined to match a single <code>word</code>
+token.</p>
+
+<p>Another example:</p>
+
+<div class="code">
+<pre>Start -> E1 << $$ = $1; >>
+E1 -> E2 << $$ = $1; >>
+E1 -> E1 plus E2 << $$ = $1 + $3; >>
+E2 -> E3 << $$ = $1; >>
+E2 -> E2 times E3 << $$ = $1 * $3; >>
+E3 -> E4 << $$ = $1; >>
+E3 -> E3 power E4 << $$ = pow($1, $3); >>
+E4 -> integer << $$ = $1; >>
+E4 -> lparen E1 rparen << $$ = $2; >>
+</pre>
+</div>
+
+<p>This example uses the default start rule name of <code>Start</code>.</p>
+
+<p>A parser rule has zero or more fields on the right side of its definition.
+Each of these fields is either a token name or a rule name.
+A field can be immediately followed by a <code>?</code> character to signify that it is
+optional.
+A field can optionally be followed by a <code>:</code> and then a field alias name.
+If present, the field alias name is used to refer to the field value in user
+code blocks, or if AST mode is active, the field alias name is used as the
+field name in the generated AST node structure.
+An optional and named field must use the format <code>field?:name</code>.
+Example:</p>
+
+<div class="code">
+<pre>token public;
+token private;
+token int;
+token ident /[a-zA-Z_][a-zA-Z_0-9]*/;
+token semicolon /;/;
+IntegerDeclaration -> Visibility?:visibility int ident:name semicolon;
+Visibility -> public;
+Visibility -> private;
+</pre>
+</div>
+
+<p>In a parser rule code block, parser values for the right side fields are
+accessible as <code>$1</code> for the first field&#39;s parser value, <code>$2</code> for the second
+field&#39;s parser value, etc...
+For the <code>IntegerDeclaration</code> rule, the first field value can also be referred to as <code>${visibility}</code> and the third field value can also be referred
+to as <code>${name}</code>.
+The <code>$$</code> symbol accesses the output parser value for this rule.
+The above examples demonstrate how the parser values for the rule components
+can be used to produce the parser value for the accepted rule.</p>
+
+<p>Parser rule code blocks are not allowed and not used when AST generation mode
+is active.</p>
+<div class="separator"></div><table class="page_nav"><tr><td class="page_nav_prev"><a href="s4_10_Specifying_parser_value_types___the__ptype__statement.html">&laquo; Prev<br/>4.10 Specifying parser value types - the ptype statement</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s4_12_Specifying_the_parser_start_rule_name___the__start__statement.html">Next &raquo<br/>4.12 Specifying the parser start rule name - the start statement</a></td></tr></table></div>
+  </body>
+</html>
