@@ -1,0 +1,184 @@
+<html>
+  <head>
+    <title>Propane User Guide - 5.2 Types - Version 2.3.0</title>
+    <style>
+      body {
+        background-color: #CCC;
+        margin: 0px;
+        padding: 0px;
+      }
+      #body-content {
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 1em;
+        margin-bottom: 1em;
+        border: 1px solid black;
+        background-color: #FFF;
+        width: 120ex;
+        padding: 2ex;
+      }
+      a {
+        text-decoration: none;
+      }
+      .separator {
+        height: 2em;
+      }
+      .img_block_center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .page_nav {
+        width: 100%;
+        table-layout: fixed;
+      }
+      .page_nav_toc {
+        text-align: center;
+      }
+      .page_nav_next {
+        text-align: right;
+      }
+      .code {
+        padding-left: 2ex;
+        width: 116ex;
+        overflow-x: auto;
+      }
+      .ruby_code .normal {}
+      .ruby_code .comment { color: #005; font-style: italic; }
+      .ruby_code .keyword { color: #A00; font-weight: bold; }
+      .ruby_code .method { color: #077; }
+      .ruby_code .class { color: #074; }
+      .ruby_code .module { color: #050; }
+      .ruby_code .punct { color: #447; font-weight: bold; }
+      .ruby_code .symbol { color: #099; }
+      .ruby_code .string { color: #090; }
+      .ruby_code .char { color: #F07; }
+      .ruby_code .ident { color: #004; }
+      .ruby_code .constant { color: #07F; }
+      .ruby_code .regex { color: #B66; }
+      .ruby_code .number { color: #D55; }
+      .ruby_code .attribute { color: #377; }
+      .ruby_code .global { color: #3B7; }
+      .ruby_code .expr { color: #227; }
+    </style>
+  </head>
+  <body>
+    <div id="body-content"><table class="page_nav"><tr><td class="page_nav_prev"><a href="s5_1_Constants.html">&laquo; Prev<br/>5.1 Constants</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s5_3_Functions.html">Next &raquo<br/>5.3 Functions</a></td></tr></table><div class="separator"></div><a name="s5_2_Types" /><h2>5.2 Types</h2>
+<a name="s5_2_1__p_code_point_t_" /><h3>5.2.1 <code>p_code_point_t</code></h3>
+
+<p>The <code>p_code_point_t</code> type is aliased to a 32-bit unsigned integer.
+It is used to store decoded code points from the input text and perform
+lexing based on the grammar&#39;s lexer patterns.</p>
+<a name="s5_2_2__p_context_t_" /><h3>5.2.2 <code>p_context_t</code></h3>
+
+<p>Propane defines a <code>p_context_t</code> structure type.
+The structure is intended to be used opaquely and stores information related to
+the state of the lexer and parser.
+Integrating code must define an instance of the <code>p_context_t</code> structure.
+A pointer to this instance is passed to the generated functions.</p>
+<a name="s5_2_3__p_position_t_" /><h3>5.2.3 <code>p_position_t</code></h3>
+
+<p>The <code>p_position_t</code> structure contains two fields <code>row</code> and <code>col</code>.
+These fields contain the 1-based row and column describing a parser position.</p>
+
+<p>For D targets, the <code>p_position_t</code> structure can be checked for validity by
+querying the <code>valid</code> property.</p>
+
+<p>For C targets, the <code>p_position_t</code> structure can be checked for validity by
+calling <code>p_position_valid(pos)</code> where <code>pos</code> is a <code>p_position_t</code> structure
+instance.</p>
+<a name="s5_2_4_AST_Node_Types" /><h3>5.2.4 AST Node Types</h3>
+
+<p>If AST generation mode is enabled, a structure type for each rule will be
+generated.
+The name of the structure type is given by the name of the rule.
+Additionally a structure type called <code>Token</code> is generated to represent an
+AST node which refers to a raw parser token rather than a composite rule.</p>
+<a name="s5_2_4_1_AST_Node_Fields" /><h4>5.2.4.1 AST Node Fields</h4>
+
+<p>All AST nodes have a <code>position</code> field specifying the text position of the
+beginning of the matched token or rule, and an <code>end_position</code> field specifying
+the text position of the end of the matched token or rule.
+Each of these fields are instances of the <code>p_position_t</code> structure.</p>
+
+<p>A <code>Token</code> node will always have a valid <code>position</code> and <code>end_position</code>.
+A rule node may not have valid positions if the rule allows for an empty match.
+In this case the <code>position</code> structure should be checked for validity before
+using it.
+For C targets this can be accomplished with
+<code>if (p_position_valid(node-&gt;position))</code> and for D targets this can be
+accomplished with <code>if (node.position.valid)</code>.</p>
+
+<p>A <code>Token</code> node has the following additional fields:</p>
+
+<ul>
+<li><code>token</code> which specifies which token was parsed (one of <code>TOKEN_*</code>)</li>
+<li><code>pvalue</code> which specifies the parser value for the token. If a lexer user
+code block assigned to <code>$$</code>, the assigned value will be stored here.</li>
+</ul>
+
+<p>AST node structures for rules contain generated fields based on the
+right hand side components specified for all rules of a given name.</p>
+
+<p>In this example:</p>
+
+<div class="code">
+<pre>Start -> Items;
+
+Items -> Item ItemsMore;
+Items -> ;
+</pre>
+</div>
+
+<p>The <code>Start</code> structure will have a field called <code>pItems</code> and another field of
+the same name but with a positional suffix (<code>pItems1</code>) which both point to the
+parsed <code>Items</code> node.
+Their value will be null if the parsed <code>Items</code> rule was empty.</p>
+
+<p>The <code>Items</code> structure will have fields:</p>
+
+<ul>
+<li><code>pItem</code> and <code>pItem1</code> which point to the parsed <code>Item</code> structure.</li>
+<li><code>pItemsMore</code> and <code>pItemsMore2</code> which point to the parsed <code>ItemsMore</code> structure.</li>
+</ul>
+
+<p>If a rule can be empty (for example in the second <code>Items</code> rule above), then
+an instance of a pointer to that rule&#39;s generated AST node will be null if the
+parser matches the empty rule pattern.</p>
+
+<p>The non-positional AST node field pointer will not be generated if there are
+multiple positions in which an instance of the node it points to could be
+present.
+For example, in the below rules:</p>
+
+<div class="code">
+<pre>Dual -> One Two;
+Dual -> Two One;
+</pre>
+</div>
+
+<p>The generated <code>Dual</code> structure will contain <code>pOne1</code>, <code>pTwo2</code>, <code>pTwo1</code>, and
+<code>pOne2</code> fields.
+However, a <code>pOne</code> field and <code>pTwo</code> field will not be generated since it would
+be ambiguous which one was matched.</p>
+
+<p>If the first rule is matched, then <code>pOne1</code> and <code>pTwo2</code> will be non-null while
+<code>pTwo1</code> and <code>pOne2</code> will be null.
+If the second rule is matched instead, then the opposite would be the case.</p>
+
+<p>If a field alias is present in a rule definition, an additional field will be
+generated in the AST node with the field alias name.
+For example:</p>
+
+<div class="code">
+<pre>Exp -> Exp:left plus ExpB:right;
+</pre>
+</div>
+
+<p>In the generated <code>Exp</code> structure, the fields <code>pExp</code>, <code>pExp1</code>, and <code>left</code> will
+all point to the same child node (an instance of the <code>Exp</code> structure), and the
+fields <code>pExpB</code>, <code>pExpB3</code>, and <code>right</code> will all point to the same child node
+(an instance of the <code>ExpB</code> structure).</p>
+<div class="separator"></div><table class="page_nav"><tr><td class="page_nav_prev"><a href="s5_1_Constants.html">&laquo; Prev<br/>5.1 Constants</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s5_3_Functions.html">Next &raquo<br/>5.3 Functions</a></td></tr></table></div>
+  </body>
+</html>

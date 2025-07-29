@@ -1,0 +1,83 @@
+<html>
+  <head>
+    <title>Propane User Guide - 4.6 Specifying a lexer pattern - the pattern statement - Version 2.3.0</title>
+    <style>
+      body {
+        background-color: #CCC;
+        margin: 0px;
+        padding: 0px;
+      }
+      #body-content {
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 1em;
+        margin-bottom: 1em;
+        border: 1px solid black;
+        background-color: #FFF;
+        width: 120ex;
+        padding: 2ex;
+      }
+      a {
+        text-decoration: none;
+      }
+      .separator {
+        height: 2em;
+      }
+      .img_block_center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .page_nav {
+        width: 100%;
+        table-layout: fixed;
+      }
+      .page_nav_toc {
+        text-align: center;
+      }
+      .page_nav_next {
+        text-align: right;
+      }
+      .code {
+        padding-left: 2ex;
+        width: 116ex;
+        overflow-x: auto;
+      }
+      .ruby_code .normal {}
+      .ruby_code .comment { color: #005; font-style: italic; }
+      .ruby_code .keyword { color: #A00; font-weight: bold; }
+      .ruby_code .method { color: #077; }
+      .ruby_code .class { color: #074; }
+      .ruby_code .module { color: #050; }
+      .ruby_code .punct { color: #447; font-weight: bold; }
+      .ruby_code .symbol { color: #099; }
+      .ruby_code .string { color: #090; }
+      .ruby_code .char { color: #F07; }
+      .ruby_code .ident { color: #004; }
+      .ruby_code .constant { color: #07F; }
+      .ruby_code .regex { color: #B66; }
+      .ruby_code .number { color: #D55; }
+      .ruby_code .attribute { color: #377; }
+      .ruby_code .global { color: #3B7; }
+      .ruby_code .expr { color: #227; }
+    </style>
+  </head>
+  <body>
+    <div id="body-content"><table class="page_nav"><tr><td class="page_nav_prev"><a href="s4_5_Defining_tokens_without_a_matching_pattern___the__tokenid__statement.html">&laquo; Prev<br/>4.5 Defining tokens without a matching pattern - the tokenid statement</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s4_7_Ignoring_input_sections___the__drop__statement.html">Next &raquo<br/>4.7 Ignoring input sections - the drop statement</a></td></tr></table><div class="separator"></div><a name="s4_6_Specifying_a_lexer_pattern___the_pattern_statement" /><h2>4.6 Specifying a lexer pattern - the pattern statement</h2>
+
+<p>A pattern statement is used to define a lexer pattern that can execute user
+code but may not result in a matched token.</p>
+
+<p>Example:</p>
+
+<div class="code">
+<pre>/foo+/ << writeln("saw a foo pattern"); >>
+</pre>
+</div>
+
+<p>This can be especially useful with <a href="s4_9_Lexer_modes.html#s4_9_Lexer_modes">Lexer modes</a>.</p>
+
+<p>See also <a href="s4_8_Regular_expression_syntax.html#s4_8_Regular_expression_syntax">Regular expression syntax</a>.</p>
+<div class="separator"></div><table class="page_nav"><tr><td class="page_nav_prev"><a href="s4_5_Defining_tokens_without_a_matching_pattern___the__tokenid__statement.html">&laquo; Prev<br/>4.5 Defining tokens without a matching pattern - the tokenid statement</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s4_7_Ignoring_input_sections___the__drop__statement.html">Next &raquo<br/>4.7 Ignoring input sections - the drop statement</a></td></tr></table></div>
+  </body>
+</html>
