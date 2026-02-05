@@ -1,0 +1,183 @@
+<html>
+  <head>
+    <title>Rscons User Guide - 4.4 Variants - Version 3.4.0</title>
+    <style>
+      body {
+        background-color: #CCC;
+        margin: 0px;
+        padding: 0px;
+      }
+      #body-content {
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 1em;
+        margin-bottom: 1em;
+        border: 1px solid black;
+        background-color: #FFF;
+        width: 120ex;
+        padding: 2ex;
+      }
+      a {
+        text-decoration: none;
+      }
+      .separator {
+        height: 2em;
+      }
+      .img_block_center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .page_nav {
+        width: 100%;
+        table-layout: fixed;
+      }
+      .page_nav_toc {
+        text-align: center;
+      }
+      .page_nav_next {
+        text-align: right;
+      }
+      .code {
+        padding-left: 2ex;
+        width: 116ex;
+        overflow-x: auto;
+      }
+      .ruby_code .normal {}
+      .ruby_code .comment { color: #005; font-style: italic; }
+      .ruby_code .keyword { color: #A00; font-weight: bold; }
+      .ruby_code .method { color: #077; }
+      .ruby_code .class { color: #074; }
+      .ruby_code .module { color: #050; }
+      .ruby_code .punct { color: #447; font-weight: bold; }
+      .ruby_code .symbol { color: #099; }
+      .ruby_code .string { color: #090; }
+      .ruby_code .char { color: #F07; }
+      .ruby_code .ident { color: #004; }
+      .ruby_code .constant { color: #07F; }
+      .ruby_code .regex { color: #B66; }
+      .ruby_code .number { color: #D55; }
+      .ruby_code .attribute { color: #377; }
+      .ruby_code .global { color: #3B7; }
+      .ruby_code .expr { color: #227; }
+    </style>
+  </head>
+  <body>
+    <div id="body-content"><table class="page_nav"><tr><td class="page_nav_prev"><a href="s4_3_7_Barriers.html">&laquo; Prev<br/>4.3.7 Barriers</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s4_4_1_Variant_Groups.html">Next &raquo<br/>4.4.1 Variant Groups</a></td></tr></table><div class="separator"></div><a name="s4_4_Variants" /><h2>4.4 Variants</h2>
+
+<p>Rscons supports build variants.
+Variants can be used to built multiple variations of the same item with a
+specific change.
+For example, a desktop application with the same sources could be built to
+target KDE or GNOME using build variants.
+It is up to the build script author to define the variants and what effect they
+have on the build.</p>
+
+<p>This build script defines &quot;kde&quot; and &quot;gnome&quot; variants:</p>
+
+<div class="code ruby_code">
+<pre><span class="ident">variant</span> <span class="punct">&quot;</span><span class="string">kde</span><span class="punct">&quot;</span>
+<span class="ident">variant</span> <span class="punct">&quot;</span><span class="string">gnome</span><span class="punct">&quot;</span>
+
+<span class="ident">with_variants</span> <span class="keyword">do</span>
+  <span class="ident">env</span> <span class="punct">&quot;</span><span class="string">prog</span><span class="punct">&quot;</span> <span class="keyword">do</span> <span class="punct">|</span><span class="ident">env</span><span class="punct">|</span>
+    <span class="keyword">if</span> <span class="ident">variant</span> <span class="punct">&quot;</span><span class="string">kde</span><span class="punct">&quot;</span>
+      <span class="ident">env</span><span class="punct">[&quot;</span><span class="string">CPPDEFINES</span><span class="punct">&quot;]</span> <span class="punct">&lt;&lt;</span> <span class="punct">&quot;</span><span class="string">KDE</span><span class="punct">&quot;</span>
+    <span class="keyword">end</span>
+    <span class="keyword">if</span> <span class="ident">variant</span> <span class="punct">&quot;</span><span class="string">gnome</span><span class="punct">&quot;</span>
+      <span class="ident">env</span><span class="punct">[&quot;</span><span class="string">CPPDEFINES</span><span class="punct">&quot;]</span> <span class="punct">&lt;&lt;</span> <span class="punct">&quot;</span><span class="string">GNOME</span><span class="punct">&quot;</span>
+    <span class="keyword">end</span>
+    <span class="ident">env</span><span class="punct">.</span><span class="ident">Program</span><span class="punct">(&quot;</span><span class="string">^/prog.exe</span><span class="punct">&quot;,</span> <span class="punct">&quot;</span><span class="string">src/**/*.cpp</span><span class="punct">&quot;)</span>
+  <span class="ident">end</span>
+<span class="keyword">end</span>
+</pre>
+</div>
+
+<p>The <code>variant</code> build script method has two uses:</p>
+
+<ul>
+<li>At the top of the build script, it defines a variant.</li>
+<li>Within a <code>with_variants</code> block, it queries for whether the given variant is
+active.</li>
+</ul>
+
+<p>The <code>with_variants</code> build script method allows the power of variants to be
+harnessed.
+It iterates through each enabled variant and calls the given block.
+In this example, the block would be called twice, once with the &quot;kde&quot; variant
+active, and the second time with the &quot;gnome&quot; variant active.</p>
+
+<p>Each <code>env</code> method call creates an Environment, so two environments are created.
+When an Environment is created within a <code>with_variants</code> block, the
+Environment&#39;s build directory name has the active variant(s) keys appended to
+the given Environment name, and separated by a &quot;-&quot;.</p>
+
+<p>In this example, a &quot;prog-kde&quot; Environment would be created with build root
+build/prog-kde and -DKDE would be passed to the compiler when compiling each
+source.
+Next a &quot;prog-gnome&quot; Environment would be created with build root
+build/prog-gnome and -DGNOME would be passed to the compiler when compiling
+the sources.</p>
+
+<p>The key for a variant is the variant&#39;s name by default but can be overridden by
+passing a <code>:key</code> value to the <code>variant</code> method.
+A <code>nil</code> value for the <code>:key</code> parameter will omit that variant from appearing
+in the environment&#39;s build directory name.
+For example:</p>
+
+<div class="code ruby_code">
+<pre><span class="ident">variant</span> <span class="punct">&quot;</span><span class="string">debug</span><span class="punct">&quot;</span>
+<span class="ident">variant</span> <span class="punct">&quot;</span><span class="string">release</span><span class="punct">&quot;,</span> <span class="ident">key</span><span class="punct">:</span> <span class="constant">nil</span>
+
+<span class="ident">with_variants</span> <span class="keyword">do</span>
+  <span class="ident">env</span> <span class="punct">&quot;</span><span class="string">prog</span><span class="punct">&quot;</span> <span class="keyword">do</span> <span class="punct">|</span><span class="ident">env</span><span class="punct">|</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre>
+</div>
+
+<p>In this example, one &quot;prog&quot; environment will be created for the &quot;debug&quot; variant
+with the build directory &quot;prog-debug&quot;, and another &quot;prog&quot; environment will be
+created for the &quot;release&quot; variant with the build directory &quot;prog&quot;.
+The build directory for the release variant of the &quot;prog&quot; environment is just
+&quot;prog&quot; instead of &quot;prog-release&quot; because the key for the &quot;release&quot; variant is
+set to <code>nil</code>.</p>
+
+<p>Variants are enabled by default, but can be disabled by passing a <code>false</code> value
+to the <code>:default</code> option of the <code>variant</code> method.
+For example:</p>
+
+<div class="code ruby_code">
+<pre><span class="ident">variant</span> <span class="punct">&quot;</span><span class="string">debug</span><span class="punct">&quot;,</span> <span class="ident">default</span><span class="punct">:</span> <span class="constant">false</span>
+<span class="ident">variant</span> <span class="punct">&quot;</span><span class="string">release</span><span class="punct">&quot;</span>
+
+<span class="ident">with_variants</span> <span class="keyword">do</span>
+  <span class="ident">env</span> <span class="punct">&quot;</span><span class="string">prog</span><span class="punct">&quot;</span> <span class="keyword">do</span> <span class="punct">|</span><span class="ident">env</span><span class="punct">|</span>
+    <span class="ident">env</span><span class="punct">.</span><span class="ident">Program</span><span class="punct">(&quot;</span><span class="string">^/prog.exe</span><span class="punct">&quot;,</span> <span class="punct">&quot;</span><span class="string">prog.c</span><span class="punct">&quot;)</span>
+  <span class="ident">end</span>
+<span class="keyword">end</span>
+
+</pre>
+</div>
+
+<p>The <code>rscons</code> command line interface provides a <code>-e</code>/<code>--variants</code> argument which
+allows the user to enable a different set of variants from those enabled by
+default according to the build script author.
+This argument accepts a comma-separated list of variants to enable.
+Each entry in the list can begin with &quot;-&quot; to disable the variant instead of
+enable it.
+If the list begins with &quot;+&quot; or &quot;-&quot;, then the entire given list modifies the
+defaults given in the build script.
+Otherwise, it exactly specifies which variants should be enabled, and any
+variant not listed is disabled.</p>
+
+<p>When the project is configured, the set of enabled variants is recorded and
+remembered for later Rscons invocations.
+This way, a user working on a single variant of a project does not need to
+specify the <code>-e</code>/<code>--variants</code> option on each build operation.</p>
+
+<p>The <code>variant_enabled?</code> build script method can be called to query whether the
+given variant is enabled.</p>
+<div class="separator"></div><table class="page_nav"><tr><td class="page_nav_prev"><a href="s4_3_7_Barriers.html">&laquo; Prev<br/>4.3.7 Barriers</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s4_4_1_Variant_Groups.html">Next &raquo<br/>4.4.1 Variant Groups</a></td></tr></table></div>
+  </body>
+</html>

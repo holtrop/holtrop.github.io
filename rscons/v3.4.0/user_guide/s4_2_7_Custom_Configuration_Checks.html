@@ -1,0 +1,149 @@
+<html>
+  <head>
+    <title>Rscons User Guide - 4.2.7 Custom Configuration Checks - Version 3.4.0</title>
+    <style>
+      body {
+        background-color: #CCC;
+        margin: 0px;
+        padding: 0px;
+      }
+      #body-content {
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 1em;
+        margin-bottom: 1em;
+        border: 1px solid black;
+        background-color: #FFF;
+        width: 120ex;
+        padding: 2ex;
+      }
+      a {
+        text-decoration: none;
+      }
+      .separator {
+        height: 2em;
+      }
+      .img_block_center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .page_nav {
+        width: 100%;
+        table-layout: fixed;
+      }
+      .page_nav_toc {
+        text-align: center;
+      }
+      .page_nav_next {
+        text-align: right;
+      }
+      .code {
+        padding-left: 2ex;
+        width: 116ex;
+        overflow-x: auto;
+      }
+      .ruby_code .normal {}
+      .ruby_code .comment { color: #005; font-style: italic; }
+      .ruby_code .keyword { color: #A00; font-weight: bold; }
+      .ruby_code .method { color: #077; }
+      .ruby_code .class { color: #074; }
+      .ruby_code .module { color: #050; }
+      .ruby_code .punct { color: #447; font-weight: bold; }
+      .ruby_code .symbol { color: #099; }
+      .ruby_code .string { color: #090; }
+      .ruby_code .char { color: #F07; }
+      .ruby_code .ident { color: #004; }
+      .ruby_code .constant { color: #07F; }
+      .ruby_code .regex { color: #B66; }
+      .ruby_code .number { color: #D55; }
+      .ruby_code .attribute { color: #377; }
+      .ruby_code .global { color: #3B7; }
+      .ruby_code .expr { color: #227; }
+    </style>
+  </head>
+  <body>
+    <div id="body-content"><table class="page_nav"><tr><td class="page_nav_prev"><a href="s4_2_6_Checking_for_a_Package_Configuration.html">&laquo; Prev<br/>4.2.6 Checking for a Package Configuration</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s4_2_8_Global_Configuration_Check_Options.html">Next &raquo<br/>4.2.8 Global Configuration Check Options</a></td></tr></table><div class="separator"></div><a name="s4_2_7_Custom_Configuration_Checks" /><h3>4.2.7 Custom Configuration Checks</h3>
+
+<p>The <code>Rsconscript</code> author can add custom configuration checks to be performed
+during the rscons <code>configure</code> operation.</p>
+
+<p>Here is an example from <code>build_tests/configure/custom_config_check.rb</code> showing
+a custom configuration check:</p>
+
+<div class="code ruby_code">
+<pre><span class="ident">configure</span> <span class="keyword">do</span>
+  <span class="ident">custom_check</span><span class="punct">(&quot;</span><span class="string">Checking 'grep' version</span><span class="punct">&quot;)</span> <span class="keyword">do</span> <span class="punct">|</span><span class="ident">op</span><span class="punct">|</span>
+    <span class="ident">stdout</span><span class="punct">,</span> <span class="ident">stderr</span><span class="punct">,</span> <span class="ident">status</span> <span class="punct">=</span> <span class="ident">op</span><span class="punct">.</span><span class="ident">log_and_test_command</span><span class="punct">(%w[</span><span class="string">grep --version</span><span class="punct">])</span>
+    <span class="ident">should_fail</span> <span class="punct">=</span> <span class="constant">true</span>
+    <span class="keyword">if</span> <span class="ident">status</span> <span class="punct">!=</span> <span class="number">0</span>
+      <span class="ident">fail_message</span> <span class="punct">=</span> <span class="punct">&quot;</span><span class="string">error executing grep</span><span class="punct">&quot;</span>
+    <span class="keyword">elsif</span> <span class="ident">stdout</span> <span class="punct">=~</span> <span class="punct">/</span><span class="regex">^grep <span class="escape">\(</span>GNU grep<span class="escape">\)</span> 1<span class="escape">\.</span></span><span class="punct">/</span>
+      <span class="ident">fail_message</span> <span class="punct">=</span> <span class="punct">&quot;</span><span class="string">too old!</span><span class="punct">&quot;</span>
+      <span class="ident">status</span> <span class="punct">=</span> <span class="number">1</span>
+    <span class="keyword">elsif</span> <span class="ident">stdout</span> <span class="punct">=~</span> <span class="punct">/</span><span class="regex">^grep <span class="escape">\(</span>GNU grep<span class="escape">\)</span> 2<span class="escape">\.</span></span><span class="punct">/</span>
+      <span class="ident">fail_message</span> <span class="punct">=</span> <span class="punct">&quot;</span><span class="string">we'll work with it but you should upgrade</span><span class="punct">&quot;</span>
+      <span class="ident">status</span> <span class="punct">=</span> <span class="number">1</span>
+      <span class="ident">should_fail</span> <span class="punct">=</span> <span class="constant">false</span>
+      <span class="ident">op</span><span class="punct">.</span><span class="ident">store_merge</span><span class="punct">(&quot;</span><span class="string">CPPDEFINES</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">&quot;</span><span class="string">GREP_WORKAROUND</span><span class="punct">&quot;)</span>
+    <span class="keyword">else</span>
+      <span class="ident">op</span><span class="punct">.</span><span class="ident">store_append</span><span class="punct">(&quot;</span><span class="string">CPPDEFINES</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">&quot;</span><span class="string">GREP_FULL</span><span class="punct">&quot;)</span>
+    <span class="keyword">end</span>
+    <span class="ident">op</span><span class="punct">.</span><span class="ident">complete</span><span class="punct">(</span><span class="ident">status</span><span class="punct">,</span> <span class="ident">success_message</span><span class="punct">:</span> <span class="punct">&quot;</span><span class="string">good!</span><span class="punct">&quot;,</span> <span class="ident">fail_message</span><span class="punct">:</span> <span class="ident">fail_message</span><span class="punct">,</span> <span class="ident">fail</span><span class="punct">:</span> <span class="ident">should_fail</span><span class="punct">)</span>
+  <span class="keyword">end</span>
+  <span class="ident">custom_check</span><span class="punct">(&quot;</span><span class="string">Checking sed -E flag</span><span class="punct">&quot;)</span> <span class="keyword">do</span> <span class="punct">|</span><span class="ident">op</span><span class="punct">|</span>
+    <span class="ident">stdout</span><span class="punct">,</span> <span class="ident">stderr</span><span class="punct">,</span> <span class="ident">status</span> <span class="punct">=</span> <span class="ident">op</span><span class="punct">.</span><span class="ident">log_and_test_command</span><span class="punct">(%w[</span><span class="string">sed -E -e s/ab+/rep/</span><span class="punct">],</span> <span class="ident">stdin</span><span class="punct">:</span> <span class="punct">&quot;</span><span class="string">abbbc</span><span class="punct">&quot;)</span>
+    <span class="ident">op</span><span class="punct">.</span><span class="ident">complete</span><span class="punct">(</span><span class="ident">stdout</span> <span class="punct">=~</span> <span class="punct">/</span><span class="regex">repc</span><span class="punct">/</span> <span class="punct">?</span> <span class="number">0</span> <span class="punct">:</span> <span class="number">1</span><span class="punct">,</span> <span class="ident">success_message</span><span class="punct">:</span> <span class="punct">&quot;</span><span class="string">good</span><span class="punct">&quot;,</span> <span class="ident">fail_message</span><span class="punct">:</span> <span class="punct">&quot;</span><span class="string">fail</span><span class="punct">&quot;)</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+<span class="ident">env</span> <span class="keyword">do</span> <span class="punct">|</span><span class="ident">env</span><span class="punct">|</span>
+  <span class="ident">puts</span> <span class="ident">env</span><span class="punct">[&quot;</span><span class="string">CPPDEFINES</span><span class="punct">&quot;]</span>
+<span class="keyword">end</span>
+
+</pre>
+</div>
+
+<p>A custom configuration check is created by calling the <code>custom_check</code> method
+and passing a block.
+The contents of the block should perform the custom configuration checking
+logic.
+This logic can include executing a test command or other arbitrary operations.
+An argument <code>op</code> is passed to the block.
+This object is an instance of the <a href="../yard/Rscons/ConfigureOp.html"><code>ConfigureOp</code> class</a>
+class and provides several methods that can be used to aid with the custom
+configuration check.
+The <a href="../yard/Rscons/ConfigureOp.html#log_and_test_command-instance_method"><code>log_and_test_command</code></a>
+method can be used to execute a test command and retrieve its results.
+The command and its output are also logged to the config.log file.
+The <a href="../yard/Rscons/ConfigureOp.html#store_merge-instance_method"><code>store_merge</code></a>,
+<a href="../yard/Rscons/ConfigureOp.html#store_append-instance_method"><code>store_append</code></a>,
+and <a href="../yard/Rscons/ConfigureOp.html#store_parse-instance_method"><code>store_parse</code></a>
+methods can be used to store construction variables to be used in Environments
+created later.
+Finally, the <a href="../yard/Rscons/ConfigureOp.html#complete-instance_method"><code>complete</code></a>
+method can be used to complete the configuration check and indicate a success
+or failure.</p>
+
+<p>While performing a custom configuration check, it can sometimes be useful to
+be able to construct an Environment to use the set of default construction
+variables as defined so far in the configuration block, for example to expand
+construction variables to build a test command.
+The normal <code>Environment</code> class cannot be used within the <code>configure</code> block,
+however the <a href="../yard/Rscons/BasicEnvironment.html"><code>BasicEnvironment</code></a> class
+can be used for such a purpose.</p>
+
+<p>For example, to expand the current <code>${CCCMD}</code> value:</p>
+
+<div class="code ruby_code">
+<pre><span class="ident">configure</span> <span class="keyword">do</span>
+  <span class="ident">custom_check</span><span class="punct">(&quot;</span><span class="string">Checking something to do with CCCMD</span><span class="punct">&quot;)</span> <span class="keyword">do</span>
+    <span class="ident">command</span> <span class="punct">=</span> <span class="constant">BasicEnvironment</span><span class="punct">.</span><span class="ident">new</span><span class="punct">.</span><span class="ident">expand_varref</span><span class="punct">(&quot;</span><span class="string">${CCCMD}</span><span class="punct">&quot;)</span>
+    <span class="comment"># ...</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre>
+</div>
+<div class="separator"></div><table class="page_nav"><tr><td class="page_nav_prev"><a href="s4_2_6_Checking_for_a_Package_Configuration.html">&laquo; Prev<br/>4.2.6 Checking for a Package Configuration</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s4_2_8_Global_Configuration_Check_Options.html">Next &raquo<br/>4.2.8 Global Configuration Check Options</a></td></tr></table></div>
+  </body>
+</html>

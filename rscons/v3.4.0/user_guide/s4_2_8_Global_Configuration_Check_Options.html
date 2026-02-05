@@ -1,0 +1,105 @@
+<html>
+  <head>
+    <title>Rscons User Guide - 4.2.8 Global Configuration Check Options - Version 3.4.0</title>
+    <style>
+      body {
+        background-color: #CCC;
+        margin: 0px;
+        padding: 0px;
+      }
+      #body-content {
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 1em;
+        margin-bottom: 1em;
+        border: 1px solid black;
+        background-color: #FFF;
+        width: 120ex;
+        padding: 2ex;
+      }
+      a {
+        text-decoration: none;
+      }
+      .separator {
+        height: 2em;
+      }
+      .img_block_center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .page_nav {
+        width: 100%;
+        table-layout: fixed;
+      }
+      .page_nav_toc {
+        text-align: center;
+      }
+      .page_nav_next {
+        text-align: right;
+      }
+      .code {
+        padding-left: 2ex;
+        width: 116ex;
+        overflow-x: auto;
+      }
+      .ruby_code .normal {}
+      .ruby_code .comment { color: #005; font-style: italic; }
+      .ruby_code .keyword { color: #A00; font-weight: bold; }
+      .ruby_code .method { color: #077; }
+      .ruby_code .class { color: #074; }
+      .ruby_code .module { color: #050; }
+      .ruby_code .punct { color: #447; font-weight: bold; }
+      .ruby_code .symbol { color: #099; }
+      .ruby_code .string { color: #090; }
+      .ruby_code .char { color: #F07; }
+      .ruby_code .ident { color: #004; }
+      .ruby_code .constant { color: #07F; }
+      .ruby_code .regex { color: #B66; }
+      .ruby_code .number { color: #D55; }
+      .ruby_code .attribute { color: #377; }
+      .ruby_code .global { color: #3B7; }
+      .ruby_code .expr { color: #227; }
+    </style>
+  </head>
+  <body>
+    <div id="body-content"><table class="page_nav"><tr><td class="page_nav_prev"><a href="s4_2_7_Custom_Configuration_Checks.html">&laquo; Prev<br/>4.2.7 Custom Configuration Checks</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s4_3_Building_Targets.html">Next &raquo<br/>4.3 Building Targets</a></td></tr></table><div class="separator"></div><a name="s4_2_8_Global_Configuration_Check_Options" /><h3>4.2.8 Global Configuration Check Options</h3>
+<a name="s4_2_8_1___fail_" /><h4>4.2.8.1 <code>:fail</code></h4>
+
+<p>If the <code>:fail</code> option is set to <code>false</code>, then the absence of the package or
+program requested will not result in the configure option failing.
+The <code>:fail</code> option defaults to <code>true</code> if the <code>:set_define</code> option is not
+defined, and defaults to <code>false</code> if the <code>:set_define</code> option is defined.</p>
+<a name="s4_2_8_2___on_fail_" /><h4>4.2.8.2 <code>:on_fail</code></h4>
+
+<p>The <code>:on_fail</code> option can be set to a String or a Proc object. If the
+configuration operation fails (or would fail), the given message is printed
+or the Proc is called.</p>
+
+<p>Examples:</p>
+
+<div class="code ruby_code">
+<pre><span class="ident">configure</span> <span class="keyword">do</span>
+  <span class="ident">check_c_compiler</span> <span class="punct">&quot;</span><span class="string">special-gcc</span><span class="punct">&quot;,</span> <span class="ident">on_fail</span><span class="punct">:</span> <span class="punct">&quot;</span><span class="string">First install special gcc!</span><span class="punct">&quot;</span>
+<span class="keyword">end</span>
+
+<span class="ident">configure</span> <span class="keyword">do</span>
+  <span class="ident">package_hint</span> <span class="punct">=</span> <span class="ident">lambda</span> <span class="keyword">do</span>
+    <span class="ident">puts</span> <span class="punct">&quot;</span><span class="string">The following packages must be installed to build this project:</span><span class="punct">&quot;</span>
+    <span class="ident">puts</span> <span class="punct">&quot;</span><span class="string">- libsdl2-dev</span><span class="punct">&quot;</span>
+    <span class="ident">puts</span> <span class="punct">&quot;</span><span class="string">- libsdl2-image-dev</span><span class="punct">&quot;</span>
+    <span class="ident">puts</span> <span class="punct">&quot;</span><span class="string">- libsdl2-net-dev</span><span class="punct">&quot;</span>
+  <span class="keyword">end</span>
+  <span class="ident">check_lib</span> <span class="punct">&quot;</span><span class="string">SDL2</span><span class="punct">&quot;,</span> <span class="ident">on_fail</span><span class="punct">:</span> <span class="ident">package_hint</span>
+  <span class="ident">check_lib</span> <span class="punct">&quot;</span><span class="string">SDL2_image</span><span class="punct">&quot;,</span> <span class="ident">on_fail</span><span class="punct">:</span> <span class="ident">package_hint</span>
+  <span class="ident">check_lib</span> <span class="punct">&quot;</span><span class="string">SDL2_net</span><span class="punct">&quot;,</span> <span class="ident">on_fail</span><span class="punct">:</span> <span class="ident">package_hint</span>
+<span class="keyword">end</span>
+</pre>
+</div>
+<a name="s4_2_8_3___set_define_" /><h4>4.2.8.3 <code>:set_define</code></h4>
+
+<p>If set, a build define of the specified String will be added to the
+<code>CPPDEFINES</code> construction variable array if the requested package is found.</p>
+<div class="separator"></div><table class="page_nav"><tr><td class="page_nav_prev"><a href="s4_2_7_Custom_Configuration_Checks.html">&laquo; Prev<br/>4.2.7 Custom Configuration Checks</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s4_3_Building_Targets.html">Next &raquo<br/>4.3 Building Targets</a></td></tr></table></div>
+  </body>
+</html>

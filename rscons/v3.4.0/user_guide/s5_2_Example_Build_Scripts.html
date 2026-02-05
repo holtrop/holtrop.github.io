@@ -1,0 +1,249 @@
+<html>
+  <head>
+    <title>Rscons User Guide - 5.2 Example Build Scripts - Version 3.4.0</title>
+    <style>
+      body {
+        background-color: #CCC;
+        margin: 0px;
+        padding: 0px;
+      }
+      #body-content {
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 1em;
+        margin-bottom: 1em;
+        border: 1px solid black;
+        background-color: #FFF;
+        width: 120ex;
+        padding: 2ex;
+      }
+      a {
+        text-decoration: none;
+      }
+      .separator {
+        height: 2em;
+      }
+      .img_block_center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .page_nav {
+        width: 100%;
+        table-layout: fixed;
+      }
+      .page_nav_toc {
+        text-align: center;
+      }
+      .page_nav_next {
+        text-align: right;
+      }
+      .code {
+        padding-left: 2ex;
+        width: 116ex;
+        overflow-x: auto;
+      }
+      .ruby_code .normal {}
+      .ruby_code .comment { color: #005; font-style: italic; }
+      .ruby_code .keyword { color: #A00; font-weight: bold; }
+      .ruby_code .method { color: #077; }
+      .ruby_code .class { color: #074; }
+      .ruby_code .module { color: #050; }
+      .ruby_code .punct { color: #447; font-weight: bold; }
+      .ruby_code .symbol { color: #099; }
+      .ruby_code .string { color: #090; }
+      .ruby_code .char { color: #F07; }
+      .ruby_code .ident { color: #004; }
+      .ruby_code .constant { color: #07F; }
+      .ruby_code .regex { color: #B66; }
+      .ruby_code .number { color: #D55; }
+      .ruby_code .attribute { color: #377; }
+      .ruby_code .global { color: #3B7; }
+      .ruby_code .expr { color: #227; }
+    </style>
+  </head>
+  <body>
+    <div id="body-content"><table class="page_nav"><tr><td class="page_nav_prev"><a href="s5_Appendix.html">&laquo; Prev<br/>5 Appendix</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s5_3___configure____make.html">Next &raquo<br/>5.3 ./configure && make</a></td></tr></table><div class="separator"></div><a name="s5_2_Example_Build_Scripts" /><h2>5.2 Example Build Scripts</h2>
+<a name="s5_2_1_Example__Building_a_C_Program" /><h3>5.2.1 Example: Building a C Program</h3>
+
+<div class="code ruby_code">
+<pre><span class="ident">env</span> <span class="keyword">do</span> <span class="punct">|</span><span class="ident">env</span><span class="punct">|</span>
+  <span class="ident">env</span><span class="punct">[&quot;</span><span class="string">CFLAGS</span><span class="punct">&quot;]</span> <span class="punct">&lt;&lt;</span> <span class="punct">&quot;</span><span class="string">-Wall</span><span class="punct">&quot;</span>
+  <span class="ident">env</span><span class="punct">.</span><span class="ident">Program</span><span class="punct">(&quot;</span><span class="string">program</span><span class="punct">&quot;,</span> <span class="ident">glob</span><span class="punct">(&quot;</span><span class="string">src/**/*.c</span><span class="punct">&quot;))</span>
+<span class="keyword">end</span>
+</pre>
+</div>
+<a name="s5_2_2_Example__Building_a_D_Program" /><h3>5.2.2 Example: Building a D Program</h3>
+
+<div class="code ruby_code">
+<pre><span class="ident">env</span> <span class="keyword">do</span> <span class="punct">|</span><span class="ident">env</span><span class="punct">|</span>
+  <span class="ident">env</span><span class="punct">[&quot;</span><span class="string">DFLAGS</span><span class="punct">&quot;]</span> <span class="punct">&lt;&lt;</span> <span class="punct">&quot;</span><span class="string">-Wall</span><span class="punct">&quot;</span>
+  <span class="ident">env</span><span class="punct">.</span><span class="ident">Program</span><span class="punct">(&quot;</span><span class="string">program</span><span class="punct">&quot;,</span> <span class="ident">glob</span><span class="punct">(&quot;</span><span class="string">src/**/*.d</span><span class="punct">&quot;))</span>
+<span class="keyword">end</span>
+</pre>
+</div>
+<a name="s5_2_3_Example__Building_a_Program_from_C_and_LLVM_Sources" /><h3>5.2.3 Example: Building a Program from C and LLVM Sources</h3>
+
+<div class="code ruby_code">
+<pre><span class="ident">env</span> <span class="keyword">do</span> <span class="punct">|</span><span class="ident">env</span><span class="punct">|</span>
+  <span class="ident">env</span><span class="punct">[&quot;</span><span class="string">CFLAGS</span><span class="punct">&quot;]</span> <span class="punct">&lt;&lt;</span> <span class="punct">&quot;</span><span class="string">-Wall</span><span class="punct">&quot;</span>
+  <span class="ident">env</span><span class="punct">.</span><span class="ident">Program</span><span class="punct">(&quot;</span><span class="string">program</span><span class="punct">&quot;,</span> <span class="ident">glob</span><span class="punct">(&quot;</span><span class="string">src/**/*.{c,ll}</span><span class="punct">&quot;))</span>
+<span class="keyword">end</span>
+</pre>
+</div>
+<a name="s5_2_4_Example__Cloning_an_Environment" /><h3>5.2.4 Example: Cloning an Environment</h3>
+
+<div class="code ruby_code">
+<pre><span class="ident">main_env</span> <span class="punct">=</span> <span class="ident">env</span> <span class="keyword">do</span> <span class="punct">|</span><span class="ident">env</span><span class="punct">|</span>
+  <span class="ident">env</span><span class="punct">[&quot;</span><span class="string">CFLAGS</span><span class="punct">&quot;]</span> <span class="punct">=</span> <span class="punct">[&quot;</span><span class="string">-fshort-enums</span><span class="punct">&quot;,</span> <span class="punct">&quot;</span><span class="string">-O3</span><span class="punct">&quot;]</span>
+  <span class="ident">env</span><span class="punct">[&quot;</span><span class="string">CPPDEFINES</span><span class="punct">&quot;]</span> <span class="punct">&lt;&lt;</span> <span class="punct">&quot;</span><span class="string">SOME_DEFINE</span><span class="punct">&quot;</span>
+  <span class="ident">env</span><span class="punct">[&quot;</span><span class="string">LIBS</span><span class="punct">&quot;]</span> <span class="punct">=</span> <span class="punct">[&quot;</span><span class="string">SDL</span><span class="punct">&quot;]</span>
+  <span class="ident">env</span><span class="punct">.</span><span class="ident">Program</span><span class="punct">(&quot;</span><span class="string">program</span><span class="punct">&quot;,</span> <span class="ident">glob</span><span class="punct">(&quot;</span><span class="string">src/**/*.cc</span><span class="punct">&quot;))</span>
+<span class="keyword">end</span>
+
+<span class="ident">test_env</span> <span class="punct">=</span> <span class="ident">main_env</span><span class="punct">.</span><span class="ident">clone</span> <span class="keyword">do</span> <span class="punct">|</span><span class="ident">env</span><span class="punct">|</span>
+  <span class="ident">env</span><span class="punct">[&quot;</span><span class="string">CFLAGS</span><span class="punct">&quot;]</span> <span class="punct">-=</span> <span class="punct">[&quot;</span><span class="string">-O3</span><span class="punct">&quot;]</span>
+  <span class="ident">env</span><span class="punct">[&quot;</span><span class="string">CFLAGS</span><span class="punct">&quot;]</span> <span class="punct">+=</span> <span class="punct">[&quot;</span><span class="string">-g</span><span class="punct">&quot;,</span> <span class="punct">&quot;</span><span class="string">-O0</span><span class="punct">&quot;]</span>
+  <span class="ident">env</span><span class="punct">[&quot;</span><span class="string">CPPDEFINES</span><span class="punct">&quot;]</span> <span class="punct">=</span> <span class="punct">&quot;</span><span class="string">ENABLE_TESTS</span><span class="punct">&quot;</span>
+  <span class="ident">env</span><span class="punct">.</span><span class="ident">Program</span><span class="punct">(&quot;</span><span class="string">program-test</span><span class="punct">&quot;,</span> <span class="ident">glob</span><span class="punct">(&quot;</span><span class="string">src/**/*.cc</span><span class="punct">&quot;))</span>
+<span class="keyword">end</span>
+</pre>
+</div>
+<a name="s5_2_5_Example__Custom_Builder" /><h3>5.2.5 Example: Custom Builder</h3>
+
+<div class="code ruby_code">
+<pre><span class="keyword">class </span><span class="class">GenerateFoo</span> <span class="punct">&lt;</span> <span class="constant">Builder</span>
+  <span class="keyword">def </span><span class="method">run</span><span class="punct">(</span><span class="ident">options</span><span class="punct">)</span>
+    <span class="ident">target</span><span class="punct">,</span> <span class="ident">cache</span> <span class="punct">=</span> <span class="ident">options</span><span class="punct">.</span><span class="ident">values_at</span><span class="punct">(</span><span class="symbol">:target</span><span class="punct">,</span> <span class="symbol">:cache</span><span class="punct">)</span>
+    <span class="ident">cache</span><span class="punct">.</span><span class="ident">mkdir_p</span><span class="punct">(</span><span class="constant">File</span><span class="punct">.</span><span class="ident">dirname</span><span class="punct">(</span><span class="ident">target</span><span class="punct">))</span>
+    <span class="constant">File</span><span class="punct">.</span><span class="ident">open</span><span class="punct">(</span><span class="ident">target</span><span class="punct">,</span> <span class="punct">&quot;</span><span class="string">w</span><span class="punct">&quot;)</span> <span class="keyword">do</span> <span class="punct">|</span><span class="ident">fh</span><span class="punct">|</span>
+      <span class="ident">fh</span><span class="punct">.</span><span class="ident">puts</span> <span class="punct">&lt;&lt;</span><span class="constant">EOF</span><span class="string">
+#define GENERATED 42
+</span><span class="constant">EOF</span>
+    <span class="keyword">end</span>
+    <span class="ident">target</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+<span class="ident">env</span> <span class="keyword">do</span> <span class="punct">|</span><span class="ident">env</span><span class="punct">|</span>
+  <span class="ident">env</span><span class="punct">.</span><span class="ident">add_builder</span><span class="punct">(</span><span class="constant">GenerateFoo</span><span class="punct">)</span>
+  <span class="ident">env</span><span class="punct">.</span><span class="ident">GenerateFoo</span><span class="punct">(&quot;</span><span class="string">foo.h</span><span class="punct">&quot;,</span> <span class="punct">[])</span>
+  <span class="ident">env</span><span class="punct">.</span><span class="ident">Program</span><span class="punct">(&quot;</span><span class="string">a.out</span><span class="punct">&quot;,</span> <span class="ident">glob</span><span class="punct">(&quot;</span><span class="string">*.c</span><span class="punct">&quot;))</span>
+<span class="keyword">end</span>
+</pre>
+</div>
+<a name="s5_2_6_Example__Using_different_compilation_flags_for_some_sources" /><h3>5.2.6 Example: Using different compilation flags for some sources</h3>
+
+<div class="code ruby_code">
+<pre><span class="ident">env</span> <span class="keyword">do</span> <span class="punct">|</span><span class="ident">env</span><span class="punct">|</span>
+  <span class="ident">env</span><span class="punct">[&quot;</span><span class="string">CFLAGS</span><span class="punct">&quot;]</span> <span class="punct">=</span> <span class="punct">[&quot;</span><span class="string">-O3</span><span class="punct">&quot;,</span> <span class="punct">&quot;</span><span class="string">-Wall</span><span class="punct">&quot;]</span>
+  <span class="ident">env</span><span class="punct">.</span><span class="ident">add_build_hook</span> <span class="keyword">do</span> <span class="punct">|</span><span class="ident">builder</span><span class="punct">|</span>
+    <span class="keyword">if</span> <span class="ident">builder</span><span class="punct">.</span><span class="ident">sources</span><span class="punct">.</span><span class="ident">first</span> <span class="punct">=~</span> <span class="punct">%r{</span><span class="regex">src/third-party/</span><span class="punct">}</span>
+      <span class="ident">build_op</span><span class="punct">[</span><span class="symbol">:vars</span><span class="punct">][&quot;</span><span class="string">CFLAGS</span><span class="punct">&quot;]</span> <span class="punct">-=</span> <span class="punct">[&quot;</span><span class="string">-Wall</span><span class="punct">&quot;]</span>
+    <span class="keyword">end</span>
+  <span class="keyword">end</span>
+  <span class="ident">env</span><span class="punct">.</span><span class="ident">Program</span><span class="punct">(&quot;</span><span class="string">program</span><span class="punct">&quot;,</span> <span class="ident">glob</span><span class="punct">(&quot;</span><span class="string">**/*.cc</span><span class="punct">&quot;))</span>
+<span class="keyword">end</span>
+</pre>
+</div>
+<a name="s5_2_7_Example__Creating_a_static_library" /><h3>5.2.7 Example: Creating a static library</h3>
+
+<div class="code ruby_code">
+<pre><span class="ident">env</span> <span class="keyword">do</span> <span class="punct">|</span><span class="ident">env</span><span class="punct">|</span>
+  <span class="ident">env</span><span class="punct">.</span><span class="ident">Library</span><span class="punct">(&quot;</span><span class="string">mylib.a</span><span class="punct">&quot;,</span> <span class="ident">glob</span><span class="punct">(&quot;</span><span class="string">src/**/*.c</span><span class="punct">&quot;))</span>
+<span class="keyword">end</span>
+</pre>
+</div>
+<a name="s5_2_8_Example__Creating_a_C___parser_source_from_a_Yacc_Bison_input_file" /><h3>5.2.8 Example: Creating a C++ parser source from a Yacc/Bison input file</h3>
+
+<div class="code ruby_code">
+<pre><span class="ident">env</span> <span class="keyword">do</span> <span class="punct">|</span><span class="ident">env</span><span class="punct">|</span>
+  <span class="ident">env</span><span class="punct">.</span><span class="ident">Yacc</span><span class="punct">(&quot;</span><span class="string">^/parser.tab.cc</span><span class="punct">&quot;,</span> <span class="punct">&quot;</span><span class="string">parser.yy</span><span class="punct">&quot;)</span>
+<span class="ident">end</span>
+</pre>
+</div>
+<a name="s5_2_9_Example__GCC_Cross_Compiler" /><h3>5.2.9 Example: GCC Cross Compiler</h3>
+
+<div class="code ruby_code">
+<pre><span class="ident">binutils_version</span> <span class="punct">=</span> <span class="punct">&quot;</span><span class="string">2.35</span><span class="punct">&quot;</span>
+<span class="ident">binutils_checksum</span> <span class="punct">=</span> <span class="punct">&quot;</span><span class="string">1b11659fb49e20e18db460d44485f09442c8c56d5df165de9461eb09c8302f85</span><span class="punct">&quot;</span>
+<span class="ident">gcc_version</span> <span class="punct">=</span> <span class="punct">&quot;</span><span class="string">10.2.0</span><span class="punct">&quot;</span>
+<span class="ident">gcc_checksum</span> <span class="punct">=</span> <span class="punct">&quot;</span><span class="string">b8dd4368bb9c7f0b98188317ee0254dd8cc99d1e3a18d0ff146c855fe16c1d8c</span><span class="punct">&quot;</span>
+<span class="ident">install_path</span> <span class="punct">=</span> <span class="constant">File</span><span class="punct">.</span><span class="ident">expand_path</span><span class="punct">(&quot;</span><span class="string">i686-elf-gcc</span><span class="punct">&quot;)</span>
+<span class="ident">target</span> <span class="punct">=</span> <span class="punct">&quot;</span><span class="string">i686-elf</span><span class="punct">&quot;</span>
+<span class="ident">path_prepend</span> <span class="punct">&quot;</span><span class="string"><span class="expr">#{install_path}</span>/bin</span><span class="punct">&quot;</span>
+
+<span class="ident">configure</span> <span class="keyword">do</span>
+  <span class="ident">check_c_compiler</span> <span class="punct">&quot;</span><span class="string">gcc</span><span class="punct">&quot;</span>
+  <span class="ident">check_program</span> <span class="punct">&quot;</span><span class="string">make</span><span class="punct">&quot;</span>
+  <span class="ident">check_program</span> <span class="punct">&quot;</span><span class="string">bison</span><span class="punct">&quot;</span>
+  <span class="ident">check_program</span> <span class="punct">&quot;</span><span class="string">flex</span><span class="punct">&quot;</span>
+  <span class="ident">check_program</span> <span class="punct">&quot;</span><span class="string">texi2any</span><span class="punct">&quot;,</span> <span class="ident">on_fail</span><span class="punct">:</span> <span class="punct">&quot;</span><span class="string">Install the texinfo package</span><span class="punct">&quot;</span>
+  <span class="ident">check_program</span> <span class="punct">&quot;</span><span class="string">wget</span><span class="punct">&quot;</span>
+  <span class="ident">check_lib</span> <span class="punct">&quot;</span><span class="string">gmp</span><span class="punct">&quot;,</span> <span class="ident">on_fail</span><span class="punct">:</span> <span class="punct">&quot;</span><span class="string">Install the libgmp-dev package</span><span class="punct">&quot;</span>
+  <span class="ident">check_lib</span> <span class="punct">&quot;</span><span class="string">mpc</span><span class="punct">&quot;,</span> <span class="ident">on_fail</span><span class="punct">:</span> <span class="punct">&quot;</span><span class="string">Install the libmpc-dev package</span><span class="punct">&quot;</span>
+  <span class="ident">check_lib</span> <span class="punct">&quot;</span><span class="string">mpfr</span><span class="punct">&quot;,</span> <span class="ident">on_fail</span><span class="punct">:</span> <span class="punct">&quot;</span><span class="string">Install the libmpfr-dev package</span><span class="punct">&quot;</span>
+<span class="keyword">end</span>
+
+<span class="ident">default</span> <span class="keyword">do</span>
+  <span class="keyword">unless</span> <span class="constant">Dir</span><span class="punct">.</span><span class="ident">exist?</span><span class="punct">(</span><span class="ident">install_path</span><span class="punct">)</span>
+
+    <span class="comment"># Download archives.</span>
+    <span class="ident">download</span> <span class="punct">&quot;</span><span class="string">https://ftp.gnu.org/gnu/binutils/binutils-<span class="expr">#{binutils_version}</span>.tar.xz</span><span class="punct">&quot;,</span>
+      <span class="punct">&quot;</span><span class="string"><span class="expr">#{build_dir}</span>/binutils-<span class="expr">#{binutils_version}</span>.tar.xz</span><span class="punct">&quot;,</span>
+      <span class="ident">sha256sum</span><span class="punct">:</span> <span class="ident">binutils_checksum</span>
+
+    <span class="ident">download</span> <span class="punct">&quot;</span><span class="string">https://ftp.gnu.org/gnu/gcc/gcc-<span class="expr">#{gcc_version}</span>/gcc-<span class="expr">#{gcc_version}</span>.tar.xz</span><span class="punct">&quot;,</span>
+      <span class="punct">&quot;</span><span class="string"><span class="expr">#{build_dir}</span>/gcc-<span class="expr">#{gcc_version}</span>.tar.xz</span><span class="punct">&quot;,</span>
+      <span class="ident">sha256sum</span><span class="punct">:</span> <span class="ident">gcc_checksum</span>
+
+    <span class="comment"># Extract archives.</span>
+    <span class="ident">sh</span> <span class="punct">&quot;</span><span class="string">tar</span><span class="punct">&quot;,</span> <span class="punct">&quot;</span><span class="string">xJf</span><span class="punct">&quot;,</span> <span class="punct">&quot;</span><span class="string">binutils-<span class="expr">#{binutils_version}</span>.tar.xz</span><span class="punct">&quot;,</span>
+      <span class="ident">chdir</span><span class="punct">:</span> <span class="ident">build_dir</span>
+
+    <span class="ident">sh</span> <span class="punct">&quot;</span><span class="string">tar</span><span class="punct">&quot;,</span> <span class="punct">&quot;</span><span class="string">xJf</span><span class="punct">&quot;,</span> <span class="punct">&quot;</span><span class="string">gcc-<span class="expr">#{gcc_version}</span>.tar.xz</span><span class="punct">&quot;,</span>
+      <span class="ident">chdir</span><span class="punct">:</span> <span class="ident">build_dir</span>
+
+    <span class="comment"># Build binutils.</span>
+    <span class="ident">rm_rf</span> <span class="punct">&quot;</span><span class="string"><span class="expr">#{build_dir}</span>/build-binutils</span><span class="punct">&quot;</span>
+    <span class="ident">mkdir_p</span> <span class="punct">&quot;</span><span class="string"><span class="expr">#{build_dir}</span>/build-binutils</span><span class="punct">&quot;</span>
+    <span class="ident">cd</span> <span class="punct">&quot;</span><span class="string"><span class="expr">#{build_dir}</span>/build-binutils</span><span class="punct">&quot;</span> <span class="keyword">do</span>
+      <span class="ident">sh</span> <span class="punct">%W[</span><span class="string">../binutils-<span class="expr">#{binutils_version}</span>/configure
+        --target=<span class="expr">#{target}</span> --prefix=<span class="expr">#{install_path}</span> --with-sysroot --disable-nls
+        --disable-werror</span><span class="punct">]</span>
+      <span class="ident">sh</span> <span class="punct">&quot;</span><span class="string">make</span><span class="punct">&quot;</span>
+      <span class="ident">sh</span> <span class="punct">&quot;</span><span class="string">make install</span><span class="punct">&quot;</span>
+    <span class="keyword">end</span>
+
+    <span class="comment"># Build gcc.</span>
+    <span class="ident">rm_rf</span> <span class="punct">&quot;</span><span class="string"><span class="expr">#{build_dir}</span>/build-gcc</span><span class="punct">&quot;</span>
+    <span class="ident">mkdir_p</span> <span class="punct">&quot;</span><span class="string"><span class="expr">#{build_dir}</span>/build-gcc</span><span class="punct">&quot;</span>
+    <span class="ident">cd</span> <span class="punct">&quot;</span><span class="string"><span class="expr">#{build_dir}</span>/build-gcc</span><span class="punct">&quot;</span> <span class="keyword">do</span>
+      <span class="ident">sh</span> <span class="punct">%W[</span><span class="string">../gcc-<span class="expr">#{gcc_version}</span>/configure
+        --target=<span class="expr">#{target}</span> --prefix=<span class="expr">#{install_path}</span> --disable-nls
+        --enable-languages=c,c++ --without-headers</span><span class="punct">]</span>
+      <span class="ident">sh</span> <span class="punct">&quot;</span><span class="string">make all-gcc</span><span class="punct">&quot;</span>
+      <span class="ident">sh</span> <span class="punct">&quot;</span><span class="string">make all-target-libgcc</span><span class="punct">&quot;</span>
+      <span class="ident">sh</span> <span class="punct">&quot;</span><span class="string">make install-gcc</span><span class="punct">&quot;</span>
+      <span class="ident">sh</span> <span class="punct">&quot;</span><span class="string">make install-target-libgcc</span><span class="punct">&quot;</span>
+    <span class="keyword">end</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+
+<span class="ident">clean</span> <span class="keyword">do</span>
+  <span class="ident">rm_f</span> <span class="punct">&quot;</span><span class="string"><span class="expr">#{build_dir}</span>/binutils-<span class="expr">#{binutils_version}</span>.tar.xz</span><span class="punct">&quot;</span>
+  <span class="ident">rm_rf</span> <span class="punct">&quot;</span><span class="string"><span class="expr">#{build_dir}</span>/binutils-<span class="expr">#{binutils_version}</span></span><span class="punct">&quot;</span>
+  <span class="ident">rm_rf</span> <span class="punct">&quot;</span><span class="string"><span class="expr">#{build_dir}</span>/build-binutils</span><span class="punct">&quot;</span>
+  <span class="ident">rm_f</span> <span class="punct">&quot;</span><span class="string"><span class="expr">#{build_dir}</span>/gcc-<span class="expr">#{gcc_version}</span>.tar.xz</span><span class="punct">&quot;</span>
+  <span class="ident">rm_rf</span> <span class="punct">&quot;</span><span class="string"><span class="expr">#{build_dir}</span>/gcc-<span class="expr">#{gcc_version}</span></span><span class="punct">&quot;</span>
+  <span class="ident">rm_rf</span> <span class="punct">&quot;</span><span class="string"><span class="expr">#{build_dir}</span>/build-gcc</span><span class="punct">&quot;</span>
+<span class="keyword">end</span>
+
+<span class="ident">distclean</span> <span class="keyword">do</span>
+  <span class="ident">rm_rf</span> <span class="ident">install_path</span>
+<span class="keyword">end</span>
+</pre>
+</div>
+<div class="separator"></div><table class="page_nav"><tr><td class="page_nav_prev"><a href="s5_Appendix.html">&laquo; Prev<br/>5 Appendix</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s5_3___configure____make.html">Next &raquo<br/>5.3 ./configure && make</a></td></tr></table></div>
+  </body>
+</html>

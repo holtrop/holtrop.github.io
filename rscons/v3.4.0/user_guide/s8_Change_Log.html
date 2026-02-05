@@ -1,0 +1,560 @@
+<html>
+  <head>
+    <title>Rscons User Guide - 8 Change Log - Version 3.4.0</title>
+    <style>
+      body {
+        background-color: #CCC;
+        margin: 0px;
+        padding: 0px;
+      }
+      #body-content {
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 1em;
+        margin-bottom: 1em;
+        border: 1px solid black;
+        background-color: #FFF;
+        width: 120ex;
+        padding: 2ex;
+      }
+      a {
+        text-decoration: none;
+      }
+      .separator {
+        height: 2em;
+      }
+      .img_block_center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .page_nav {
+        width: 100%;
+        table-layout: fixed;
+      }
+      .page_nav_toc {
+        text-align: center;
+      }
+      .page_nav_next {
+        text-align: right;
+      }
+      .code {
+        padding-left: 2ex;
+        width: 116ex;
+        overflow-x: auto;
+      }
+      .ruby_code .normal {}
+      .ruby_code .comment { color: #005; font-style: italic; }
+      .ruby_code .keyword { color: #A00; font-weight: bold; }
+      .ruby_code .method { color: #077; }
+      .ruby_code .class { color: #074; }
+      .ruby_code .module { color: #050; }
+      .ruby_code .punct { color: #447; font-weight: bold; }
+      .ruby_code .symbol { color: #099; }
+      .ruby_code .string { color: #090; }
+      .ruby_code .char { color: #F07; }
+      .ruby_code .ident { color: #004; }
+      .ruby_code .constant { color: #07F; }
+      .ruby_code .regex { color: #B66; }
+      .ruby_code .number { color: #D55; }
+      .ruby_code .attribute { color: #377; }
+      .ruby_code .global { color: #3B7; }
+      .ruby_code .expr { color: #227; }
+    </style>
+  </head>
+  <body>
+    <div id="body-content"><table class="page_nav"><tr><td class="page_nav_prev"><a href="s7_Contributing.html">&laquo; Prev<br/>7 Contributing</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"></td></tr></table><div class="separator"></div><a name="s8_Change_Log" /><h1>8 Change Log</h1>
+
+<p><h2>v3.4.0</h2>
+
+<h3>New Features</h3>
+
+<ul>
+<li>#178 - Add precompile phase to generate D Interface (.di) files</li>
+<li>Add Barrier builder</li>
+</ul>
+
+<h3>Fixes</h3>
+
+<ul>
+<li>Fix a couple cases where an absolute path and a relative path both pointing
+to the same file would not resolve build order properly</li>
+<li>Fix manual user dependencies on a phony target not resolving build order
+correctly</li>
+</ul>
+
+<h3>New Developer Features</h3>
+
+<ul>
+<li>Speed up build test execution by parallelizing</li>
+</ul>
+
+<h2>v3.3.0</h2>
+
+<h3>New Features</h3>
+
+<ul>
+<li>Add support for Ruby 3.4.</li>
+<li>Fix up some macOS test cases.</li>
+<li>#177 - Remove dependency on base64</li>
+<li>#175 - Add support for building object files from LLVM assembly sources</li>
+</ul>
+
+<h2>v3.2.0</h2>
+
+<h3>New Features</h3>
+
+<ul>
+<li>#171 - Place object files next to source files for source files in build directory</li>
+<li>#170 - Use top-level build directory as environment build directory for unnamed environments</li>
+<li>#167 - Add upgrading instructions</li>
+<li>#166 - Replace CFile builder with Yacc and Lex builders</li>
+</ul>
+
+<h3>Fixes</h3>
+
+<ul>
+<li>#172 - Fix configuration checks performed with ldc2 compiler</li>
+<li>#169 - Output a better error when pkg-config is not found</li>
+<li>#168 - Cannot output binary to an environment&#39;s build root with the same name as the top-level source directory</li>
+<li>#164 - Improve DSL method documentation</li>
+</ul>
+
+<h2>v3.1.0</h2>
+
+<h3>New Features</h3>
+
+<ul>
+<li>#162 - Improve configuration error messages</li>
+<li>#163 - Ruby 3.2 compatibility</li>
+</ul>
+
+<h3>Fixes</h3>
+
+<ul>
+<li>#161 - builder registered during build hooks should increase build step count</li>
+</ul>
+
+<h2>v3.0.2</h2>
+
+<h3>Fixes</h3>
+
+<ul>
+<li>#159 - Compiler check configure methods should respect :use flag</li>
+<li>#160 - Configure parameters should not be stored as unscoped construction variables</li>
+</ul>
+
+<h2>v3.0.1</h2>
+
+<h3>Fixes</h3>
+
+<ul>
+<li>#156 - Avoid running configure operation twice</li>
+<li>#157 - Load configure task arguments before early configure operations</li>
+<li>#158 - Do not configure for clean tasks when not yet configured</li>
+</ul>
+
+<h2>v3.0.0</h2>
+
+<ul>
+<li>#136 - Move rsconscache into build directory</li>
+<li>#140 - Support naming environments</li>
+<li>#143 - Add Size builder</li>
+<li>#142 - Add &#39;sh&#39; script DSL method</li>
+<li>#144 - Add FileUtils class methods to script DSL</li>
+<li>#145 - Support environment variable to set rscons build directory</li>
+<li>#146 - Add ^^/ shortcut to top-level build directory</li>
+<li>#139 - Add tasks</li>
+<li>#147 - Add task options</li>
+<li>#148 - Add license/copyright to distributable script</li>
+<li>#150 - Add env.expand() shortcut method to expand paths and construction variables</li>
+<li>#152 - Add download script method</li>
+<li>#153 - Allow passing spawn options to sh</li>
+<li>#154 - Record build directory absolute path</li>
+<li>#149 - Add shortcut method for creating environments</li>
+<li>#131 - Only configure if necessary</li>
+<li>#151 - Store configure task parameters in configuration cache data</li>
+<li>#137 - Add variants</li>
+<li>#155 - Add build_dir script method</li>
+</ul>
+
+<h2>v2.3.0</h2>
+
+<h3>New Features</h3>
+
+<ul>
+<li>#125 - Support subsidiary Rsconscript files</li>
+<li>#126 - Add PATH manipulation methods</li>
+</ul>
+
+<h3>Fixes</h3>
+
+<ul>
+<li>#121 - env.depends() does not work with build-root-relative &quot;^/&quot; paths</li>
+<li>#130 - Document -f command line option</li>
+<li>#133 - Clarify failed command error message indicating to run -F</li>
+<li>#134 - Document CMD_STDOUT variable for Command builder</li>
+<li>#135 - Write dependency file to build directory when user invokes Object builder directly</li>
+<li>#141 - Document phony targets</li>
+</ul>
+
+<h2>v2.2.0</h2>
+
+<h3>New Features</h3>
+
+<ul>
+<li>#120 - improve support for MSYS2</li>
+<li>#119 - add failure messages for failed configuration checks</li>
+<li>#118 - compiler checks should support cross-compilers and freestanding compilers</li>
+</ul>
+
+<h2>v2.1.0</h2>
+
+<h3>New Features</h3>
+
+<ul>
+<li>#117 - ruby 2.7 compatibility</li>
+</ul>
+
+<h2>v2.0.2</h2>
+
+<h3>Fixes</h3>
+
+<ul>
+<li>#113 - distinguish object files built from multiple sources with the same base name but different extensions</li>
+</ul>
+
+<h2>v2.0.1</h2>
+
+<h3>Fixes</h3>
+
+<ul>
+<li>#112 - Install builder cannot replace a currently executing binary on Linux</li>
+</ul>
+
+<h2>v2.0.0</h2>
+
+<ul>
+<li>convert rscons from a Ruby gem to a standalone script</li>
+<li>compress rscons distributable script</li>
+<li>add configure operation to detect compilers, check for headers/libraries, etc... (invoked automatically if needed)</li>
+<li>Environments store builder classes instead of instances of builder classes</li>
+<li>use a separate Builder instance for each build operation</li>
+<li>load Rsconscript from Rsconscript/Rsconscript.rb instead of Rsconsfile</li>
+<li>drop support for builder run methods using the old 5 parameter signature</li>
+<li>remove Environment#build_dir</li>
+<li>set Environment build root in configure step</li>
+<li>remove Builder#finalize (now #run called repeatedly until builder completes)</li>
+<li>remove Builder#setup</li>
+<li>remove Builder#features and Builder#produces?</li>
+<li>add functionality to allow builders to wait on Ruby threads or other builders</li>
+<li>add install/uninstall/distclean command-line operations</li>
+<li>preserve makefile dependency files under build directory</li>
+<li>remove a few deprecated methods</li>
+<li>pass a Builder instance to build hooks instead of a build operation Hash</li>
+<li>support a basic markup syntax in builder run messages to colorize target/source files</li>
+<li>hide (but store) failed compilation command by default so the user doesn&#39;t have to scroll back as much to see compiler output</li>
+<li>refactor to remove some redundancy among built-in builders</li>
+<li>track object file source language (correctly determine linker when only passed object files previously built by particular toolchains)</li>
+<li>add barriers</li>
+<li>add InstallDirectory builder</li>
+<li>change Install builder to copy files on &#39;install&#39; operation</li>
+<li>add &quot;prefix&quot; construction variable based on configured installation prefix</li>
+<li>allow passing builder objects as sources to build targets</li>
+<li>differentiate &#39;build&#39; targets from &#39;install&#39; targets in cache contents</li>
+<li>add verbose mode</li>
+<li>show build progress as a percentage in builder output messages</li>
+<li>various performance improvements</li>
+<li>wrote a new user guide</li>
+<li>added new website (<a href="https://holtrop.github.io/rscons/">https://holtrop.github.io/rscons/</a>)</li>
+<li>added new logo</li>
+</ul>
+
+<h2>v1.17.0</h2>
+
+<h3>New Features</h3>
+
+<ul>
+<li>allow construction variable expansion on <code>true</code> and <code>false</code> values.</li>
+<li>remove makefile target name check when parsing dependencies</li>
+</ul>
+
+<h2>v1.16.0</h2>
+
+<h3>New Features</h3>
+
+<ul>
+<li>Add <code>Rscons.glob</code></li>
+<li>Support command-line variables</li>
+<li>improve debuggability of <code>cache.up_to_date?</code></li>
+<li>allow passing a VarSet into cache methods</li>
+</ul>
+
+<h3>Fixes</h3>
+
+<ul>
+<li>generate dependencies for D builds</li>
+</ul>
+
+<h2>v1.15.0</h2>
+
+<ul>
+<li>allow json 1.x or 2.x</li>
+</ul>
+
+<h2>v1.14.0</h2>
+
+<h3>New Features</h3>
+
+<ul>
+<li>#45 - Add <code>Rscons::VarSet#values_at</code></li>
+</ul>
+
+<h3>Fixes</h3>
+
+<ul>
+<li>#44 - <code>Environment#print_builder_run_message</code> should support string commands</li>
+</ul>
+
+<h2>v1.13.0</h2>
+
+<h3>New Features</h3>
+
+<ul>
+<li>#43 - Add ability to record side-effect file production</li>
+</ul>
+
+<h2>v1.12.0</h2>
+
+<h3>New Features</h3>
+
+<ul>
+<li>#40 - env.depends should imply <code>env.build_after</code></li>
+<li>#41 - be more colorful</li>
+</ul>
+
+<h3>Fixes</h3>
+
+<ul>
+<li>#39 - wait for in-progress subcommands to complete on build failure</li>
+<li>#42 - cloned Environments should inherit <code>n_threads</code></li>
+</ul>
+
+<h2>v1.11.1</h2>
+
+<h3>Fixes</h3>
+
+<ul>
+<li>fix the circular build dependency detection logic</li>
+</ul>
+
+<h2>v1.11.0</h2>
+
+<h3>New Features</h3>
+
+<ul>
+<li>Change default Environment :clone option to :all to clone all attributes</li>
+<li>#38 - raise error when circular dependencies are found</li>
+<li>#34 - Allow overriding <code>n_threads</code> on a per-Environment level</li>
+</ul>
+
+<h3>Fixes</h3>
+
+<ul>
+<li>#35 - <code>env.build_after</code> should expand paths</li>
+<li>#36 - <code>SHCFLAGS</code> and <code>SHCXXFLAGS</code> should inherit non-SH flags by default</li>
+<li>#37 - Fix non-blocking thread-wait if <code>Rscons.n_threads</code> is set to 0</li>
+</ul>
+
+<h2>v1.10.0</h2>
+
+<h3>New Features</h3>
+
+<ul>
+<li>#23 - add parallelization - builds are now parallelized by default</li>
+<li>#31 - add LEXSUFFIX, YACCSUFFIX construction variables</li>
+<li>#30 - place object files for absolute source paths under build_root</li>
+<li>#28 - support redirecting standard output using the Command builder</li>
+<li>Always use a build root and default it to &quot;build&quot;</li>
+<li>Add builder features</li>
+<li>#8 - add SharedObject and SharedLibrary builders</li>
+</ul>
+
+<h3>Fixes</h3>
+
+<ul>
+<li>expand target and source paths before calling <code>Builder#create_build_target</code></li>
+<li>#29 - fix <code>PROGSUFFIX</code> handling</li>
+<li>#32 - Pre-build hooks do not respect modified key values</li>
+</ul>
+
+<h2>v1.9.3</h2>
+
+<ul>
+<li><code>Environment#parse_flags</code> should put -std=XXX flags in CCFLAGS, not CFLAGS</li>
+</ul>
+
+<h2>v1.9.2</h2>
+
+<ul>
+<li>allow phony targets in conjunction with build roots</li>
+</ul>
+
+<h2>v1.9.1</h2>
+
+<ul>
+<li>change *SUFFIX defaults to arrays</li>
+<li>add various C++ file suffixes</li>
+<li>use ${INCPREFIX} instead of hard-coded &quot;-I&quot; in Preprocess builder</li>
+</ul>
+
+<h2>v1.9.0</h2>
+
+<h3>New Features</h3>
+
+<ul>
+<li>#6 - add Install and Copy builders</li>
+<li>#22 - allow overriding Command builder short description with <code>CMD_DESC</code> variable</li>
+<li>#24 - add &quot;rscons&quot; executable</li>
+<li>#25 - add support for phony targets given as Symbols instead of Strings</li>
+<li>#26 - support registering multiple build targets with the same target name</li>
+<li>#27 - add Directory builder</li>
+</ul>
+
+<h3>Fixes</h3>
+
+<ul>
+<li>#20 - fix variable references that expand to arrays in build target sources</li>
+<li>#21 - rework Preprocess builder to consider deep dependencies</li>
+<li>fix <code>Rscons.set_suffix</code> to append the given suffix if the filename has none</li>
+<li>remove ${CFLAGS} from default <code>CPP_CMD</code></li>
+</ul>
+
+<h2>v1.8.1</h2>
+
+<ul>
+<li>fix Environment#dump when construction variables are symbols</li>
+</ul>
+
+<h2>v1.8.0</h2>
+
+<ul>
+<li>new Command builder to execute arbitrary user commands</li>
+<li>new SimpleBuilder class
+
+<ul>
+<li>create new builders quickly by passing a block to <code>Environment#add_builder</code></li>
+</ul></li>
+<li>improved YARD documentation</li>
+<li>add Environment#dump to debug Environment construction variables</li>
+</ul>
+
+<h2>v1.7.0</h2>
+
+<ul>
+<li>allow build hooks to register new build targets</li>
+<li>add post-build hooks (register with <code>Environment#add_post_build_hook</code>)</li>
+<li>clear all build targets after processing an Environment</li>
+<li>allow trailing slashes in arguments to <code>Environment#build_dir</code></li>
+</ul>
+
+<h2>v1.6.1</h2>
+
+<ul>
+<li>add DEPFILESUFFIX construction variable to override dependency file suffix</li>
+<li>fix Environment#depends to expand its arguments for construction variables</li>
+</ul>
+
+<h2>v1.6.0</h2>
+
+<ul>
+<li>support lambdas as construction variable values</li>
+</ul>
+
+<h2>v1.5.0</h2>
+
+<ul>
+<li>add &quot;json&quot; as a runtime dependency</li>
+<li>update construction variables to match SCons more closely
+
+<ul>
+<li>add <code>CPPDEFPREFIX</code>, <code>INCPREFIX</code>, <code>CPPDEFINES</code>, <code>CCFLAGS</code>, <code>LIBDIRPREFIX</code>, and <code>LIBLINKPREFIX</code></li>
+</ul></li>
+<li>add <code>Environment#shell</code></li>
+<li>add <code>Environment#parse_flags</code>, <code>#parse_flags!</code>, <code>#merge_flags</code></li>
+<li>unbuffer <code>$stdout</code> by default</li>
+<li>add <code>PROGSUFFIX</code> construction variable (defaults to <code>.exe</code> on MinGW/Cygwin)</li>
+<li>add <code>Rscons::BuildTarget</code> and <code>Builder#create_build_target</code></li>
+<li>update specs to RSpec 3.x and fix to run on MinGW/Cygwin/Linux</li>
+<li>add YARD documentation to get to 100% coverage</li>
+</ul>
+
+<h2>v1.4.3</h2>
+
+<ul>
+<li>fix builders properly using construction variable overrides</li>
+<li>expand nil construction variables to empty strings</li>
+</ul>
+
+<h2>v1.4.2</h2>
+
+<ul>
+<li>add <code>Environment#expand_path</code></li>
+<li>expand construction variable references in builder targets and sources before invoking builder</li>
+</ul>
+
+<h2>v1.4.1</h2>
+
+<ul>
+<li>fix invoking a builder with no sources while a build root defined</li>
+</ul>
+
+<h2>v1.4.0</h2>
+
+<ul>
+<li>add CFile builder</li>
+<li>add Disassemble builder</li>
+<li>add Preprocess builder</li>
+<li>pass the Environment object to build hooks in the :env key of the build_op parameter</li>
+<li>expand target/source paths beginning with &quot;^/&quot; to be relative to the Environment&#39;s build root</li>
+<li>many performance improvements, including:
+
+<ul>
+<li>use JSON instead of YAML for the cache to improve loading speed (Issue #7)</li>
+<li>store a hash of the build command instead of the full command contents in the cache</li>
+<li>implement copy-on-write semantics for construction variables when cloning Environments</li>
+<li>only load the cache once instead of on each Environment#process</li>
+<li>only write the cache when something has changed</li>
+</ul></li>
+<li>fix <code>Cache#mkdir_p</code> to handle relative paths (Issue #5)</li>
+<li>flush the cache to disk if a builder raises an exception (Issue #4)</li>
+</ul>
+
+<h2>v1.3.0</h2>
+
+<ul>
+<li>change Environment#execute() options parameter to accept the following options keys:
+
+<ul>
+<li>:env to pass an environment Hash to Kernel#system</li>
+<li>:options to pass an options Hash to Kernel#system</li>
+</ul></li>
+</ul>
+
+<h2>v1.2.0</h2>
+
+<ul>
+<li>add :clone option to Environment#clone to control exactly which Environment attributes are cloned</li>
+<li>allow nil to be passed in to <code>Environment#build_root=</code></li>
+</ul>
+
+<h2>v1.1.0</h2>
+
+<ul>
+<li>Change <code>Cache#up_to_date?</code> and <code>#register_build</code> to accept a single target
+file or an array of target file names</li>
+</ul>
+</p>
+<div class="separator"></div><table class="page_nav"><tr><td class="page_nav_prev"><a href="s7_Contributing.html">&laquo; Prev<br/>7 Contributing</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"></td></tr></table></div>
+  </body>
+</html>

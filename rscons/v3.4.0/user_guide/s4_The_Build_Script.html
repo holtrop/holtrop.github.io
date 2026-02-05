@@ -1,0 +1,86 @@
+<html>
+  <head>
+    <title>Rscons User Guide - 4 The Build Script - Version 3.4.0</title>
+    <style>
+      body {
+        background-color: #CCC;
+        margin: 0px;
+        padding: 0px;
+      }
+      #body-content {
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 1em;
+        margin-bottom: 1em;
+        border: 1px solid black;
+        background-color: #FFF;
+        width: 120ex;
+        padding: 2ex;
+      }
+      a {
+        text-decoration: none;
+      }
+      .separator {
+        height: 2em;
+      }
+      .img_block_center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .page_nav {
+        width: 100%;
+        table-layout: fixed;
+      }
+      .page_nav_toc {
+        text-align: center;
+      }
+      .page_nav_next {
+        text-align: right;
+      }
+      .code {
+        padding-left: 2ex;
+        width: 116ex;
+        overflow-x: auto;
+      }
+      .ruby_code .normal {}
+      .ruby_code .comment { color: #005; font-style: italic; }
+      .ruby_code .keyword { color: #A00; font-weight: bold; }
+      .ruby_code .method { color: #077; }
+      .ruby_code .class { color: #074; }
+      .ruby_code .module { color: #050; }
+      .ruby_code .punct { color: #447; font-weight: bold; }
+      .ruby_code .symbol { color: #099; }
+      .ruby_code .string { color: #090; }
+      .ruby_code .char { color: #F07; }
+      .ruby_code .ident { color: #004; }
+      .ruby_code .constant { color: #07F; }
+      .ruby_code .regex { color: #B66; }
+      .ruby_code .number { color: #D55; }
+      .ruby_code .attribute { color: #377; }
+      .ruby_code .global { color: #3B7; }
+      .ruby_code .expr { color: #227; }
+    </style>
+  </head>
+  <body>
+    <div id="body-content"><table class="page_nav"><tr><td class="page_nav_prev"><a href="s3_Command_Line_Operation.html">&laquo; Prev<br/>3 Command-Line Operation</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s4_1_Tasks.html">Next &raquo<br/>4.1 Tasks</a></td></tr></table><div class="separator"></div><a name="s4_The_Build_Script" /><h1>4 The Build Script</h1>
+
+<p>Rscons looks for instructions for what to build by reading a build script file
+called <code>Rsconscript</code> (or <code>Rsconscript.rb</code>).
+Here is a simple example <code>Rsconscript</code> file:</p>
+
+<div class="code ruby_code">
+<pre><span class="ident">env</span> <span class="keyword">do</span> <span class="punct">|</span><span class="ident">env</span><span class="punct">|</span>
+  <span class="ident">env</span><span class="punct">.</span><span class="ident">Program</span><span class="punct">(&quot;</span><span class="string">myprog.exe</span><span class="punct">&quot;,</span> <span class="ident">glob</span><span class="punct">(&quot;</span><span class="string">src/**/*.c</span><span class="punct">&quot;))</span>
+<span class="keyword">end</span>
+</pre>
+</div>
+
+<p>This <code>Rsconscript</code> file would instruct Rscons to produce a <em>Program</em> target
+called <code>myprog.exe</code> which is to be built from all C source files found
+(recursively) under the <code>src</code> directory.</p>
+
+<p>The <code>Rsconscript</code> file is a Ruby script.</p>
+<div class="separator"></div><table class="page_nav"><tr><td class="page_nav_prev"><a href="s3_Command_Line_Operation.html">&laquo; Prev<br/>3 Command-Line Operation</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s4_1_Tasks.html">Next &raquo<br/>4.1 Tasks</a></td></tr></table></div>
+  </body>
+</html>
