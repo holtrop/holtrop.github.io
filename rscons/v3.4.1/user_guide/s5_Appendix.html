@@ -1,0 +1,174 @@
+<html>
+  <head>
+    <title>Rscons User Guide - 5 Appendix - Version 3.4.1</title>
+    <style>
+      body {
+        background-color: #CCC;
+        margin: 0px;
+        padding: 0px;
+      }
+      #body-content {
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 1em;
+        margin-bottom: 1em;
+        border: 1px solid black;
+        background-color: #FFF;
+        width: 120ex;
+        padding: 2ex;
+      }
+      a {
+        text-decoration: none;
+      }
+      .separator {
+        height: 2em;
+      }
+      .img_block_center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .page_nav {
+        width: 100%;
+        table-layout: fixed;
+      }
+      .page_nav_toc {
+        text-align: center;
+      }
+      .page_nav_next {
+        text-align: right;
+      }
+      .code {
+        padding-left: 2ex;
+        width: 116ex;
+        overflow-x: auto;
+      }
+      .ruby_code .normal {}
+      .ruby_code .comment { color: #005; font-style: italic; }
+      .ruby_code .keyword { color: #A00; font-weight: bold; }
+      .ruby_code .method { color: #077; }
+      .ruby_code .class { color: #074; }
+      .ruby_code .module { color: #050; }
+      .ruby_code .punct { color: #447; font-weight: bold; }
+      .ruby_code .symbol { color: #099; }
+      .ruby_code .string { color: #090; }
+      .ruby_code .char { color: #F07; }
+      .ruby_code .ident { color: #004; }
+      .ruby_code .constant { color: #07F; }
+      .ruby_code .regex { color: #B66; }
+      .ruby_code .number { color: #D55; }
+      .ruby_code .attribute { color: #377; }
+      .ruby_code .global { color: #3B7; }
+      .ruby_code .expr { color: #227; }
+    </style>
+  </head>
+  <body>
+    <div id="body-content"><table class="page_nav"><tr><td class="page_nav_prev"><a href="s4_6_2_5_Simple_custom_builders_added_with_add_builder.html">&laquo; Prev<br/>4.6.2.5 Simple custom builders added with add_builder</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s5_2_Example_Build_Scripts.html">Next &raquo<br/>5.2 Example Build Scripts</a></td></tr></table><div class="separator"></div><a name="s5_Appendix" /><h1>5 Appendix</h1>
+<a name="s5_1_Default_Construction_Variables" /><h2>5.1 Default Construction Variables</h2>
+
+<div class="code ruby_code">
+<pre><span class="keyword">module </span><span class="module">Rscons</span>
+
+  <span class="ident">on_windows</span> <span class="punct">=</span> <span class="constant">RUBY_PLATFORM</span> <span class="punct">=~</span> <span class="punct">/</span><span class="regex">mingw|msys|cygwin</span><span class="punct">/</span>
+  <span class="ident">pic_flags</span> <span class="punct">=</span> <span class="ident">on_windows</span> <span class="punct">?</span> <span class="punct">[]</span> <span class="punct">:</span> <span class="punct">%w[</span><span class="string">-fPIC</span><span class="punct">]</span>
+
+  <span class="comment"># Default Rscons construction variables.</span>
+  <span class="constant">DEFAULT_CONSTRUCTION_VARIABLES</span> <span class="punct">=</span> <span class="punct">{</span>
+    <span class="punct">&quot;</span><span class="string">AR</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">&quot;</span><span class="string">ar</span><span class="punct">&quot;,</span>
+    <span class="punct">&quot;</span><span class="string">ARCMD</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">${AR} ${ARFLAGS} ${_TARGET} ${_SOURCES}</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">ARFLAGS</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">rcs</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">AS</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">&quot;</span><span class="string">${CC}</span><span class="punct">&quot;,</span>
+    <span class="punct">&quot;</span><span class="string">ASCMD</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">${AS} -c -o ${_TARGET} ${ASDEPGEN} ${INCPREFIX}${ASPPPATH} ${ASPPFLAGS} ${ASFLAGS} ${_SOURCES}</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">ASCMD:direct</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">${AS} -o ${_TARGET} ${ASDEPGEN} ${INCPREFIX}${ASPPPATH} ${ASPPFLAGS} ${ASFLAGS} ${LDFLAGS} ${_SOURCES} ${LIBDIRPREFIX}${LIBPATH} ${LIBLINKPREFIX}${LIBS}</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">ASDEPGEN</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">-MMD -MF ${_DEPFILE}</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">ASFLAGS</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">[],</span>
+    <span class="punct">&quot;</span><span class="string">ASPPFLAGS</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">&quot;</span><span class="string">${CPPFLAGS}</span><span class="punct">&quot;,</span>
+    <span class="punct">&quot;</span><span class="string">ASPPPATH</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">&quot;</span><span class="string">${CPPPATH}</span><span class="punct">&quot;,</span>
+    <span class="punct">&quot;</span><span class="string">ASSUFFIX</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">.S</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">CC</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">&quot;</span><span class="string">gcc</span><span class="punct">&quot;,</span>
+    <span class="punct">&quot;</span><span class="string">CCCMD</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">${CC} -c -o ${_TARGET} ${CCDEPGEN} ${INCPREFIX}${CPPPATH} ${CPPFLAGS} ${CFLAGS} ${CCFLAGS} ${_SOURCES}</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">CCCMD:direct</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">${CC} -o ${_TARGET} ${CCDEPGEN} ${INCPREFIX}${CPPPATH} ${CPPFLAGS} ${CFLAGS} ${CCFLAGS} ${LDFLAGS} ${_SOURCES} ${LIBDIRPREFIX}${LIBPATH} ${LIBLINKPREFIX}${LIBS}</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">CCDEPGEN</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">-MMD -MF ${_DEPFILE}</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">CCFLAGS</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">[],</span>
+    <span class="punct">&quot;</span><span class="string">CFLAGS</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">[],</span>
+    <span class="punct">&quot;</span><span class="string">CPPDEFINES</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">[],</span>
+    <span class="punct">&quot;</span><span class="string">CPPDEFPREFIX</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">&quot;</span><span class="string">-D</span><span class="punct">&quot;,</span>
+    <span class="punct">&quot;</span><span class="string">CPPFLAGS</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">${CPPDEFPREFIX}${CPPDEFINES}</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">CPPPATH</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">[],</span>
+    <span class="punct">&quot;</span><span class="string">CPP_CMD</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">${_PREPROCESS_CC} -E ${_PREPROCESS_DEPGEN} -o ${_TARGET} ${INCPREFIX}${CPPPATH} ${CPPFLAGS} ${_SOURCES}</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">CSUFFIX</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">.c</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">CXX</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">&quot;</span><span class="string">g++</span><span class="punct">&quot;,</span>
+    <span class="punct">&quot;</span><span class="string">CXXCMD</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">${CXX} -c -o ${_TARGET} ${CXXDEPGEN} ${INCPREFIX}${CPPPATH} ${CPPFLAGS} ${CXXFLAGS} ${CCFLAGS} ${_SOURCES}</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">CXXCMD:direct</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">${CXX} -o ${_TARGET} ${CXXDEPGEN} ${INCPREFIX}${CPPPATH} ${CPPFLAGS} ${CXXFLAGS} ${CCFLAGS} ${LDFLAGS} ${_SOURCES} ${LIBDIRPREFIX}${LIBPATH} ${LIBLINKPREFIX}${LIBS}</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">CXXDEPGEN</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">-MMD -MF ${_DEPFILE}</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">CXXFLAGS</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">[],</span>
+    <span class="punct">&quot;</span><span class="string">CXXSUFFIX</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">.cc .cpp .cxx .C</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">DC</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">&quot;</span><span class="string">gdc</span><span class="punct">&quot;,</span>
+    <span class="punct">&quot;</span><span class="string">DC:-o</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">&quot;</span><span class="string">-o</span><span class="punct">&quot;,</span>
+    <span class="punct">&quot;</span><span class="string">DCCMD</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">${DC} -c ${DC:-o} ${_TARGET} ${DDEPGEN} ${INCPREFIX}${D_IMPORT_PATH} ${DFLAGS} ${_SOURCES}</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">DCCMD:direct</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">${DC} ${DC:-o} ${_TARGET} ${DDEPGEN} ${INCPREFIX}${D_IMPORT_PATH} ${DFLAGS} ${LDFLAGS} ${_SOURCES} ${LIBDIRPREFIX}${LIBPATH} ${LIBLINKPREFIX}${LIBS}</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">DDEPGEN</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">-MMD -MF ${_DEPFILE}</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">DEPFILESUFFIX</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">&quot;</span><span class="string">.mf</span><span class="punct">&quot;,</span>
+    <span class="punct">&quot;</span><span class="string">DFLAGS</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">[],</span>
+    <span class="punct">&quot;</span><span class="string">DISASM_CMD</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">${OBJDUMP} ${DISASM_FLAGS} ${_SOURCES}</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">DISASM_FLAGS</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">--disassemble --source</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">DPC_CMD:ldc</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">${DC} -H -Hf ${_TARGET} -o- ${INCPREFIX}${D_IMPORT_PATH} ${DFLAGS} ${_SOURCES}</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">DPC_CMD:gdc</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">${DC} -H -Hf ${_TARGET} -fsyntax-only ${INCPREFIX}${D_IMPORT_PATH} ${DFLAGS} ${_SOURCES}</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">DSUFFIX</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">.d</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">D_IMPORT_PATH</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">[],</span>
+    <span class="punct">&quot;</span><span class="string">INCPREFIX</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">&quot;</span><span class="string">-I</span><span class="punct">&quot;,</span>
+    <span class="punct">&quot;</span><span class="string">LD</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="constant">nil</span><span class="punct">,</span>
+    <span class="punct">&quot;</span><span class="string">LD:-o</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">&quot;</span><span class="string">-o</span><span class="punct">&quot;,</span>
+    <span class="punct">&quot;</span><span class="string">LDCMD</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">${LD} ${LD:-o} ${_TARGET} ${LDFLAGS} ${_SOURCES} ${LIBDIRPREFIX}${LIBPATH} ${LIBLINKPREFIX}${LIBS}</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">LDFLAGS</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">[],</span>
+    <span class="punct">&quot;</span><span class="string">LEX</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">&quot;</span><span class="string">flex</span><span class="punct">&quot;,</span>
+    <span class="punct">&quot;</span><span class="string">LEX_CMD</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">${LEX} ${LEX_FLAGS} -o ${_TARGET} ${_SOURCES}</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">LEX_FLAGS</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">[],</span>
+    <span class="punct">&quot;</span><span class="string">LIBDIRPREFIX</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">&quot;</span><span class="string">-L</span><span class="punct">&quot;,</span>
+    <span class="punct">&quot;</span><span class="string">LIBLINKPREFIX</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">&quot;</span><span class="string">-l</span><span class="punct">&quot;,</span>
+    <span class="punct">&quot;</span><span class="string">LIBPATH</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">[],</span>
+    <span class="punct">&quot;</span><span class="string">LIBS</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">[],</span>
+    <span class="punct">&quot;</span><span class="string">LIBSUFFIX</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">&quot;</span><span class="string">.a</span><span class="punct">&quot;,</span>
+    <span class="punct">&quot;</span><span class="string">LLVMAS</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">&quot;</span><span class="string">clang</span><span class="punct">&quot;,</span>
+    <span class="punct">&quot;</span><span class="string">LLVMAS_CMD</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">${LLVMAS} -c -o ${_TARGET} ${LLVMAS_FLAGS} ${_SOURCES}</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">LLVMAS_CMD:direct</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">${LLVMAS} -o ${_TARGET} ${LLVMAS_FLAGS} ${LDFLAGS} ${_SOURCES} ${LIBDIRPREFIX}${LIBPATH} ${LIBLINKPREFIX}${LIBS}</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">LLVMAS_FLAGS</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">[],</span>
+    <span class="punct">&quot;</span><span class="string">LLVMAS_SUFFIX</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">&quot;</span><span class="string">.ll</span><span class="punct">&quot;,</span>
+    <span class="punct">&quot;</span><span class="string">OBJDUMP</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">&quot;</span><span class="string">objdump</span><span class="punct">&quot;,</span>
+    <span class="punct">&quot;</span><span class="string">OBJSUFFIX</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">.o</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">PROGSUFFIX</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="ident">on_windows</span> <span class="punct">?</span> <span class="punct">&quot;</span><span class="string">.exe</span><span class="punct">&quot;</span> <span class="punct">:</span> <span class="punct">&quot;</span><span class="string"></span><span class="punct">&quot;,</span>
+    <span class="punct">&quot;</span><span class="string">SHCC</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">&quot;</span><span class="string">${CC}</span><span class="punct">&quot;,</span>
+    <span class="punct">&quot;</span><span class="string">SHCCCMD</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">${SHCC} -c -o ${_TARGET} ${CCDEPGEN} ${INCPREFIX}${CPPPATH} ${CPPFLAGS} ${SHCFLAGS} ${SHCCFLAGS} ${_SOURCES}</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">SHCCCMD:direct</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">${SHCC} -o ${_TARGET} ${CCDEPGEN} ${INCPREFIX}${CPPPATH} ${CPPFLAGS} ${SHCFLAGS} ${SHCCFLAGS} ${SHLDFLAGS} ${_SOURCES} ${LIBDIRPREFIX}${LIBPATH} ${LIBLINKPREFIX}${LIBS}</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">SHCCFLAGS</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">${CCFLAGS}</span><span class="punct">]</span> <span class="punct">+</span> <span class="ident">pic_flags</span><span class="punct">,</span>
+    <span class="punct">&quot;</span><span class="string">SHCFLAGS</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">${CFLAGS}</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">SHCXX</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">&quot;</span><span class="string">${CXX}</span><span class="punct">&quot;,</span>
+    <span class="punct">&quot;</span><span class="string">SHCXXCMD</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">${SHCXX} -c -o ${_TARGET} ${CXXDEPGEN} ${INCPREFIX}${CPPPATH} ${CPPFLAGS} ${SHCXXFLAGS} ${SHCCFLAGS} ${_SOURCES}</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">SHCXXCMD:direct</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">${SHCXX} -o ${_TARGET} ${CXXDEPGEN} ${INCPREFIX}${CPPPATH} ${CPPFLAGS} ${SHCXXFLAGS} ${SHCCFLAGS} ${SHLDFLAGS} ${_SOURCES} ${LIBDIRPREFIX}${LIBPATH} ${LIBLINKPREFIX}${LIBS}</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">SHCXXFLAGS</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">${CXXFLAGS}</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">SHDC</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">&quot;</span><span class="string">gdc</span><span class="punct">&quot;,</span>
+    <span class="punct">&quot;</span><span class="string">SHDCCMD</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">${SHDC} -c -o ${_TARGET} ${INCPREFIX}${D_IMPORT_PATH} ${SHDFLAGS} ${_SOURCES}</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">SHDCCMD:direct</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">${SHDC} -o ${_TARGET} ${INCPREFIX}${D_IMPORT_PATH} ${SHDFLAGS} ${SHLDFLAGS} ${_SOURCES} ${LIBDIRPREFIX}${LIBPATH} ${LIBLINKPREFIX}${LIBS}</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">SHDFLAGS</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">${DFLAGS}</span><span class="punct">]</span> <span class="punct">+</span> <span class="ident">pic_flags</span><span class="punct">,</span>
+    <span class="punct">&quot;</span><span class="string">SHLD</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="constant">nil</span><span class="punct">,</span>
+    <span class="punct">&quot;</span><span class="string">SHLDCMD</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">${SHLD} -o ${_TARGET} ${SHLDFLAGS} ${_SOURCES} ${SHLIBDIRPREFIX}${LIBPATH} ${SHLIBLINKPREFIX}${LIBS}</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">SHLDFLAGS</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">${LDFLAGS} -shared</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">SHLIBDIRPREFIX</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">&quot;</span><span class="string">-L</span><span class="punct">&quot;,</span>
+    <span class="punct">&quot;</span><span class="string">SHLIBLINKPREFIX</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">&quot;</span><span class="string">-l</span><span class="punct">&quot;,</span>
+    <span class="punct">&quot;</span><span class="string">SHLIBPREFIX</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="ident">on_windows</span> <span class="punct">?</span> <span class="punct">&quot;</span><span class="string"></span><span class="punct">&quot;</span> <span class="punct">:</span> <span class="punct">&quot;</span><span class="string">lib</span><span class="punct">&quot;,</span>
+    <span class="punct">&quot;</span><span class="string">SHLIBSUFFIX</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="ident">on_windows</span> <span class="punct">?</span> <span class="punct">&quot;</span><span class="string">.dll</span><span class="punct">&quot;</span> <span class="punct">:</span> <span class="punct">&quot;</span><span class="string">.so</span><span class="punct">&quot;,</span>
+    <span class="punct">&quot;</span><span class="string">SIZE</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">&quot;</span><span class="string">size</span><span class="punct">&quot;,</span>
+    <span class="punct">&quot;</span><span class="string">SIZECMD</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">${SIZE} ${SIZEFLAGS} ${_SOURCES}</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">SIZEFLAGS</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">[],</span>
+    <span class="punct">&quot;</span><span class="string">YACC</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">&quot;</span><span class="string">bison</span><span class="punct">&quot;,</span>
+    <span class="punct">&quot;</span><span class="string">YACC_CMD</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">${YACC} ${YACC_FLAGS} -o ${_TARGET} ${_SOURCES}</span><span class="punct">],</span>
+    <span class="punct">&quot;</span><span class="string">YACC_FLAGS</span><span class="punct">&quot;</span> <span class="punct">=&gt;</span> <span class="punct">%w[</span><span class="string">-d</span><span class="punct">],</span>
+  <span class="punct">}</span>
+
+<span class="keyword">end</span>
+
+</pre>
+</div>
+<div class="separator"></div><table class="page_nav"><tr><td class="page_nav_prev"><a href="s4_6_2_5_Simple_custom_builders_added_with_add_builder.html">&laquo; Prev<br/>4.6.2.5 Simple custom builders added with add_builder</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s5_2_Example_Build_Scripts.html">Next &raquo<br/>5.2 Example Build Scripts</a></td></tr></table></div>
+  </body>
+</html>
