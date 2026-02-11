@@ -1,0 +1,306 @@
+<html>
+  <head>
+    <title>Propane User Guide - 5.3 Functions - Version 3.0.0</title>
+    <style>
+      body {
+        background-color: #CCC;
+        margin: 0px;
+        padding: 0px;
+      }
+      #body-content {
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 1em;
+        margin-bottom: 1em;
+        border: 1px solid black;
+        background-color: #FFF;
+        width: 120ex;
+        padding: 2ex;
+      }
+      a {
+        text-decoration: none;
+      }
+      .separator {
+        height: 2em;
+      }
+      .img_block_center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .page_nav {
+        width: 100%;
+        table-layout: fixed;
+      }
+      .page_nav_toc {
+        text-align: center;
+      }
+      .page_nav_next {
+        text-align: right;
+      }
+      .code {
+        padding-left: 2ex;
+        width: 116ex;
+        overflow-x: auto;
+      }
+      .ruby_code .normal {}
+      .ruby_code .comment { color: #005; font-style: italic; }
+      .ruby_code .keyword { color: #A00; font-weight: bold; }
+      .ruby_code .method { color: #077; }
+      .ruby_code .class { color: #074; }
+      .ruby_code .module { color: #050; }
+      .ruby_code .punct { color: #447; font-weight: bold; }
+      .ruby_code .symbol { color: #099; }
+      .ruby_code .string { color: #090; }
+      .ruby_code .char { color: #F07; }
+      .ruby_code .ident { color: #004; }
+      .ruby_code .constant { color: #07F; }
+      .ruby_code .regex { color: #B66; }
+      .ruby_code .number { color: #D55; }
+      .ruby_code .attribute { color: #377; }
+      .ruby_code .global { color: #3B7; }
+      .ruby_code .expr { color: #227; }
+    </style>
+  </head>
+  <body>
+    <div id="body-content"><table class="page_nav"><tr><td class="page_nav_prev"><a href="s5_2_Types.html">&laquo; Prev<br/>5.2 Types</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s5_4_Data.html">Next &raquo<br/>5.4 Data</a></td></tr></table><div class="separator"></div><a name="s5_3_Functions" /><h2>5.3 Functions</h2>
+<a name="s5_3_1__p_context_init_" /><h3>5.3.1 <code>p_context_init</code></h3>
+
+<p>The <code>p_context_init()</code> function must be called to initialize the context
+structure.
+The input to be used for lexing/parsing is passed in when initializing the
+context structure.</p>
+
+<p>C example:</p>
+
+<div class="code">
+<pre>p_context_t context;
+p_context_init(&context, input, input_length);
+</pre>
+</div>
+
+<p>D example:</p>
+
+<div class="code">
+<pre>p_context_t context;
+p_context_init(&context, input);
+</pre>
+</div>
+<a name="s5_3_2__p_lex_" /><h3>5.3.2 <code>p_lex</code></h3>
+
+<p>The <code>p_lex()</code> function is the main entry point to the lexer.
+It is normally called automatically by the generated parser to retrieve the
+next input token for the parser and does not need to be called by the user.
+However, the user may initialize a context and call <code>p_lex()</code> to use the
+generated lexer in a standalone mode.</p>
+
+<p>Example:</p>
+
+<div class="code">
+<pre>p_context_t context;
+p_context_init(&context, input, input_length);
+p_token_info_t token_info;
+size_t result = p_lex(&context, &token_info);
+switch (result)
+{
+case P_DECODE_ERROR:
+    /* UTF-8 decode error */
+    break;
+case P_UNEXPECTED_INPUT:
+    /* Input text does not match any lexer pattern. */
+    break;
+case P_USER_TERMINATED:
+    /* Lexer user code block requested to terminate the lexer. */
+    break;
+case P_SUCCESS:
+    /*
+     * token_info.position holds the text position of the first code point in the token.
+     * token_info.end_position holds the text position of the last code point in the token.
+     * token_info.length holds the number of input bytes used by the token.
+     * token_info.token holds the token ID of the lexed token
+     * token_info.pvalue holds the parser value associated with the token.
+     */
+    break;
+}
+</pre>
+</div>
+<a name="s5_3_3__p_parse_" /><h3>5.3.3 <code>p_parse</code></h3>
+
+<p>The <code>p_parse()</code> function is the main entry point to the parser.
+It must be passed a pointer to an initialized context structure.</p>
+
+<p>Example:</p>
+
+<div class="code">
+<pre>p_context_t context;
+p_context_init(&context, input, input_length);
+size_t result = p_parse(&context);
+</pre>
+</div>
+
+<p>When multiple start rules are specified, a separate parse function is generated
+for each which starts parsing at the given rule.
+For example, if <code>Statement</code> is specified as a start rule:</p>
+
+<div class="code">
+<pre>size_t result = p_parse_Statement(&context);
+</pre>
+</div>
+
+<p>In this case, the parser will start parsing with the <code>Statement</code> rule.</p>
+<a name="s5_3_4__p_position_valid_" /><h3>5.3.4 <code>p_position_valid</code></h3>
+
+<p>The <code>p_position_valid()</code> function is only generated for C targets.
+it is used to determine whether or not a <code>p_position_t</code> structure is valid.</p>
+
+<p>Example:</p>
+
+<div class="code">
+<pre>if (p_position_valid(node->position))
+{
+    ....
+}
+</pre>
+</div>
+
+<p>For D targets, rather than using <code>p_position_valid()</code>, the <code>valid</code> property
+function of the <code>p_position_t</code> structure can be queried
+(e.g. <code>if (node.position.valid)</code>).</p>
+<a name="s5_3_5__p_result_" /><h3>5.3.5 <code>p_result</code></h3>
+
+<p>The <code>p_result()</code> function can be used to retrieve the final parse value after
+<code>p_parse()</code> returns a <code>P_SUCCESS</code> value.</p>
+
+<p>Example:</p>
+
+<div class="code">
+<pre>p_context_t context;
+p_context_init(&context, input, input_length);
+size_t result = p_parse(&context);
+if (p_parse(&context) == P_SUCCESS)
+{
+    result = p_result(&context);
+}
+</pre>
+</div>
+
+<p>If tree generation mode is active, then the <code>p_result()</code> function returns a
+<code>Start *</code> pointing to the <code>Start</code> tree node structure.</p>
+
+<p>When multiple start rules are specified, a separate result function is generated
+for each which returns the parse result for the corresponding rule.
+For example, if <code>Statement</code> is specified as a start rule:</p>
+
+<div class="code">
+<pre>p_context_t context;
+p_context_init(&context, input, input_length);
+size_t result = p_parse(&context);
+if (p_parse_Statement(&context) == P_SUCCESS)
+{
+    result = p_result_Statement(&context);
+}
+</pre>
+</div>
+
+<p>In this case, the parser will start parsing with the <code>Statement</code> rule and the
+parse result from the <code>Statement</code> rule will be returned.</p>
+<a name="s5_3_6__p_position_" /><h3>5.3.6 <code>p_position</code></h3>
+
+<p>The <code>p_position()</code> function can be used to retrieve the parser position where
+an error occurred.</p>
+
+<p>Example:</p>
+
+<div class="code">
+<pre>p_context_t context;
+p_context_init(&context, input, input_length);
+size_t result = p_parse(&context);
+if (p_parse(&context) == P_UNEXPECTED_TOKEN)
+{
+    p_position_t error_position = p_position(&context);
+    fprintf(stderr, "Error: unexpected token at row %u column %u\n",
+        error_position.row + 1, error_position.col + 1);
+}
+</pre>
+</div>
+<a name="s5_3_7__p_user_terminate_code_" /><h3>5.3.7 <code>p_user_terminate_code</code></h3>
+
+<p>The <code>p_user_terminate_code()</code> function can be used to retrieve the user
+terminate code after <code>p_parse()</code> returns a <code>P_USER_TERMINATED</code> value.
+User terminate codes are arbitrary values that can be defined by the user to
+be returned when the user requests to terminate parsing.
+They have no particular meaning to Propane.</p>
+
+<p>Example:</p>
+
+<div class="code">
+<pre>if (p_parse(&context) == P_USER_TERMINATED)
+{
+    size_t user_terminate_code = p_user_terminate_code(&context);
+}
+</pre>
+</div>
+<a name="s5_3_8__p_token_" /><h3>5.3.8 <code>p_token</code></h3>
+
+<p>The <code>p_token()</code> function can be used to retrieve the current parse token.
+This is useful after <code>p_parse()</code> returns a <code>P_UNEXPECTED_TOKEN</code> value.
+terminate code after <code>p_parse()</code> returns a <code>P_USER_TERMINATED</code> value to
+indicate what token the parser was not expecting.</p>
+
+<p>Example:</p>
+
+<div class="code">
+<pre>if (p_parse(&context) == P_UNEXPECTED_TOKEN)
+{
+    p_token_t unexpected_token = p_token(&context);
+}
+</pre>
+</div>
+<a name="s5_3_9__p_decode_code_point_" /><h3>5.3.9 <code>p_decode_code_point</code></h3>
+
+<p>The <code>p_decode_code_point()</code> function can be used to decode code points from a
+UTF-8 string.
+It does not require a lexer/parser context structure and can be used as a
+standalone UTF-8 decoder or from within a lexer or parser user code block.</p>
+
+<p>D Example:</p>
+
+<div class="code">
+<pre>size_t result;
+p_code_point_t code_point;
+ubyte code_point_length;
+
+result = p_decode_code_point("\xf0\x9f\xa7\xa1", &code_point, &code_point_length);
+assert(result == P_SUCCESS);
+assert(code_point == 0x1F9E1u);
+assert(code_point_length == 4u);
+</pre>
+</div>
+<a name="s5_3_10__p_free_tree_" /><h3>5.3.10 <code>p_free_tree</code></h3>
+
+<p>The <code>p_free_tree()</code> function can be used to free the memory used by the tree.
+It should be passed the same value that is returned by <code>p_result()</code>.</p>
+
+<p>The <code>p_free_tree()</code> function is only available for C/C++ output targets.</p>
+
+<p>Note that if any lexer user code block allocates memory to store in a token&#39;s
+<code>pvalue</code>, in order to properly free this memory a <code>free_token_node</code> function
+should be specified in the grammar file.
+If specified, the <code>free_token_node</code> function will be called during the
+<code>p_free_tree()</code> process to allow user code to free any memory associated with
+a token node&#39;s <code>pvalue</code>.</p>
+
+<p>When multiple start rules are specified, a separate <code>p_free_tree</code> function is
+generated for each which frees the tree resulting from parsing the given rule.
+For example, if <code>Statement</code> is specified as a start rule:</p>
+
+<div class="code">
+<pre>p_free_tree_Statement(statement_tree);
+</pre>
+</div>
+
+<p>In this case, Propane will free a <code>Statement</code> tree structure returned by the
+<code>p_parse_Statement(&amp;context)</code> function.</p>
+<div class="separator"></div><table class="page_nav"><tr><td class="page_nav_prev"><a href="s5_2_Types.html">&laquo; Prev<br/>5.2 Types</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s5_4_Data.html">Next &raquo<br/>5.4 Data</a></td></tr></table></div>
+  </body>
+</html>

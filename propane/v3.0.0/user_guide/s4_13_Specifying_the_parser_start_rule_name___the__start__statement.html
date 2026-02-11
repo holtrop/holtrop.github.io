@@ -1,0 +1,95 @@
+<html>
+  <head>
+    <title>Propane User Guide - 4.13 Specifying the parser start rule name - the start statement - Version 3.0.0</title>
+    <style>
+      body {
+        background-color: #CCC;
+        margin: 0px;
+        padding: 0px;
+      }
+      #body-content {
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 1em;
+        margin-bottom: 1em;
+        border: 1px solid black;
+        background-color: #FFF;
+        width: 120ex;
+        padding: 2ex;
+      }
+      a {
+        text-decoration: none;
+      }
+      .separator {
+        height: 2em;
+      }
+      .img_block_center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .page_nav {
+        width: 100%;
+        table-layout: fixed;
+      }
+      .page_nav_toc {
+        text-align: center;
+      }
+      .page_nav_next {
+        text-align: right;
+      }
+      .code {
+        padding-left: 2ex;
+        width: 116ex;
+        overflow-x: auto;
+      }
+      .ruby_code .normal {}
+      .ruby_code .comment { color: #005; font-style: italic; }
+      .ruby_code .keyword { color: #A00; font-weight: bold; }
+      .ruby_code .method { color: #077; }
+      .ruby_code .class { color: #074; }
+      .ruby_code .module { color: #050; }
+      .ruby_code .punct { color: #447; font-weight: bold; }
+      .ruby_code .symbol { color: #099; }
+      .ruby_code .string { color: #090; }
+      .ruby_code .char { color: #F07; }
+      .ruby_code .ident { color: #004; }
+      .ruby_code .constant { color: #07F; }
+      .ruby_code .regex { color: #B66; }
+      .ruby_code .number { color: #D55; }
+      .ruby_code .attribute { color: #377; }
+      .ruby_code .global { color: #3B7; }
+      .ruby_code .expr { color: #227; }
+    </style>
+  </head>
+  <body>
+    <div id="body-content"><table class="page_nav"><tr><td class="page_nav_prev"><a href="s4_12_Specifying_a_parser_rule___the_rule_statement.html">&laquo; Prev<br/>4.12 Specifying a parser rule - the rule statement</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s4_14_Specifying_the_parser_module_name___the__module__statement.html">Next &raquo<br/>4.14 Specifying the parser module name - the module statement</a></td></tr></table><div class="separator"></div><a name="s4_13_Specifying_the_parser_start_rule_name___the__start__statement" /><h2>4.13 Specifying the parser start rule name - the <code>start</code> statement</h2>
+
+<p>The start rule can be changed from the default of <code>Start</code> by using the <code>start</code>
+statement.
+Example:</p>
+
+<div class="code">
+<pre>start MyStartRule;
+</pre>
+</div>
+
+<p>Multiple start rules can be specified, either with multiple <code>start</code> statements
+or one <code>start</code> statement listing multiple start rules.
+Example:</p>
+
+<div class="code">
+<pre>start Module ModuleItem Statement Expression;
+</pre>
+</div>
+
+<p>When multiple start rules are specified, multiple <code>p_parse_*()</code> functions,
+<code>p_result_*()</code>, and <code>p_free_tree_*()</code> functions (in tree mode) are generated.
+A default <code>p_parse()</code>, <code>p_result()</code>, <code>p_free_tree()</code> are generated corresponding
+to the first start rule.
+Additionally, each start rule causes the generation of another version of each
+of these functions, for example <code>p_parse_Statement()</code>, <code>p_result_Statement()</code>,
+and <code>p_free_tree_Statement()</code>.</p>
+<div class="separator"></div><table class="page_nav"><tr><td class="page_nav_prev"><a href="s4_12_Specifying_a_parser_rule___the_rule_statement.html">&laquo; Prev<br/>4.12 Specifying a parser rule - the rule statement</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s4_14_Specifying_the_parser_module_name___the__module__statement.html">Next &raquo<br/>4.14 Specifying the parser module name - the module statement</a></td></tr></table></div>
+  </body>
+</html>
