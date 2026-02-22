@@ -1,0 +1,104 @@
+<html>
+  <head>
+    <title>Propane User Guide - 4.2 context_user_fields statement - adding custom fields to the context - Version 4.0.0</title>
+    <style>
+      body {
+        background-color: #CCC;
+        margin: 0px;
+        padding: 0px;
+      }
+      #body-content {
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 1em;
+        margin-bottom: 1em;
+        border: 1px solid black;
+        background-color: #FFF;
+        width: 120ex;
+        padding: 2ex;
+      }
+      a {
+        text-decoration: none;
+      }
+      .separator {
+        height: 2em;
+      }
+      .img_block_center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .page_nav {
+        width: 100%;
+        table-layout: fixed;
+      }
+      .page_nav_toc {
+        text-align: center;
+      }
+      .page_nav_next {
+        text-align: right;
+      }
+      .code {
+        padding-left: 2ex;
+        width: 116ex;
+        overflow-x: auto;
+      }
+      .ruby_code .normal {}
+      .ruby_code .comment { color: #005; font-style: italic; }
+      .ruby_code .keyword { color: #A00; font-weight: bold; }
+      .ruby_code .method { color: #077; }
+      .ruby_code .class { color: #074; }
+      .ruby_code .module { color: #050; }
+      .ruby_code .punct { color: #447; font-weight: bold; }
+      .ruby_code .symbol { color: #099; }
+      .ruby_code .string { color: #090; }
+      .ruby_code .char { color: #F07; }
+      .ruby_code .ident { color: #004; }
+      .ruby_code .constant { color: #07F; }
+      .ruby_code .regex { color: #B66; }
+      .ruby_code .number { color: #D55; }
+      .ruby_code .attribute { color: #377; }
+      .ruby_code .global { color: #3B7; }
+      .ruby_code .expr { color: #227; }
+    </style>
+  </head>
+  <body>
+    <div id="body-content"><table class="page_nav"><tr><td class="page_nav_prev"><a href="s4_1_User_Code_Blocks.html">&laquo; Prev<br/>4.1 User Code Blocks</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s4_3__drop__statement___ignoring_input_patterns.html">Next &raquo<br/>4.3 drop statement - ignoring input patterns</a></td></tr></table><div class="separator"></div><a name="s4_2__context_user_fields__statement___adding_custom_fields_to_the_context" /><h2>4.2 <code>context_user_fields</code> statement - adding custom fields to the context</h2>
+
+<p>Propane uses a context structure for lexer and parser operations.
+Custom fields may be added to the context structure by using the grammar
+<code>context_user_fields</code> statement.
+This allows lexer pattern or parser rule code blocks to access user-defined
+fields within the context structure.</p>
+
+<p>Example:</p>
+
+<div class="code">
+<pre>context_user_fields <<
+    int mycontextval;
+>>
+</pre>
+</div>
+
+<p>Lexer user code blocks or parser user code blocks can access user-defined
+context fields by using the <code>${context.&lt;field&gt;}</code> syntax.</p>
+
+<p>C++ example:</p>
+
+<div class="code">
+<pre>context_user_fields <<
+    std::string comments;
+>>
+drop /#(.*)\n/ <<
+    /* Accumulate comments before the next parser tree node. */
+    ${context.comments} += std::string((const char *)match, match_length);
+>>
+</pre>
+</div>
+
+<p>If a pointer to any allocated memory is stored in a user-defined context field,
+it is up to the user to free any memory when the program is finished using the
+context structure.</p>
+<div class="separator"></div><table class="page_nav"><tr><td class="page_nav_prev"><a href="s4_1_User_Code_Blocks.html">&laquo; Prev<br/>4.1 User Code Blocks</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s4_3__drop__statement___ignoring_input_patterns.html">Next &raquo<br/>4.3 drop statement - ignoring input patterns</a></td></tr></table></div>
+  </body>
+</html>
