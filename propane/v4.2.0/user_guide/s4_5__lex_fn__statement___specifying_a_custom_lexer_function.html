@@ -1,0 +1,123 @@
+<html>
+  <head>
+    <title>Propane User Guide - 4.5 lex_fn statement - specifying a custom lexer function - Version 4.2.0</title>
+    <style>
+      body {
+        background-color: #CCC;
+        margin: 0px;
+        padding: 0px;
+      }
+      #body-content {
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 1em;
+        margin-bottom: 1em;
+        border: 1px solid black;
+        background-color: #FFF;
+        width: 120ex;
+        padding: 2ex;
+      }
+      a {
+        text-decoration: none;
+      }
+      .separator {
+        height: 2em;
+      }
+      .img_block_center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .page_nav {
+        width: 100%;
+        table-layout: fixed;
+      }
+      .page_nav_toc {
+        text-align: center;
+      }
+      .page_nav_next {
+        text-align: right;
+      }
+      .code {
+        padding-left: 2ex;
+        width: 116ex;
+        overflow-x: auto;
+      }
+      .ruby_code .normal {}
+      .ruby_code .comment { color: #005; font-style: italic; }
+      .ruby_code .keyword { color: #A00; font-weight: bold; }
+      .ruby_code .method { color: #077; }
+      .ruby_code .class { color: #074; }
+      .ruby_code .module { color: #050; }
+      .ruby_code .punct { color: #447; font-weight: bold; }
+      .ruby_code .symbol { color: #099; }
+      .ruby_code .string { color: #090; }
+      .ruby_code .char { color: #F07; }
+      .ruby_code .ident { color: #004; }
+      .ruby_code .constant { color: #07F; }
+      .ruby_code .regex { color: #B66; }
+      .ruby_code .number { color: #D55; }
+      .ruby_code .attribute { color: #377; }
+      .ruby_code .global { color: #3B7; }
+      .ruby_code .expr { color: #227; }
+    </style>
+  </head>
+  <body>
+    <div id="body-content"><table class="page_nav"><tr><td class="page_nav_prev"><a href="s4_3__drop__statement___ignoring_input_patterns.html">&laquo; Prev<br/>4.3 drop statement - ignoring input patterns</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s4_6__module__statement___specifying_the_generated_parser_module_name.html">Next &raquo<br/>4.6 module statement - specifying the generated parser module name</a></td></tr></table><div class="separator"></div><a name="s4_5__lex_fn__statement___specifying_a_custom_lexer_function" /><h2>4.5 <code>lex_fn</code> statement - specifying a custom lexer function</h2>
+
+<p>Propane generates both a lexer and a parser.
+By default, the parser uses the generated <code>p_lex()</code> function directly to
+return information for the next lexed token from the input stream.</p>
+
+<p>However, the user can specify a custom lex function.
+This function may or may not use the Propane generated <code>p_lex()</code> function under
+the hood.
+For example, a token sequence could be injected or repeated from a previously
+saved macro definition.</p>
+
+<p>Example (C/C++):</p>
+
+<div class="code">
+<pre><<
+static size_t mylexfn(p_context_t * context, p_token_info_t * out_token_info)
+{
+    static size_t count;
+    size_t result = P_SUCCESS;
+    if (count > 0)
+    {
+        out_token_info->token = TOKEN_a;
+        out_token_info->pvalue = p_value(count);
+        count--;
+    }
+    else
+    {
+        result = p_lex(context, out_token_info);
+        if (out_token_info->token == TOKEN_c)
+        {
+            count = 3;
+        }
+    }
+    return result;
+}
+>>
+
+lex_fn mylexfn;
+</pre>
+</div>
+
+<p>The <code>lex_fn</code> statement takes one argument specifying the name of the custom
+lexer function.
+The user must supply a value for the <code>token</code> field of the <code>p_token_info_t</code>
+output structure so that the parser knows what token was lexed.</p>
+
+<p>Additionally, if the parser user code makes use of the token&#39;s pvalue, then
+the lexer function must supply a value for the <code>pvalue</code> field of the
+<code>p_token_info_t</code> structure.
+The <code>p_value()</code> generated API function could be useful for specifying
+parser values to associate with the lexed token when tree generation is not
+enabled.
+When tree generation is enabled, the <code>pvalue</code> field can be set to an instance
+of whatever type the user has defined as the <code>ptype</code> type.</p>
+<div class="separator"></div><table class="page_nav"><tr><td class="page_nav_prev"><a href="s4_3__drop__statement___ignoring_input_patterns.html">&laquo; Prev<br/>4.3 drop statement - ignoring input patterns</a></td><td class="page_nav_toc"><a href="toc.html">Table of Contents</a></td><td class="page_nav_next"><a href="s4_6__module__statement___specifying_the_generated_parser_module_name.html">Next &raquo<br/>4.6 module statement - specifying the generated parser module name</a></td></tr></table></div>
+  </body>
+</html>
